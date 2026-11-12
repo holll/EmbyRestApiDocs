@@ -1,0 +1,251 @@
+StartIndex	Optional. The record index to start at. All items with a lower index will be dropped from the results.
+Limit	Optional. The maximum number of records to return
+MinDate	Optional. The minimum date. Format = ISO
+ArtistType	Artist or AlbumArtist
+MaxOfficialRating	Optional filter by maximum official rating (PG, PG-13, TV-MA, etc).
+HasThemeSong	Optional filter by items with theme songs.
+HasThemeVideo	Optional filter by items with theme videos.
+HasSubtitles	Optional filter by items with subtitles.
+HasSpecialFeature	Optional filter by items with special features.
+HasTrailer	Optional filter by items with trailers.
+IsSpecialSeason	Optional. Filter by special season.
+AdjacentTo	Optional. Return items that are siblings of a supplied item.
+StartItemId	Optional. Skip through the list until a given item is found.
+MinIndexNumber	Optional filter by minimum index number.
+MinStartDate	Optional. The minimum premiere date. Format = ISO
+MaxStartDate	Optional. The maximum premiere date. Format = ISO
+MinEndDate	Optional. The minimum premiere date. Format = ISO
+MaxEndDate	Optional. The maximum premiere date. Format = ISO
+MinPlayers	Optional filter by minimum number of game players.
+MaxPlayers	Optional filter by maximum number of game players.
+ParentIndexNumber	Optional filter by parent index number.
+HasParentalRating	Optional filter by items that have or do not have a parental rating
+IsHD	Optional filter by items that are HD or not.
+IsUnaired	Optional filter by items that are unaired episodes or not.
+MinCommunityRating	Optional filter by minimum community rating.
+MinCriticRating	Optional filter by minimum critic rating.
+AiredDuringSeason	Gets all episodes that aired during a season, including specials.
+MinPremiereDate	Optional. The minimum premiere date. Format = ISO
+MinDateLastSaved	Optional. The minimum premiere date. Format = ISO
+MinDateLastSavedForUser	Optional. The minimum premiere date. Format = ISO
+MaxPremiereDate	Optional. The maximum premiere date. Format = ISO
+HasOverview	Optional filter by items that have an overview or not.
+HasImdbId	Optional filter by items that have an imdb id or not.
+HasTmdbId	Optional filter by items that have a tmdb id or not.
+HasTvdbId	Optional filter by items that have a tvdb id or not.
+ExcludeItemIds	Optional. If specified, results will be filtered by exxcluding item ids. This allows multiple, comma delimeted.
+Recursive	When searching within folders, this determines whether or not the search will be recursive. true/false
+SearchTerm	Enter a search term to perform a search request
+SortOrder	Sort Order - Ascending,Descending
+ParentId	Specify this to localize the search to a specific item or folder. Omit to use the root
+Fields	Optional. Specify additional fields of information to return in the output. This allows multiple, comma delimeted. Options: Budget, Chapters, DateCreated, Genres, HomePageUrl, IndexOptions, MediaStreams, Overview, ParentId, Path, People, ProviderIds, PrimaryImageAspectRatio, Revenue, SortName, Studios, Taglines
+ExcludeItemTypes	Optional. If specified, results will be filtered based on item type. This allows multiple, comma delimeted.
+IncludeItemTypes	Optional. If specified, results will be filtered based on item type. This allows multiple, comma delimeted.
+AnyProviderIdEquals	Optional. If specified, result will be filtered to contain only items which match at least one of the specified IDs. Each provider ID must be in the form 'prov.id', e.g. 'imdb.tt123456'. This allows multiple, comma delimeted value pairs.
+Filters	Optional. Specify additional filters to apply. This allows multiple, comma delimeted. Options: IsFolder, IsNotFolder, IsUnplayed, IsPlayed, IsFavorite, IsResumable, Likes, Dislikes
+IsFavorite	Optional filter by items that are marked as favorite, or not.
+IsMovie	Optional filter for movies.
+IsSeries	Optional filter for series.
+IsFolder	Optional filter for folders.
+IsNews	Optional filter for news.
+IsKids	Optional filter for kids.
+IsSports	Optional filter for sports.
+IsNew	Optional filter for IsNew.
+IsPremiere	Optional filter for IsPremiere.
+IsNewOrPremiere	Optional filter for IsNewOrPremiere.
+IsRepeat	Optional filter for IsRepeat.
+ProjectToMedia	ProjectToMedia
+MediaTypes	Optional filter by MediaType. Allows multiple, comma delimited.
+ImageTypes	Optional. If specified, results will be filtered based on those containing image types. This allows multiple, comma delimited.
+SortBy	Optional. Specify one or more sort orders, comma delimeted. Options: Album, AlbumArtist, Artist, Budget, CommunityRating, CriticRating, DateCreated, DatePlayed, PlayCount, PremiereDate, ProductionYear, SortName, Random, Revenue, Runtime
+IsPlayed	Optional filter by items that are played, or not.
+Genres	Optional. If specified, results will be filtered based on genre. This allows multiple, pipe delimeted.
+OfficialRatings	Optional. If specified, results will be filtered based on OfficialRating. This allows multiple, pipe delimeted.
+Tags	Optional. If specified, results will be filtered based on tag. This allows multiple, pipe delimeted.
+ExcludeTags	Optional. If specified, results will be filtered based on tag. This allows multiple, pipe delimeted.
+Years	Optional. If specified, results will be filtered based on production year. This allows multiple, comma delimeted.
+EnableImages	Optional, include image information in output
+EnableUserData	Optional, include user data
+ImageTypeLimit	Optional, the max number of images to return, per image type
+EnableImageTypes	Optional. The image types to include in the output.
+Person	Optional. If specified, results will be filtered to include only those containing the specified person.
+PersonIds	Optional. If specified, results will be filtered to include only those containing the specified person.
+PersonTypes	Optional. If specified, along with Person, results will be filtered to include only those containing the specified person and PersonType. Allows multiple, comma-delimited
+Studios	Optional. If specified, results will be filtered based on studio. This allows multiple, pipe delimeted.
+StudioIds	Optional. If specified, results will be filtered based on studio. This allows multiple, pipe delimeted.
+Artists	Optional. If specified, results will be filtered based on artist. This allows multiple, pipe delimeted.
+ArtistIds	Optional. If specified, results will be filtered based on artist. This allows multiple, pipe delimeted.
+Albums	Optional. If specified, results will be filtered based on album. This allows multiple, pipe delimeted.
+Ids	Optional. If specific items are needed, specify a list of item id's to retrieve. This allows multiple, comma delimited.
+VideoTypes	Optional filter by VideoType (videofile, dvd, bluray, iso). Allows multiple, comma delimeted.
+Containers	Optional filter by Container. Allows multiple, comma delimeted.
+AudioCodecs	Optional filter by AudioCodec. Allows multiple, comma delimeted.
+AudioLayouts	Optional filter by AudioLayout. Allows multiple, comma delimeted.
+VideoCodecs	Optional filter by VideoCodec. Allows multiple, comma delimeted.
+ExtendedVideoTypes	Optional filter by ExtendedVideoType. Allows multiple, comma delimeted.
+SubtitleCodecs	Optional filter by SubtitleCodec. Allows multiple, comma delimeted.
+Path	Optional filter by Path.
+UserId	User Id
+MinOfficialRating	Optional filter by minimum official rating (PG, PG-13, TV-MA, etc).
+IsLocked	Optional filter by items that are locked.
+IsPlaceHolder	Optional filter by items that are placeholders
+HasOfficialRating	Optional filter by items that have official ratings
+GroupItemsIntoCollections	Whether or not to hide items behind their boxsets.
+Is3D	Optional filter by items that are 3D, or not.
+SeriesStatus	Optional filter by Series Status. Allows multiple, comma delimeted.
+NameStartsWithOrGreater	Optional filter by items whose name is sorted equally or greater than a given input string.
+ArtistStartsWithOrGreater	Optional filter by items whose name is sorted equally or greater than a given input string.
+AlbumArtistStartsWithOrGreater	Optional filter by items whose name is sorted equally or greater than a given input string.
+NameStartsWith	Optional filter by items whose name is sorted equally than a given input string.
+NameLessThan	Optional filter by items whose name is equally or lesser than a given input string.
+Name	The artist name
+DeviceProfileId	Optional. The dlna device profile id to utilize.
+StreamFileName	
+Id	Item Id
+DeviceId	The device id of the client requesting. Used to stop encoding processes when needed.
+Container	Container
+AudioCodec	Optional. Specify a audio codec to encode to, e.g. mp3. If omitted the server will auto-select using the url's extension. Options: aac, mp3, vorbis, wma.
+EnableAutoStreamCopy	Whether or not to allow automatic stream copy if requested values match the original source. Defaults to true.
+AudioSampleRate	Optional. Specify a specific audio sample rate, e.g. 44100
+AudioBitRate	Optional. Specify an audio bitrate to encode to, e.g. 128000. If omitted this will be left to encoder defaults.
+AudioChannels	Optional. Specify a specific number of audio channels to encode to, e.g. 2
+MaxAudioChannels	Optional. Specify a maximum number of audio channels to encode to, e.g. 2
+Static	Optional. If true, the original file will be streamed statically without any encoding. Use either no url extension or the original file extension. true/false
+CopyTimestamps	Whether or not to copy timestamps when transcoding with an offset. Defaults to false.
+StartTimeTicks	Optional. Specify a starting offset, in ticks. 1ms = 10000 ticks.
+Width	Optional. The fixed horizontal resolution of the encoded video.
+Height	Optional. The fixed vertical resolution of the encoded video.
+MaxWidth	Optional. The maximum horizontal resolution of the encoded video.
+MaxHeight	Optional. The maximum vertical resolution of the encoded video.
+VideoBitRate	Optional. Specify a video bitrate to encode to, e.g. 500000. If omitted this will be left to encoder defaults.
+SubtitleStreamIndex	Optional. The index of the subtitle stream to use. If omitted no subtitles will be used.
+SubtitleMethod	Optional. Specify the subtitle delivery method.
+MaxVideoBitDepth	Optional.
+VideoCodec	Optional. Specify a video codec to encode to, e.g. h264. If omitted the server will auto-select using the url's extension. Options: h264, mpeg4, theora, vpx, wmv.
+AudioStreamIndex	Optional. The index of the audio stream to use. If omitted the first audio stream will be used.
+VideoStreamIndex	Optional. The index of the video stream to use. If omitted the first video stream will be used.
+CodecId	Codec Id
+ParameterContext	Parameter Context
+body	Binary stream
+Key	Key
+ConnectUserId	ConnectUserId
+ConnectUsername	Connect username
+SectionId	
+Album	Album
+Client	Client
+DisplayPreferencesId	DisplayPreferences Id
+UuId	Server UuId
+Filename	The icon filename
+SegmentContainer	
+SegmentId	
+PlaylistId	
+SubtitleSegmentLength	The subtitle segment length
+ManifestSubtitles	The subtitle segment format
+IncludeFiles	An optional filter to include or exclude files from the results. true/false
+IncludeDirectories	An optional filter to include or exclude folders from the results. true/false
+PageId	Id of the page controller
+ClientLocale	Locale identifier of the client
+PlaySessionId	The play session id
+Index	Image Index
+Type	Image Type
+Quality	Optional quality setting, from 0-100. Defaults to 90 and should suffice in most cases.
+Tag	Optional. Supply the cache tag from the item object to receive strong caching headers.
+CropWhitespace	Specify if whitespace should be cropped out of the image. True/False. If unspecified, whitespace will be cropped from logos and clear art.
+EnableImageEnhancers	Enable or disable image enhancers such as cover art.
+Format	Determines the output foramt of the image - original,gif,jpg,png
+BackgroundColor	Optional. Apply a background color for transparent images.
+ForegroundLayer	Optional. Apply a foreground layer on top of the image.
+AutoOrient	Set to true to force normalization of orientation in the event the renderer does not support it.
+KeepAnimation	Set to true to retain image animation (when supported).
+PercentPlayed	
+UnPlayedCount	
+NewIndex	The new image index
+Url	The url for the new image
+AlbumId	Optional. Filter by series id
+ImageUrl	The image url
+ProviderName	
+ItemIds	The item ids
+ReplaceAllImages	Whether or not to replace all images
+MetadataRefreshMode	Specifies the metadata refresh mode
+ImageRefreshMode	Specifies the image refresh mode
+ReplaceAllMetadata	Determines if metadata should be replaced. Only applicable if mode is FullRefresh
+ItemId	The id of the item
+InheritFromParent	Determines whether or not parent items should be searched for theme media.
+IsHidden	Optional. Filter by folders that are marked hidden, or not.
+Segment	
+ProviderId	Provider id
+IsLiked	Filter by channels that are liked, or not.
+IsDisliked	Filter by channels that are disliked, or not.
+EnableFavoriteSorting	Incorporate favorite and like status into channel sorting.
+AddCurrentProgram	Optional. Adds current program info to each channel
+ChannelIds	The channels to return guide information for.
+ChannelId	Channel id
+Location	Location
+Country	Country
+Status	Optional filter by recording status.
+IsInProgress	Optional filter by recordings that are in progress, or not.
+SeriesTimerId	Optional filter by recordings belonging to a series timer
+ProgramId	Optional, to attach default values based on a program.
+Size	Size
+LiveStreamId	LiveStreamId
+CategoryLimit	The max number of categories to return
+ItemLimit	The max number of items to return per category
+Description	The notification's description
+Level	The notification level
+PackageType	Optional package type filter (System/UserInstalled)
+TargetSystems	Optional. Filter by target system type. Allows multiple, comma delimited.
+IsPremium	Optional. Filter by premium status
+IsAdult	Optional. Filter by package that contain adult content.
+AssemblyGuid	The guid of the associated assembly
+Version	Optional version. Defaults to latest version.
+UpdateClass	Optional update class (Dev, Beta, Release). Defaults to Release.
+EntryIds	
+MediaType	The playlist media type
+MediaSourceId	The id of the MediaSource
+NextMediaType	The next media type that will play
+PositionTicks	Optional. The position, in ticks, where playback stopped. 1ms = 10000 ticks.
+DatePlayed	The date the item was played (if any). Format = yyyyMMddHHmmss
+CanSeek	Indicates if the client can seek
+PlayMethod	
+IsPaused	Indicates if the player is paused.
+IsMuted	Indicates if the player is muted.
+VolumeLevel	Scale of 0-100
+RepeatMode	
+SubtitleOffset	
+PlaybackRate	
+IncludeAllLanguages	Optional.
+EnableSeriesImages	Optional.
+IsEnabled	Optional filter tasks that are enabled, or not.
+ControllableByUserId	Optional. Filter by sessions that a given user is allowed to remote control.
+App	App
+Command	The command to send.
+Text	The message text.
+Header	The message header.
+TimeoutMs	The message timeout. If omitted the user will have to confirm viewing the message.
+StartPositionTicks	The starting position of the first item.
+PlayCommand	The type of play command to issue (PlayNow, PlayNext, PlayLast). Clients who have not yet implemented play next and play last may play now.
+ItemType	The type of item to browse to.
+ItemName	The name of the item.
+PlayableMediaTypes	A list of playable media types, comma delimited. Audio, Video, Book, Game, Photo.
+SupportedCommands	A list of supported remote control commands, comma delimited
+SupportsMediaControl	Determines whether media can be played remotely.
+SupportsSync	Determines whether sync is supported.
+EndPositionTicks	EndPositionTicks
+Language	Language
+IsPerfectMatch	IsPerfectMatch
+IsForced	IsForced
+IsHearingImpaired	IsHearingImpaired
+SubtitleId	SubtitleId
+TargetId	TargetId
+Category	Category
+Sanitize	Return sanitized log
+Season	Optional filter by season number.
+SeasonId	Optional. Filter by season id
+SeriesId	Optional. Filter by series id
+GroupItems	Whether or not to group items into a parent container.
+Hide	Whether the item should be hidden from reusme or not. true/false
+Likes	Whether the user likes the item or not. true/false
+TrackType	
+IsDisabled	Optional filter by IsDisabled=true or false
+X-Emby-Authorization	The authorization header can be either named 'Authorization' or 'X-Emby-Authorization'. It must be of the following schema: Emby UserId="(guid)", Client="(string)", Device="(string)", DeviceId="(string)", Version="string", Token="(string)" Please consult the documentation for further details.
+IncludeExternalContent	Whether or not to include external views such as channels or live tv

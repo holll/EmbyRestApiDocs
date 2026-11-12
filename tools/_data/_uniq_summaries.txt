@@ -1,0 +1,291 @@
+Gets items based on a query.	17
+Gets an audio stream	10
+Gets a live tv channel	9
+Gets subtitles in a specified format.	9
+Gets a live recording	6
+Gets a video stream	6
+Gets dlna connection manager xml	4
+Gets dlna content directory xml	4
+Gets dlna server info	4
+Uploads an image for an item, must be base64 encoded.	4
+Deletes an item from the library and file system	4
+Deprecated. Use /Library/Media/Updated	4
+Deletes an external subtitle file	4
+Updates a user's display preferences for an item	3
+Gets an audio stream using HTTP live streaming.	3
+Gets a video stream using HTTP live streaming.	3
+Gets the contents of a given directory in the file system	3
+Gets available live tv epgs..	3
+Issues a system command to a client	3
+Cancels items from a sync target	3
+Gets a sync job item file	3
+Gets a list of users	3
+Gets custom css	2
+Removes items from a collection	2
+Gets a list of missing items	2
+Updates application configuration	2
+Removes a Connect link for a user	2
+Creates a Connect link for a user	2
+Deletes a device	2
+Gets a server icon	2
+Processes a control request	2
+Gets an HLS subtitle playlist.	2
+Gets the parent path of a given path	2
+Updates the index for an item image	2
+Gets a list of next up episodes	2
+Creates an instant playlist based on a music genre	2
+Gets a remote image	2
+Finds albums similar to a given album.	2
+Gets all user media folders.	2
+Finds movies and trailers similar to a given trailer.	2
+Deletes a listing provider	2
+Deletes a live tv recording	2
+Cancels a live tv series timer	2
+Cancels a live tv timer	2
+Deletes a tuner host	2
+Gets live tv recordings	2
+Gets tuner hosts	2
+Gets live playback media info for an item	2
+Gets the swagger specifications	2
+Cancels a package installation	2
+Removes items from a playlist	2
+Marks an item as unplayed	2
+Reports that a user has stopped playing an item	2
+Uninstalls a plugin	2
+Stops a scheduled task	2
+Removes an additional user from a session	2
+Updates capabilities for a device	2
+Cancels a sync job item	2
+Cancels a sync job.	2
+Gets sync jobs.	2
+Gets a list of available sync targets.	2
+Gets a log file	2
+Gets release notes	2
+Gets the tone mapping options	2
+Updates the tone mapping options	2
+Unmarks an item as a favorite	2
+Deletes a user's saved personal rating for an item	2
+Marks an item as a favorite	2
+Deletes a user	2
+Clears recently searched	2
+Clears audio or subtitle track selections for a user	2
+Authenticates a user	2
+Updates a user configuration	2
+Removes alternate video sources.	2
+Gets activity log entries	1
+Gets all artists from a given item, folder, or the entire library	1
+Gets all album artists from a given item, folder, or the entire library	1
+Gets an artist, by name	1
+Gets branding configuration	1
+Gets available channels	1
+Gets the parameters for a specified codec.	1
+Updates the parameters for a specified codec.	1
+Creates a new collection	1
+Adds items to a collection	1
+Gets application configuration	1
+Gets a named configuration	1
+Updates named configuration	1
+Gets the corresponding local user from a connect user id	1
+Gets all devices	1
+Gets camera upload history for a device	1
+Gets info for a device	1
+Gets options for a device	1
+Uploads content	1
+Updates device options	1
+Gets a user's display preferences for an item	1
+Gets user settings	1
+Deletes a profile	1
+Gets a list of profiles	1
+Gets a single profile	1
+Gets the default profile	1
+Creates a profile	1
+Updates a profile	1
+Gets default codec configurations	1
+Gets details about available video encoders and decoders	1
+Gets available tone mapping options	1
+Gets available drives from the server's file system	1
+Gets a list of devices on the network	1
+Gets shares from a network device	1
+Gets a list of installed features	1
+Gets the ffmpeg options	1
+Updates the ffmpeg options	1
+Gets all Game genres from a given item, folder, or the entire library	1
+Gets a Game genre, by name	1
+Gets UI view data	1
+Execute a command in the context of tv setup	1
+Gets all genres from a given item, folder, or the entire library	1
+Gets a genre, by name	1
+Gets information about an item's images	1
+Creates an instant playlist based on a given album	1
+Creates an instant playlist based on a given artist	1
+Creates an instant playlist based on a given item	1
+Creates an instant playlist based on a given playlist	1
+Creates an instant playlist based on a given song	1
+Gets external id infos for an item	1
+Resets metadata for one or more items	1
+Applies search criteria to an item and refreshes metadata	1
+Refreshes metadata for an item	1
+Gets metadata editor info for an item	1
+Updates an item	1
+Finds games similar to a given game.	1
+Gets all parents of an item	1
+Gets critic reviews for an item	1
+Gets delete info for an item	1
+Downloads item media	1
+Gets the original file of an item	1
+Gets similar items	1
+Gets theme videos and songs for an item	1
+Gets theme songs for an item	1
+Gets theme videos for an item	1
+Gets info to debug intros	1
+Gets a list of physical paths from virtual folders	1
+Finds movies and trailers similar to a given movie.	1
+Finds tv shows similar to a given one.	1
+Reports that new movies have been added by an external source	1
+Starts a library scan	1
+Gets available recording options	1
+Gets available live tv channels.	1
+Gets live tv channel tags	1
+Gets live tv channel tag prefixes	1
+Gets the epg.	1
+Gets the top level live tv folder	1
+Gets guide info	1
+Gets available live tv services.	1
+Gets current listing providers	1
+Gets listing provider	1
+Gets available lineups	1
+Gets the channel management list	1
+Gets a live tv recording	1
+Gets recording folders	1
+Gets live tv recording groups	1
+Gets live tv series timers	1
+Gets a live tv series timer	1
+Gets live tv timers	1
+Gets a live tv timer	1
+Gets default values for a new timer	1
+Adds a listing provider	1
+Sets a channel disabled or not	1
+Sets a channel sort index	1
+Creates a live tv series timer	1
+Updates a live tv series timer	1
+Creates a live tv timer	1
+Updates a live tv timer	1
+Adds a tuner host	1
+Resets a tv tuner	1
+Gets known countries	1
+Gets known cultures	1
+Gets localization options	1
+Gets known parental ratings	1
+Closes a media source	1
+Gets media info for a live stream	1
+Opens a media source	1
+Gets movie recommendations	1
+Gets all music genres from a given item, folder, or the entire library	1
+Gets a music genre, by name	1
+Gets notification types	1
+Sends a notification to all admin users	1
+Gets the OpenAPI 3 specifications	1
+Gets OpenAPI 3 specifications	1
+Gets available packages	1
+Gets a package, by name or assembly guid	1
+Gets available package updates for currently installed packages	1
+Installs a package	1
+Gets a list of active parties	1
+Gets info about the session's current party	1
+Gets party messages	1
+Creates a party	1
+Joins a party	1
+Leaves a party	1
+Posts a message to the party	1
+Gets all persons from a given item, folder, or the entire library	1
+Gets credits for a person	1
+Gets a person, by name	1
+Gets add to playlist info	1
+Gets the original items of a playlist	1
+Creates a new playlist	1
+Adds items to a playlist	1
+Moves a playlist item	1
+Reports playback has started within a session	1
+Pings a playback session	1
+Reports playback progress within a session	1
+Reports playback has stopped within a session	1
+Updates userdata for an item	1
+Marks an item as played	1
+Reports that a user has begun playing an item	1
+Reports a user's playback progress	1
+Gets a list of currently installed plugins	1
+Gets a plugin's configuration	1
+Gets a plugin thumb image	1
+Updates a plugin's configuration	1
+Gets available remote images for an item	1
+Gets available remote image providers for an item	1
+Downloads a remote image for an item	1
+Gets scheduled tasks	1
+Gets a scheduled task, by Id	1
+Updates the triggers for a scheduled task	1
+Starts a scheduled task	1
+Gets a list of sessions	1
+Gets a the current play queue from a session	1
+Issues a command to a client to display a message to the user	1
+Instructs a session to play an item	1
+Issues a playstate command to a client	1
+Adds an additional user to a session	1
+Instructs a session to browse to an item or view	1
+Reports that a session has ended	1
+Gets all studios from a given item, folder, or the entire library	1
+Gets a studio, by name	1
+Gets the subtitle options	1
+Updates the subtitle options	1
+Gets ready to download sync items.	1
+Gets sync job items.	1
+Gets a sync job.	1
+Gets sync status for an item.	1
+Syncs data between device and server	1
+Enables a cancelled or queued sync job item	1
+Marks a job item for removal	1
+Reports that a sync job item has successfully been transferred.	1
+Unmarks a job item for removal	1
+Updates a sync job.	1
+Reports an action that occurred while offline.	1
+Gets information about the request endpoint	1
+Gets information about the server	1
+Gets public information about the server	1
+Gets a list of available server log files	1
+Gets wake on lan information	1
+Restarts the application, if needed	1
+Shuts down the application	1
+Adds new tags to an item	1
+Removes tags from an item	1
+Gets episodes for a tv season	1
+Gets seasons for a tv series	1
+Gets a list of missing episodes	1
+Gets a list of upcoming episodes	1
+Gets a live tv program	1
+Gets an item from a user's library	1
+Gets intros to play before the main media item plays	1
+Gets local trailers for an item	1
+Gets special features for an item	1
+Gets latest media	1
+Gets the root folder from a user's library	1
+Gets additional parts for a video.	1
+Updates user item access	1
+Makes an item private	1
+Makes an item public to all users	1
+Leaves a shared item	1
+Updates a user's hide from resume for an item	1
+Updates a user's rating for an item	1
+Gets default notification info	1
+Sends a test notification	1
+Gets a user by Id	1
+Gets a typed user setting	1
+Gets copy data options	1
+Gets a list of publicly visible users for display on a login screen.	1
+Updates a user	1
+Updates a user's password	1
+Updates a user policy	1
+Copies data from one user to another	1
+Updates a typed user setting	1
+Initiates the forgot password process for a local user	1
+Redeems a forgot password pin	1
+Creates a user	1
+Merges videos into a single record	1

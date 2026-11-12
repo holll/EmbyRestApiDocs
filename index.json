@@ -1,0 +1,6789 @@
+{
+  "meta": {
+    "project": "EmbyRestApiDocs",
+    "source": "https://dev.emby.media/reference/RestAPI.html",
+    "counts": {
+      "services": 70,
+      "endpoints": 548,
+      "params": 7708,
+      "models": 321,
+      "model_fields": 1916
+    },
+    "conventions": {
+      "base_url": "http://<host>:8096 (HTTPS 8920)",
+      "auth_header": "X-Emby-Authorization: Emby Client=\"…\", Device=\"…\", DeviceId=\"…\", Version=\"…\" [, UserId=\"…\", Token=\"…\"]",
+      "token_header": "X-Emby-Token: <AccessToken>",
+      "login": "POST /Users/AuthenticateByName  body {Username, Pw} → {AccessToken, User, SessionInfo, ServerId}",
+      "tick": "1 秒 = 10,000,000 ticks；所有 *Ticks 字段（RunTimeTicks / PositionTicks / StartTimeTicks）均为此单位",
+      "paging": "QueryResult {Items, TotalRecordCount, StartIndex}；参数 StartIndex + Limit",
+      "fields": "列表接口默认不返回 MediaSources/MediaStreams/People/Overview，需要时用 Fields 显式索取",
+      "image": "GET /Items/{Id}/Images/{Type}?tag={Tag}&maxHeight={h}；无 PrimaryImageTag 时不要拼 URL",
+      "case": "JSON 字段名 PascalCase，按原样大小写匹配",
+      "missing_type": "参数表类型列为官方缺失时按命名惯例推断，仅供参考"
+    },
+    "usage": "按 path 或 method 在 services[].endpoints 中检索可定位服务文件与 section 序号；打开对应 md 后搜索「## <section>. 」即可命中该接口的完整参数表。"
+  },
+  "services": [
+    {
+      "service": "ActivityLogService",
+      "zh": "活动日志服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/ActivityLogService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/ActivityLogService.html",
+      "intro": "读取服务器活动日志（登录、播放、扫描等事件），支持按时间与分页过滤。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/System/ActivityLog/Entries",
+          "title": "获取活动日志",
+          "auth": "管理员",
+          "params": 3
+        }
+      ]
+    },
+    {
+      "service": "ArtistsService",
+      "zh": "艺术家服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/ArtistsService.md",
+      "endpoint_count": 3,
+      "doc": "https://dev.emby.media/reference/RestAPI/ArtistsService.html",
+      "intro": "音乐库的艺术家维度：全部艺术家、专辑艺术家、按名称取单个艺术家。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Artists",
+          "title": "获取全部艺术家",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Artists/AlbumArtists",
+          "title": "获取全部专辑艺术家",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Artists/{Name}",
+          "title": "按名称获取艺术家",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "AudioService",
+      "zh": "音频流服务",
+      "category": "05-流媒体协议",
+      "file": "01-接口参考/05-流媒体协议/AudioService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/AudioService.html",
+      "intro": "直接以 HTTP 流输出音频：`/Audio/{Id}/stream` 系列支持直出、转码、按时间偏移起播。做纯音频播放时使用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Audio/{Id}/{StreamFileName}",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 25
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Audio/{Id}/stream",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Audio/{Id}/stream.{Container}",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 4,
+          "method": "HEAD",
+          "path": "/Audio/{Id}/{StreamFileName}",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 25
+        },
+        {
+          "section": 5,
+          "method": "HEAD",
+          "path": "/Audio/{Id}/stream",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 6,
+          "method": "HEAD",
+          "path": "/Audio/{Id}/stream.{Container}",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 24
+        }
+      ]
+    },
+    {
+      "service": "BackupApi",
+      "zh": "备份还原接口",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/BackupApi.md",
+      "endpoint_count": 3,
+      "doc": "https://dev.emby.media/reference/RestAPI/BackupApi.html",
+      "intro": "服务器配置备份与还原。官方参考站未提供该组接口的详情页，本文档按标签页信息整理，参数以服务器实际实现为准。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/BackupRestore/BackupInfo",
+          "title": "获取备份信息",
+          "auth": "未标注",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/BackupRestore/Restore",
+          "title": "从备份还原",
+          "auth": "未标注",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/BackupRestore/RestoreData",
+          "title": "还原指定数据项",
+          "auth": "未标注",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "BifService",
+      "zh": "BIF 缩略图服务",
+      "category": "06-图片与字幕",
+      "file": "01-接口参考/06-图片与字幕/BifService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/BifService.html",
+      "intro": "生成/获取 BIF 索引文件（视频进度条预览图），电视端与部分播放器用它做拖动预览。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Items/{Id}/ThumbnailSet",
+          "title": "获取条目的缩略图集（BIF）",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Videos/{Id}/index.bif",
+          "title": "获取视频的 BIF 索引文件",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "BrandingService",
+      "zh": "品牌配置服务",
+      "category": "06-图片与字幕",
+      "file": "01-接口参考/06-图片与字幕/BrandingService.md",
+      "endpoint_count": 3,
+      "doc": "https://dev.emby.media/reference/RestAPI/BrandingService.html",
+      "intro": "服务器品牌信息：自定义 CSS、服务器图标等，用于让客户端与服务器外观一致。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Branding/Configuration",
+          "title": "获取品牌配置",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Branding/Css",
+          "title": "获取自定义 CSS",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Branding/Css.css",
+          "title": "获取自定义 CSS",
+          "auth": "用户",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "ChannelService",
+      "zh": "频道服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/ChannelService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/ChannelService.html",
+      "intro": "插件提供的“频道”（如播客、网络视频源）：列出频道、频道下的内容。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Channels",
+          "title": "获取可用频道",
+          "auth": "用户",
+          "params": 99
+        }
+      ]
+    },
+    {
+      "service": "CodecParameterService",
+      "zh": "编码参数服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/CodecParameterService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/CodecParameterService.html",
+      "intro": "读取/更新指定编码器的参数（如 H.264 的预设、CRF）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Encoding/CodecParameters",
+          "title": "获取指定编码器的参数",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Encoding/CodecParameters",
+          "title": "更新指定编码器的参数",
+          "auth": "管理员",
+          "params": 3
+        }
+      ]
+    },
+    {
+      "service": "CollectionService",
+      "zh": "合集（BoxSet）服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/CollectionService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/CollectionService.html",
+      "intro": "管理“合集/套装”：新建合集、向合集增删条目。合集是把多部电影打包成一个条目的容器。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Collections/{Id}/Items",
+          "title": "从合集移除条目",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Collections/{Id}/Missing",
+          "title": "获取缺失条目列表",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Collections/{Id}/ProviderItems",
+          "title": "获取缺失条目列表",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Collections",
+          "title": "新建合集",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Collections/{Id}/Items",
+          "title": "向合集添加条目",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Collections/{Id}/Items/Delete",
+          "title": "从合集移除条目",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "ConfigurationService",
+      "zh": "配置服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/ConfigurationService.md",
+      "endpoint_count": 5,
+      "doc": "https://dev.emby.media/reference/RestAPI/ConfigurationService.html",
+      "intro": "读写服务器配置：应用配置（端口、HTTPS、库扫描等）与各类“命名配置”（如 branding、metadata 等）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/System/Configuration",
+          "title": "获取应用配置",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/System/Configuration/{Key}",
+          "title": "获取命名配置",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/System/Configuration",
+          "title": "更新应用配置",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/System/Configuration/{Key}",
+          "title": "更新命名配置",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/System/Configuration/Partial",
+          "title": "更新应用配置",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "ConnectService",
+      "zh": "Emby Connect 服务",
+      "category": "01-用户与认证",
+      "file": "01-接口参考/01-用户与认证/ConnectService.md",
+      "endpoint_count": 5,
+      "doc": "https://dev.emby.media/reference/RestAPI/ConnectService.html",
+      "intro": "Emby Connect 是官方的“账号云”登录方式：用户用邮箱注册 Connect 账号，客户端凭 Connect 换取本地服务器用户。本服务负责发起/解除 Connect 绑定，以及用 Connect 用户 ID 反查本地用户。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Users/{Id}/Connect/Link",
+          "title": "解除用户的 Connect 绑定",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Connect/Exchange",
+          "title": "用 Connect 用户 ID 换取本地用户",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Connect/Pending",
+          "title": "为用户创建 Connect 绑定",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Users/{Id}/Connect/Link",
+          "title": "为用户创建 Connect 绑定",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Users/{Id}/Connect/Link/Delete",
+          "title": "解除用户的 Connect 绑定",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "ContentService",
+      "zh": "首页内容服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/ContentService.md",
+      "endpoint_count": 5,
+      "doc": "https://dev.emby.media/reference/RestAPI/ContentService.html",
+      "intro": "控制用户首页的结构：读取/设置首页分区（HomeSections）、删除分区、调整分区顺序、取某分区下的条目。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Users/{UserId}/HomeSections",
+          "title": "获取用户首页分区",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Users/{UserId}/Sections/{SectionId}/Items",
+          "title": "获取首页指定分区的条目",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/Users/{UserId}/HomeSections",
+          "title": "设置用户首页分区",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Users/{UserId}/HomeSections/Delete",
+          "title": "删除用户首页分区",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Users/{UserId}/HomeSections/Move",
+          "title": "调整首页分区顺序",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "DeviceService",
+      "zh": "设备服务",
+      "category": "01-用户与认证",
+      "file": "01-接口参考/01-用户与认证/DeviceService.md",
+      "endpoint_count": 8,
+      "doc": "https://dev.emby.media/reference/RestAPI/DeviceService.html",
+      "intro": "管理已登录的设备：列出设备、查看设备信息与选项、更新设备能力（客户端上报自己支持的能力）、以及相机上传历史。做“设备管理”界面时会用到。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Devices",
+          "title": "删除设备",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Devices",
+          "title": "获取全部设备",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Devices/CameraUploads",
+          "title": "获取设备的相机上传历史",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Devices/Info",
+          "title": "获取设备信息",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Devices/Options",
+          "title": "获取设备选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Devices/CameraUploads",
+          "title": "上传内容",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Devices/Delete",
+          "title": "删除设备",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 8,
+          "method": "POST",
+          "path": "/Devices/Options",
+          "title": "更新设备选项",
+          "auth": "管理员",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "DisplayPreferencesService",
+      "zh": "显示偏好服务",
+      "category": "01-用户与认证",
+      "file": "01-接口参考/01-用户与认证/DisplayPreferencesService.md",
+      "endpoint_count": 5,
+      "doc": "https://dev.emby.media/reference/RestAPI/DisplayPreferencesService.html",
+      "intro": "保存每个用户、每种客户端（如 emby、emby-theater）的界面偏好：首页分区顺序、列表视图/海报视图、排序字段等。键由 userId + client 组成。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/DisplayPreferences/{Id}",
+          "title": "获取用户对条目的显示偏好",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/UserSettings/{UserId}",
+          "title": "获取用户设置",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/DisplayPreferences/{DisplayPreferencesId}",
+          "title": "更新用户对条目的显示偏好",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/UserSettings/{UserId}",
+          "title": "更新用户对条目的显示偏好",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/UserSettings/{UserId}/Partial",
+          "title": "更新用户对条目的显示偏好",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "DlnaServerService",
+      "zh": "DLNA 服务器服务",
+      "category": "09-DLNA",
+      "file": "01-接口参考/09-DLNA/DlnaServerService.md",
+      "endpoint_count": 16,
+      "doc": "https://dev.emby.media/reference/RestAPI/DlnaServerService.html",
+      "intro": "对外暴露的 DLNA/UPnP 端点（ConnectionManager、ContentDirectory、设备描述）。给第三方 DLNA 客户端或调试工具使用，普通 App 一般不需要。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Dlna/{UuId}/connectionmanager/connectionmanager",
+          "title": "获取 DLNA ConnectionManager XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Dlna/{UuId}/connectionmanager/connectionmanager.xml",
+          "title": "获取 DLNA ConnectionManager XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Dlna/{UuId}/contentdirectory/contentdirectory",
+          "title": "获取 DLNA ContentDirectory XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Dlna/{UuId}/contentdirectory/contentdirectory.xml",
+          "title": "获取 DLNA ContentDirectory XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Dlna/{UuId}/description",
+          "title": "获取 DLNA 设备信息",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Dlna/{UuId}/description.xml",
+          "title": "获取 DLNA 设备信息",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Dlna/{UuId}/icons/{Filename}",
+          "title": "获取服务器图标",
+          "auth": "未标注",
+          "params": 2
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Dlna/icons/{Filename}",
+          "title": "获取服务器图标",
+          "auth": "未标注",
+          "params": 2
+        },
+        {
+          "section": 9,
+          "method": "HEAD",
+          "path": "/Dlna/{UuId}/connectionmanager/connectionmanager",
+          "title": "获取 DLNA ConnectionManager XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 10,
+          "method": "HEAD",
+          "path": "/Dlna/{UuId}/connectionmanager/connectionmanager.xml",
+          "title": "获取 DLNA ConnectionManager XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 11,
+          "method": "HEAD",
+          "path": "/Dlna/{UuId}/contentdirectory/contentdirectory",
+          "title": "获取 DLNA ContentDirectory XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 12,
+          "method": "HEAD",
+          "path": "/Dlna/{UuId}/contentdirectory/contentdirectory.xml",
+          "title": "获取 DLNA ContentDirectory XML",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 13,
+          "method": "HEAD",
+          "path": "/Dlna/{UuId}/description",
+          "title": "获取 DLNA 设备信息",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 14,
+          "method": "HEAD",
+          "path": "/Dlna/{UuId}/description.xml",
+          "title": "获取 DLNA 设备信息",
+          "auth": "未标注",
+          "params": 1
+        },
+        {
+          "section": 15,
+          "method": "POST",
+          "path": "/Dlna/{UuId}/connectionmanager/control",
+          "title": "处理控制请求",
+          "auth": "未标注",
+          "params": 2
+        },
+        {
+          "section": 16,
+          "method": "POST",
+          "path": "/Dlna/{UuId}/contentdirectory/control",
+          "title": "处理控制请求",
+          "auth": "未标注",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "DlnaService",
+      "zh": "DLNA 管理服务",
+      "category": "09-DLNA",
+      "file": "01-接口参考/09-DLNA/DlnaService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/DlnaService.html",
+      "intro": "管理 DLNA 设备配置文件：列出/新增/删除/更新 profile。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Dlna/Profiles/{Id}",
+          "title": "删除配置文件",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Dlna/ProfileInfos",
+          "title": "获取配置文件列表",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Dlna/Profiles/{Id}",
+          "title": "获取单个配置文件",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Dlna/Profiles/Default",
+          "title": "获取默认配置文件",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Dlna/Profiles",
+          "title": "新建配置文件",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Dlna/Profiles/{Id}",
+          "title": "更新配置文件",
+          "auth": "管理员",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "DynamicHlsService",
+      "zh": "动态 HLS 服务",
+      "category": "05-流媒体协议",
+      "file": "01-接口参考/05-流媒体协议/DynamicHlsService.md",
+      "endpoint_count": 14,
+      "doc": "https://dev.emby.media/reference/RestAPI/DynamicHlsService.html",
+      "intro": "按需切片的自适应 HLS：主播放列表（master.m3u8）、变体播放列表、分片，支持音频/视频/字幕分离与直播。适合弱网与自适应码率播放。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Audio/{Id}/hls1/{PlaylistId}/{SegmentId}.{SegmentContainer}",
+          "title": "获取 HLS 音频分片",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Audio/{Id}/live.m3u8",
+          "title": "获取 HLS 音频直播播放列表",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Audio/{Id}/main.m3u8",
+          "title": "以 HLS 获取音频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Audio/{Id}/master.m3u8",
+          "title": "以 HLS 获取音频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Videos/{Id}/hls1/{PlaylistId}/{SegmentId}.{SegmentContainer}",
+          "title": "获取 HLS 视频分片",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Videos/{Id}/live.m3u8",
+          "title": "获取 HLS 视频直播播放列表",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Videos/{Id}/live_subtitles.m3u8",
+          "title": "获取 HLS 字幕播放列表",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Videos/{Id}/main.m3u8",
+          "title": "以 HLS 获取视频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/Videos/{Id}/master.m3u8",
+          "title": "以 HLS 获取视频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/Videos/{Id}/subtitles.m3u8",
+          "title": "获取 HLS 字幕播放列表",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 11,
+          "method": "HEAD",
+          "path": "/Audio/{Id}/hls1/{PlaylistId}/{SegmentId}.{SegmentContainer}",
+          "title": "探测 HLS 音频分片",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 12,
+          "method": "HEAD",
+          "path": "/Audio/{Id}/master.m3u8",
+          "title": "以 HLS 获取音频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 13,
+          "method": "HEAD",
+          "path": "/Videos/{Id}/hls1/{PlaylistId}/{SegmentId}.{SegmentContainer}",
+          "title": "探测 HLS 视频分片",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 14,
+          "method": "HEAD",
+          "path": "/Videos/{Id}/master.m3u8",
+          "title": "以 HLS 获取视频流",
+          "auth": "用户",
+          "params": 24
+        }
+      ]
+    },
+    {
+      "service": "EncodingInfoService",
+      "zh": "编码信息服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/EncodingInfoService.md",
+      "endpoint_count": 3,
+      "doc": "https://dev.emby.media/reference/RestAPI/EncodingInfoService.html",
+      "intro": "查询服务器可用的视频编解码器与色调映射能力，决定客户端能请求哪些转码参数。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Encoding/CodecConfiguration/Defaults",
+          "title": "获取默认编码配置",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Encoding/CodecInformation/Video",
+          "title": "获取可用的视频编解码器信息",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Encoding/ToneMapOptions",
+          "title": "获取可用的色调映射选项",
+          "auth": "管理员",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "EnvironmentService",
+      "zh": "环境服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/EnvironmentService.md",
+      "endpoint_count": 8,
+      "doc": "https://dev.emby.media/reference/RestAPI/EnvironmentService.html",
+      "intro": "服务器运行环境：可用磁盘、网络设备与共享、目录浏览、路径校验、默认编解码配置。配置媒体库路径时常用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Environment/DefaultDirectoryBrowser",
+          "title": "获取给定路径的父目录",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Environment/DirectoryContents",
+          "title": "获取指定目录的文件列表",
+          "auth": "管理员",
+          "params": 3
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Environment/Drives",
+          "title": "获取服务器可用磁盘",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Environment/NetworkDevices",
+          "title": "获取网络中的设备列表",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Environment/NetworkShares",
+          "title": "获取网络设备的共享目录",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Environment/ParentPath",
+          "title": "获取给定路径的父目录",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Environment/DirectoryContents",
+          "title": "获取指定目录的文件列表",
+          "auth": "管理员",
+          "params": 4
+        },
+        {
+          "section": 8,
+          "method": "POST",
+          "path": "/Environment/ValidatePath",
+          "title": "获取指定目录的文件列表",
+          "auth": "管理员",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "FeatureService",
+      "zh": "功能特性服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/FeatureService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/FeatureService.html",
+      "intro": "返回服务器已启用的功能特性列表（如是否支持 HLS、Sync 等）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Features",
+          "title": "获取已安装的功能特性",
+          "auth": "管理员",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "FfmpegOptionsService",
+      "zh": "FFmpeg 选项服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/FfmpegOptionsService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/FfmpegOptionsService.html",
+      "intro": "读取/更新 FFmpeg 相关选项（编码器路径、线程数等）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Encoding/FfmpegOptions",
+          "title": "获取 FFmpeg 选项",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Encoding/FfmpegOptions",
+          "title": "更新 FFmpeg 选项",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "GameGenresService",
+      "zh": "游戏类型服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/GameGenresService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/GameGenresService.html",
+      "intro": "游戏类型维度：全部游戏类型、按名称取单个。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/GameGenres",
+          "title": "获取全部游戏类型",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/GameGenres/{Name}",
+          "title": "按名称获取游戏类型",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "GenericUIApiService",
+      "zh": "通用 UI 接口服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/GenericUIApiService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/GenericUIApiService.html",
+      "intro": "为 Web 端 UI 提供聚合数据与命令执行（如电视设置向导中的命令）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/UI/View",
+          "title": "获取 UI 视图数据",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/UI/Command",
+          "title": "在电视设置流程中执行命令",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "GenresService",
+      "zh": "类型（Genre）服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/GenresService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/GenresService.html",
+      "intro": "影视类型（动作、喜剧等）维度：全部类型、按名称取单个类型。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Genres",
+          "title": "获取全部类型（genre）",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Genres/{Name}",
+          "title": "按名称获取类型",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "HlsSegmentService",
+      "zh": "HLS 编码任务服务",
+      "category": "05-流媒体协议",
+      "file": "01-接口参考/05-流媒体协议/HlsSegmentService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/HlsSegmentService.html",
+      "intro": "管理正在进行的 HLS 编码任务：停止/删除活动编码，避免转码进程堆积。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Videos/ActiveEncodings",
+          "title": "停止活动的 HLS 编码任务",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Videos/ActiveEncodings/Delete",
+          "title": "删除活动的 HLS 编码任务",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "ImageService",
+      "zh": "图片服务",
+      "category": "06-图片与字幕",
+      "file": "01-接口参考/06-图片与字幕/ImageService.md",
+      "endpoint_count": 49,
+      "doc": "https://dev.emby.media/reference/RestAPI/ImageService.html",
+      "intro": "所有图片出口：条目主图/背景图/Logo/缩略图、人物与工作室图片、用户头像。支持指定尺寸、格式、质量、裁白、圆角、进度角标等参数，也支持上传/删除图片。图片 URL 是客户端列表页性能的关键。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Items/{Id}/Images/{Type}",
+          "title": "删除条目的图片",
+          "auth": "管理员",
+          "params": 3
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Items/{Id}/Images/{Type}/{Index}",
+          "title": "删除条目指定序号的图片",
+          "auth": "管理员",
+          "params": 3
+        },
+        {
+          "section": 3,
+          "method": "DELETE",
+          "path": "/Users/{Id}/Images/{Type}",
+          "title": "删除用户头像",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 4,
+          "method": "DELETE",
+          "path": "/Users/{Id}/Images/{Type}/{Index}",
+          "title": "删除用户指定序号的图片",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Artists/{Name}/Images/{Type}",
+          "title": "获取艺术家的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Artists/{Name}/Images/{Type}/{Index}",
+          "title": "获取艺术家指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/GameGenres/{Name}/Images/{Type}",
+          "title": "获取游戏类型的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/GameGenres/{Name}/Images/{Type}/{Index}",
+          "title": "获取游戏类型指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/Genres/{Name}/Images/{Type}",
+          "title": "获取类型（genre）的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/Genres/{Name}/Images/{Type}/{Index}",
+          "title": "获取类型指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 11,
+          "method": "GET",
+          "path": "/Items/{Id}/Images",
+          "title": "获取条目图片信息",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 12,
+          "method": "GET",
+          "path": "/Items/{Id}/Images/{Type}",
+          "title": "获取条目的图片（主图）",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 13,
+          "method": "GET",
+          "path": "/Items/{Id}/Images/{Type}/{Index}",
+          "title": "获取条目指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 14,
+          "method": "GET",
+          "path": "/Items/{Id}/Images/{Type}/{Index}/{Tag}/{Format}/{MaxWidth}/{MaxHeight}/{PercentPlayed}/{UnPlayedCount}",
+          "title": "按尺寸/格式获取条目图片（含进度角标参数）",
+          "auth": "用户",
+          "params": 18
+        },
+        {
+          "section": 15,
+          "method": "GET",
+          "path": "/MusicGenres/{Name}/Images/{Type}",
+          "title": "获取音乐类型的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 16,
+          "method": "GET",
+          "path": "/MusicGenres/{Name}/Images/{Type}/{Index}",
+          "title": "获取音乐类型指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 17,
+          "method": "GET",
+          "path": "/Persons/{Name}/Images/{Type}",
+          "title": "获取人物的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 18,
+          "method": "GET",
+          "path": "/Persons/{Name}/Images/{Type}/{Index}",
+          "title": "获取人物指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 19,
+          "method": "GET",
+          "path": "/Studios/{Name}/Images/{Type}",
+          "title": "获取工作室的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 20,
+          "method": "GET",
+          "path": "/Studios/{Name}/Images/{Type}/{Index}",
+          "title": "获取工作室指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 21,
+          "method": "GET",
+          "path": "/Users/{Id}/Images/{Type}",
+          "title": "获取用户头像",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 22,
+          "method": "GET",
+          "path": "/Users/{Id}/Images/{Type}/{Index}",
+          "title": "获取用户指定序号的图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 23,
+          "method": "HEAD",
+          "path": "/Artists/{Name}/Images/{Type}",
+          "title": "探测艺术家图片是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 24,
+          "method": "HEAD",
+          "path": "/Artists/{Name}/Images/{Type}/{Index}",
+          "title": "探测艺术家指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 25,
+          "method": "HEAD",
+          "path": "/GameGenres/{Name}/Images/{Type}",
+          "title": "探测游戏类型图片是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 26,
+          "method": "HEAD",
+          "path": "/GameGenres/{Name}/Images/{Type}/{Index}",
+          "title": "探测游戏类型指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 27,
+          "method": "HEAD",
+          "path": "/Genres/{Name}/Images/{Type}",
+          "title": "探测类型图片是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 28,
+          "method": "HEAD",
+          "path": "/Genres/{Name}/Images/{Type}/{Index}",
+          "title": "探测类型指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 29,
+          "method": "HEAD",
+          "path": "/Items/{Id}/Images/{Type}",
+          "title": "探测条目图片是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 30,
+          "method": "HEAD",
+          "path": "/Items/{Id}/Images/{Type}/{Index}",
+          "title": "探测条目指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 31,
+          "method": "HEAD",
+          "path": "/Items/{Id}/Images/{Type}/{Index}/{Tag}/{Format}/{MaxWidth}/{MaxHeight}/{PercentPlayed}/{UnPlayedCount}",
+          "title": "探测条目图片（含尺寸参数）",
+          "auth": "用户",
+          "params": 18
+        },
+        {
+          "section": 32,
+          "method": "HEAD",
+          "path": "/MusicGenres/{Name}/Images/{Type}",
+          "title": "探测音乐类型图片是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 33,
+          "method": "HEAD",
+          "path": "/MusicGenres/{Name}/Images/{Type}/{Index}",
+          "title": "探测音乐类型指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 34,
+          "method": "HEAD",
+          "path": "/Persons/{Name}/Images/{Type}",
+          "title": "探测人物图片是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 35,
+          "method": "HEAD",
+          "path": "/Persons/{Name}/Images/{Type}/{Index}",
+          "title": "探测人物指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 36,
+          "method": "HEAD",
+          "path": "/Studios/{Name}/Images/{Type}",
+          "title": "探测工作室图片是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 37,
+          "method": "HEAD",
+          "path": "/Studios/{Name}/Images/{Type}/{Index}",
+          "title": "探测工作室指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 38,
+          "method": "HEAD",
+          "path": "/Users/{Id}/Images/{Type}",
+          "title": "探测用户头像是否存在",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 39,
+          "method": "HEAD",
+          "path": "/Users/{Id}/Images/{Type}/{Index}",
+          "title": "探测用户指定序号图片",
+          "auth": "用户",
+          "params": 16
+        },
+        {
+          "section": 40,
+          "method": "POST",
+          "path": "/Items/{Id}/Images/{Type}",
+          "title": "上传条目图片（需 Base64 编码）",
+          "auth": "管理员",
+          "params": 4
+        },
+        {
+          "section": 41,
+          "method": "POST",
+          "path": "/Items/{Id}/Images/{Type}/{Index}",
+          "title": "上传条目图片（需 Base64 编码）",
+          "auth": "管理员",
+          "params": 4
+        },
+        {
+          "section": 42,
+          "method": "POST",
+          "path": "/Items/{Id}/Images/{Type}/{Index}/Delete",
+          "title": "删除条目图片（POST 兼容写法）",
+          "auth": "管理员",
+          "params": 3
+        },
+        {
+          "section": 43,
+          "method": "POST",
+          "path": "/Items/{Id}/Images/{Type}/{Index}/Index",
+          "title": "更新条目图片的序号",
+          "auth": "管理员",
+          "params": 4
+        },
+        {
+          "section": 44,
+          "method": "POST",
+          "path": "/Items/{Id}/Images/{Type}/{Index}/Url",
+          "title": "从远程 URL 添加条目图片",
+          "auth": "管理员",
+          "params": 4
+        },
+        {
+          "section": 45,
+          "method": "POST",
+          "path": "/Items/{Id}/Images/{Type}/Delete",
+          "title": "删除条目图片（POST 兼容写法）",
+          "auth": "管理员",
+          "params": 3
+        },
+        {
+          "section": 46,
+          "method": "POST",
+          "path": "/Users/{Id}/Images/{Type}",
+          "title": "上传用户头像",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 47,
+          "method": "POST",
+          "path": "/Users/{Id}/Images/{Type}/{Index}",
+          "title": "上传用户图片",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 48,
+          "method": "POST",
+          "path": "/Users/{Id}/Images/{Type}/{Index}/Delete",
+          "title": "删除用户图片（POST 兼容写法）",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 49,
+          "method": "POST",
+          "path": "/Users/{Id}/Images/{Type}/Delete",
+          "title": "删除用户图片（POST 兼容写法）",
+          "auth": "用户",
+          "params": 3
+        }
+      ]
+    },
+    {
+      "service": "InstantMixService",
+      "zh": "即时混播服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/InstantMixService.md",
+      "endpoint_count": 8,
+      "doc": "https://dev.emby.media/reference/RestAPI/InstantMixService.html",
+      "intro": "以某个种子（专辑、艺术家、歌曲、类型、播放列表）生成一份“即时混播”播放列表，用于电台式连续播放。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Albums/{Id}/InstantMix",
+          "title": "按专辑生成即时播放列表",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Artists/InstantMix",
+          "title": "按艺术家生成即时播放列表",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/AudioBooks/NextUp",
+          "title": "获取“接下来播放”列表",
+          "auth": "用户",
+          "params": 10
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Items/{Id}/InstantMix",
+          "title": "按条目生成即时播放列表",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/MusicGenres/{Name}/InstantMix",
+          "title": "按音乐类型生成即时播放列表",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/MusicGenres/InstantMix",
+          "title": "按音乐类型生成即时播放列表",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Playlists/{Id}/InstantMix",
+          "title": "基于播放列表生成即时播放列表",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Songs/{Id}/InstantMix",
+          "title": "按歌曲生成即时播放列表",
+          "auth": "用户",
+          "params": 100
+        }
+      ]
+    },
+    {
+      "service": "ItemLookupService",
+      "zh": "远程元数据检索服务",
+      "category": "03-媒体库维护",
+      "file": "01-接口参考/03-媒体库维护/ItemLookupService.md",
+      "endpoint_count": 14,
+      "doc": "https://dev.emby.media/reference/RestAPI/ItemLookupService.html",
+      "intro": "按类型（电影、剧集、专辑、人物……）向外部元数据源检索候选项，再把选中的结果写回条目。做“识别/匹配元数据”功能时使用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Items/{Id}/ExternalIdInfos",
+          "title": "获取条目的外部 ID 信息",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Items/RemoteSearch/Image",
+          "title": "获取远程图片",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/Items/Metadata/Reset",
+          "title": "重置条目的元数据",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/Apply/{Id}",
+          "title": "对条目应用搜索结果并刷新元数据",
+          "auth": "管理员",
+          "params": 3
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/Book",
+          "title": "远程搜索书籍",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/BoxSet",
+          "title": "远程搜索合集（BoxSet）",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/Game",
+          "title": "远程搜索游戏",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 8,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/Movie",
+          "title": "远程搜索电影",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 9,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/MusicAlbum",
+          "title": "远程搜索音乐专辑",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 10,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/MusicArtist",
+          "title": "远程搜索音乐艺术家",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 11,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/MusicVideo",
+          "title": "远程搜索音乐视频（MV）",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 12,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/Person",
+          "title": "远程搜索人物",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 13,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/Series",
+          "title": "远程搜索剧集",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/Items/RemoteSearch/Trailer",
+          "title": "远程搜索预告片",
+          "auth": "用户",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "ItemRefreshService",
+      "zh": "条目刷新服务",
+      "category": "03-媒体库维护",
+      "file": "01-接口参考/03-媒体库维护/ItemRefreshService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/ItemRefreshService.html",
+      "intro": "触发条目元数据刷新：全量刷新、仅刷新缺失字段、按外部 ID 重新匹配。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "POST",
+          "path": "/Items/{Id}/Refresh",
+          "title": "刷新条目元数据",
+          "auth": "用户",
+          "params": 7
+        }
+      ]
+    },
+    {
+      "service": "ItemUpdateService",
+      "zh": "条目更新服务",
+      "category": "03-媒体库维护",
+      "file": "01-接口参考/03-媒体库维护/ItemUpdateService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/ItemUpdateService.html",
+      "intro": "以“元数据编辑器”的方式读取和写回条目字段（标题、简介、年份、评分等），并可指定刷新模式。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Items/{ItemId}/MetadataEditor",
+          "title": "获取条目的元数据编辑信息",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Items/{ItemId}",
+          "title": "更新条目",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "ItemsService",
+      "zh": "媒体条目查询服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/ItemsService.md",
+      "endpoint_count": 3,
+      "doc": "https://dev.emby.media/reference/RestAPI/ItemsService.html",
+      "intro": "最常用的查询入口：按父级、类型、年份、评分、人物、标签等几十个条件筛选条目，支持分页、排序、字段裁剪。客户端的主界面、筛选器、搜索页基本都建立在 /Items 之上。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Items",
+          "title": "按条件查询媒体条目（显式传 UserId）",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items/Resume",
+          "title": "获取继续观看列表",
+          "auth": "用户",
+          "params": 99
+        }
+      ]
+    },
+    {
+      "service": "LibraryService",
+      "zh": "媒体库服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/LibraryService.md",
+      "endpoint_count": 31,
+      "doc": "https://dev.emby.media/reference/RestAPI/LibraryService.html",
+      "intro": "面向“媒体库”本身：列出媒体库文件夹、统计各类条目数量、库内搜索、获取最新媒体、扫描进度、删除条目、以及物理路径查询。管理端与首页“最新添加”会用到。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Items",
+          "title": "从媒体库与文件系统删除条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Items/{Id}",
+          "title": "从媒体库与文件系统删除条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Albums/{Id}/Similar",
+          "title": "查找与指定专辑相似的专辑",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Artists/{Id}/Similar",
+          "title": "查找相似艺术家",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Games/{Id}/Similar",
+          "title": "查找与指定游戏相似的游戏",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Items/{Id}/Ancestors",
+          "title": "获取条目的所有父级",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Items/{Id}/CriticReviews",
+          "title": "获取条目的影评",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Items/{Id}/DeleteInfo",
+          "title": "获取条目的删除信息",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/Items/{Id}/Download",
+          "title": "下载条目媒体文件",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/Items/{Id}/File",
+          "title": "获取条目的原始文件",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 11,
+          "method": "GET",
+          "path": "/Items/{Id}/Similar",
+          "title": "获取相似条目",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 12,
+          "method": "GET",
+          "path": "/Items/{Id}/ThemeMedia",
+          "title": "获取条目的主题视频与主题曲",
+          "auth": "用户",
+          "params": 101
+        },
+        {
+          "section": 13,
+          "method": "GET",
+          "path": "/Items/{Id}/ThemeSongs",
+          "title": "获取条目的主题曲",
+          "auth": "用户",
+          "params": 101
+        },
+        {
+          "section": 14,
+          "method": "GET",
+          "path": "/Items/{Id}/ThemeVideos",
+          "title": "获取条目的主题视频",
+          "auth": "用户",
+          "params": 101
+        },
+        {
+          "section": 15,
+          "method": "GET",
+          "path": "/Items/Counts",
+          "title": "统计各类条目数量",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 16,
+          "method": "GET",
+          "path": "/Items/Intros",
+          "title": "获取片头调试信息",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 17,
+          "method": "GET",
+          "path": "/Libraries/AvailableOptions",
+          "title": "获取媒体库可选配置项",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 18,
+          "method": "GET",
+          "path": "/Library/MediaFolders",
+          "title": "获取全部用户媒体文件夹",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 19,
+          "method": "GET",
+          "path": "/Library/PhysicalPaths",
+          "title": "获取虚拟文件夹对应的物理路径",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 20,
+          "method": "GET",
+          "path": "/Library/SelectableMediaFolders",
+          "title": "获取全部用户媒体文件夹",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 21,
+          "method": "GET",
+          "path": "/Movies/{Id}/Similar",
+          "title": "查找与指定电影相似的电影与预告片",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 22,
+          "method": "GET",
+          "path": "/Shows/{Id}/Similar",
+          "title": "查找与指定剧集相似的剧集",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 23,
+          "method": "GET",
+          "path": "/Trailers/{Id}/Similar",
+          "title": "查找与指定预告片相似的电影与预告片",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 24,
+          "method": "POST",
+          "path": "/Items/{Id}/Delete",
+          "title": "从媒体库与文件系统删除条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 25,
+          "method": "POST",
+          "path": "/Items/Delete",
+          "title": "从媒体库与文件系统删除条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 26,
+          "method": "POST",
+          "path": "/Library/Media/Updated",
+          "title": "上报外部来源新增了电影",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 27,
+          "method": "POST",
+          "path": "/Library/Movies/Added",
+          "title": "已弃用，请改用 /Library/Media/Updated",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 28,
+          "method": "POST",
+          "path": "/Library/Movies/Updated",
+          "title": "已弃用，请改用 /Library/Media/Updated",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 29,
+          "method": "POST",
+          "path": "/Library/Refresh",
+          "title": "启动媒体库扫描",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 30,
+          "method": "POST",
+          "path": "/Library/Series/Added",
+          "title": "已弃用，请改用 /Library/Media/Updated",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 31,
+          "method": "POST",
+          "path": "/Library/Series/Updated",
+          "title": "已弃用，请改用 /Library/Media/Updated",
+          "auth": "用户",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "LibraryStructureService",
+      "zh": "媒体库结构维护服务",
+      "category": "03-媒体库维护",
+      "file": "01-接口参考/03-媒体库维护/LibraryStructureService.md",
+      "endpoint_count": 10,
+      "doc": "https://dev.emby.media/reference/RestAPI/LibraryStructureService.html",
+      "intro": "管理员接口：新增/删除/重命名虚拟文件夹（媒体库）、增删改媒体路径、更新库选项、查询库结构。搭“媒体库管理”页面时使用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Library/VirtualFolders",
+          "title": "删除虚拟文件夹（路径参数写法）",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Library/VirtualFolders/Paths",
+          "title": "删除媒体路径（路径参数写法）",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Library/VirtualFolders/Query",
+          "title": "查询虚拟文件夹",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Library/VirtualFolders",
+          "title": "添加虚拟文件夹",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Library/VirtualFolders/Delete",
+          "title": "删除虚拟文件夹",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Library/VirtualFolders/LibraryOptions",
+          "title": "更新媒体库选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Library/VirtualFolders/Name",
+          "title": "重命名虚拟文件夹",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 8,
+          "method": "POST",
+          "path": "/Library/VirtualFolders/Paths",
+          "title": "添加媒体路径",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 9,
+          "method": "POST",
+          "path": "/Library/VirtualFolders/Paths/Delete",
+          "title": "删除媒体路径",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 10,
+          "method": "POST",
+          "path": "/Library/VirtualFolders/Paths/Update",
+          "title": "更新媒体路径",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "LiveStreamService",
+      "zh": "直播流服务",
+      "category": "07-直播电视",
+      "file": "01-接口参考/07-直播电视/LiveStreamService.md",
+      "endpoint_count": 14,
+      "doc": "https://dev.emby.media/reference/RestAPI/LiveStreamService.html",
+      "intro": "打开/关闭直播流、获取直播媒体信息、媒体源管理。直播播放前通常先在这里拿到 LiveStreamId，再去流媒体接口取流。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/LiveTv/LiveRecordings/{Id}/hls/{Segment}",
+          "title": "获取直播录制项",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/LiveTv/LiveRecordings/{Id}/hls/live.m3u8",
+          "title": "获取直播录制项",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/LiveTv/LiveRecordings/{Id}/hls/master.m3u8",
+          "title": "获取直播录制项",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/LiveTv/LiveRecordings/{Id}/stream",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/LiveTv/LiveStreamFiles/{Id}/hls/{Segment}",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/LiveTv/LiveStreamFiles/{Id}/hls/live.m3u8",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/LiveTv/LiveStreamFiles/{Id}/hls/master.m3u8",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/LiveTv/LiveStreamFiles/{Id}/stream.{Container}",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 9,
+          "method": "HEAD",
+          "path": "/LiveTv/LiveRecordings/{Id}/hls/{Segment}",
+          "title": "获取直播录制项",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 10,
+          "method": "HEAD",
+          "path": "/LiveTv/LiveRecordings/{Id}/hls/live.m3u8",
+          "title": "获取直播录制项",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 11,
+          "method": "HEAD",
+          "path": "/LiveTv/LiveRecordings/{Id}/hls/master.m3u8",
+          "title": "获取直播录制项",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 12,
+          "method": "HEAD",
+          "path": "/LiveTv/LiveStreamFiles/{Id}/hls/{Segment}",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 13,
+          "method": "HEAD",
+          "path": "/LiveTv/LiveStreamFiles/{Id}/hls/live.m3u8",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 14,
+          "method": "HEAD",
+          "path": "/LiveTv/LiveStreamFiles/{Id}/hls/master.m3u8",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "LiveTvService",
+      "zh": "直播电视服务",
+      "category": "07-直播电视",
+      "file": "01-接口参考/07-直播电视/LiveTvService.md",
+      "endpoint_count": 61,
+      "doc": "https://dev.emby.media/reference/RestAPI/LiveTvService.html",
+      "intro": "完整的直播电视管理：频道与频道映射、节目单（EPG）、录制与定时器、系列定时器、调谐器主机、节目单提供方。接口数量全项目最多，建议按“频道/节目单/录制/调谐器”四块阅读。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/LiveTv/ChannelMappingOptions",
+          "title": "重置频道映射选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/LiveTv/ChannelMappings",
+          "title": "重置频道映射",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "DELETE",
+          "path": "/LiveTv/ListingProviders",
+          "title": "删除节目单提供方",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "DELETE",
+          "path": "/LiveTv/Recordings/{Id}",
+          "title": "删除直播录制项",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "DELETE",
+          "path": "/LiveTv/SeriesTimers/{Id}",
+          "title": "取消直播系列定时器",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "DELETE",
+          "path": "/LiveTv/Timers/{Id}",
+          "title": "取消直播定时器",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "DELETE",
+          "path": "/LiveTv/TunerHosts",
+          "title": "删除调谐器主机",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/LiveTv/AvailableRecordingOptions",
+          "title": "获取可用录制选项",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/LiveTv/ChannelMappingOptions",
+          "title": "获取频道映射选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/LiveTv/ChannelMappings",
+          "title": "获取频道映射",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 11,
+          "method": "GET",
+          "path": "/LiveTv/Channels",
+          "title": "获取可用直播频道",
+          "auth": "用户",
+          "params": 103
+        },
+        {
+          "section": 12,
+          "method": "GET",
+          "path": "/LiveTv/Channels/{Id}",
+          "title": "获取直播电视频道",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 13,
+          "method": "GET",
+          "path": "/LiveTv/ChannelTags",
+          "title": "获取直播频道标签",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 14,
+          "method": "GET",
+          "path": "/LiveTv/ChannelTags/Prefixes",
+          "title": "获取直播频道标签前缀",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 15,
+          "method": "GET",
+          "path": "/LiveTv/EPG",
+          "title": "获取节目单（EPG）",
+          "auth": "用户",
+          "params": 104
+        },
+        {
+          "section": 16,
+          "method": "GET",
+          "path": "/LiveTv/Folder",
+          "title": "获取直播电视根文件夹",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 17,
+          "method": "GET",
+          "path": "/LiveTv/GuideInfo",
+          "title": "获取节目单信息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 18,
+          "method": "GET",
+          "path": "/LiveTv/Info",
+          "title": "获取可用直播服务",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 19,
+          "method": "GET",
+          "path": "/LiveTv/ListingProviders",
+          "title": "获取当前节目单提供方",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 20,
+          "method": "GET",
+          "path": "/LiveTv/ListingProviders/Available",
+          "title": "获取节目单提供方",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 21,
+          "method": "GET",
+          "path": "/LiveTv/ListingProviders/Default",
+          "title": "获取节目单提供方的默认配置",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 22,
+          "method": "GET",
+          "path": "/LiveTv/ListingProviders/Lineups",
+          "title": "获取可用频道列表（Lineup）",
+          "auth": "管理员",
+          "params": 3
+        },
+        {
+          "section": 23,
+          "method": "GET",
+          "path": "/LiveTv/Manage/Channels",
+          "title": "获取频道管理列表",
+          "auth": "管理员",
+          "params": 4
+        },
+        {
+          "section": 24,
+          "method": "GET",
+          "path": "/LiveTv/Programs",
+          "title": "获取可用的直播节目单（EPG）",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 25,
+          "method": "GET",
+          "path": "/LiveTv/Programs/Recommended",
+          "title": "获取可用的直播节目单（EPG）",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 26,
+          "method": "GET",
+          "path": "/LiveTv/Recordings",
+          "title": "获取直播录制列表",
+          "auth": "用户",
+          "params": 103
+        },
+        {
+          "section": 27,
+          "method": "GET",
+          "path": "/LiveTv/Recordings/{Id}",
+          "title": "获取直播录制项详情",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 28,
+          "method": "GET",
+          "path": "/LiveTv/Recordings/Folders",
+          "title": "获取录制文件夹",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 29,
+          "method": "GET",
+          "path": "/LiveTv/Recordings/Groups",
+          "title": "获取直播录制分组",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 30,
+          "method": "GET",
+          "path": "/LiveTv/Recordings/Series",
+          "title": "获取直播录制列表",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 31,
+          "method": "GET",
+          "path": "/LiveTv/SeriesTimers",
+          "title": "获取直播系列定时器列表",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 32,
+          "method": "GET",
+          "path": "/LiveTv/SeriesTimers/{Id}",
+          "title": "获取直播系列定时器详情",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 33,
+          "method": "GET",
+          "path": "/LiveTv/Timers",
+          "title": "获取直播定时器列表",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 34,
+          "method": "GET",
+          "path": "/LiveTv/Timers/{Id}",
+          "title": "获取直播定时器详情",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 35,
+          "method": "GET",
+          "path": "/LiveTv/Timers/Defaults",
+          "title": "获取新建定时器的默认值",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 36,
+          "method": "GET",
+          "path": "/LiveTv/TunerHosts",
+          "title": "获取调谐器主机列表",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 37,
+          "method": "GET",
+          "path": "/LiveTv/TunerHosts/Default/{Type}",
+          "title": "获取调谐器主机列表",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 38,
+          "method": "GET",
+          "path": "/LiveTv/TunerHosts/Types",
+          "title": "获取调谐器主机类型",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 39,
+          "method": "GET",
+          "path": "/LiveTv/Tuners/Discover",
+          "title": "发现网络中的调谐器",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 40,
+          "method": "GET",
+          "path": "/LiveTv/Tuners/Discvover",
+          "title": "发现网络中的调谐器（拼写兼容写法）",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 41,
+          "method": "HEAD",
+          "path": "/LiveTv/ChannelMappingOptions",
+          "title": "探测频道映射选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 42,
+          "method": "HEAD",
+          "path": "/LiveTv/ChannelMappings",
+          "title": "探测频道映射",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 43,
+          "method": "POST",
+          "path": "/LiveTv/ChannelMappingOptions",
+          "title": "设置频道映射选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 44,
+          "method": "POST",
+          "path": "/LiveTv/ChannelMappings",
+          "title": "设置频道映射",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 45,
+          "method": "POST",
+          "path": "/LiveTv/ListingProviders",
+          "title": "添加节目单提供方",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 46,
+          "method": "POST",
+          "path": "/LiveTv/ListingProviders/Delete",
+          "title": "删除节目单提供方",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 47,
+          "method": "POST",
+          "path": "/LiveTv/Manage/Channels/{Id}/Disabled",
+          "title": "设置频道是否禁用",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 48,
+          "method": "POST",
+          "path": "/LiveTv/Manage/Channels/{Id}/SortIndex",
+          "title": "设置频道排序序号",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 49,
+          "method": "POST",
+          "path": "/LiveTv/Programs",
+          "title": "获取可用的直播节目单（EPG）",
+          "auth": "用户",
+          "params": 101
+        },
+        {
+          "section": 50,
+          "method": "POST",
+          "path": "/LiveTv/Recordings/{Id}/Delete",
+          "title": "删除直播录制项",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 51,
+          "method": "POST",
+          "path": "/LiveTv/SeriesTimers",
+          "title": "新建直播系列定时器",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 52,
+          "method": "POST",
+          "path": "/LiveTv/SeriesTimers/{Id}",
+          "title": "更新直播系列定时器",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 53,
+          "method": "POST",
+          "path": "/LiveTv/SeriesTimers/{Id}/Delete",
+          "title": "取消直播系列定时器",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 54,
+          "method": "POST",
+          "path": "/LiveTv/Timers",
+          "title": "新建直播定时器",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 55,
+          "method": "POST",
+          "path": "/LiveTv/Timers/{Id}",
+          "title": "更新直播定时器",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 56,
+          "method": "POST",
+          "path": "/LiveTv/Timers/{Id}/Delete",
+          "title": "取消直播定时器",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 57,
+          "method": "POST",
+          "path": "/LiveTv/TunerHosts",
+          "title": "添加调谐器主机",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 58,
+          "method": "POST",
+          "path": "/LiveTv/TunerHosts/Delete",
+          "title": "删除调谐器主机",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 59,
+          "method": "POST",
+          "path": "/LiveTv/Tuners/{Id}/Reset",
+          "title": "重置电视调谐器",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 60,
+          "method": "PUT",
+          "path": "/LiveTv/ChannelMappingOptions",
+          "title": "更新频道映射选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 61,
+          "method": "PUT",
+          "path": "/LiveTv/ChannelMappings",
+          "title": "更新频道映射",
+          "auth": "管理员",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "LocalizationService",
+      "zh": "本地化服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/LocalizationService.md",
+      "endpoint_count": 4,
+      "doc": "https://dev.emby.media/reference/RestAPI/LocalizationService.html",
+      "intro": "获取国家/地区、区域文化、家长分级、本地化选项，用于语言与分级下拉框。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Localization/Countries",
+          "title": "获取已知国家/地区",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Localization/Cultures",
+          "title": "获取已知区域文化",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Localization/Options",
+          "title": "获取本地化选项",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Localization/ParentalRatings",
+          "title": "获取已知家长分级",
+          "auth": "用户",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "MediaInfoService",
+      "zh": "播放信息与媒体源服务",
+      "category": "04-播放与同步",
+      "file": "01-接口参考/04-播放与同步/MediaInfoService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/MediaInfoService.html",
+      "intro": "播放链路的核心：`PlaybackInfo` 返回可用的媒体源、转码参数与播放会话 ID；还提供打开/关闭媒体源、直播流媒体信息、带宽测速。任何自研播放器都要先调 PlaybackInfo。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Items/{Id}/PlaybackInfo",
+          "title": "获取条目的实时播放媒体信息",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Playback/BitrateTest",
+          "title": "带宽测速（返回指定大小的数据）",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/Items/{Id}/PlaybackInfo",
+          "title": "获取条目的实时播放媒体信息",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/LiveStreams/Close",
+          "title": "关闭媒体源",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/LiveStreams/MediaInfo",
+          "title": "获取直播流的媒体信息",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/LiveStreams/Open",
+          "title": "打开媒体源",
+          "auth": "用户",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "MoviesService",
+      "zh": "电影服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/MoviesService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/MoviesService.html",
+      "intro": "电影推荐与相似电影查询。接口很少，通常配合 ItemsService 使用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Movies/Recommendations",
+          "title": "获取电影推荐",
+          "auth": "用户",
+          "params": 8
+        }
+      ]
+    },
+    {
+      "service": "MusicGenresService",
+      "zh": "音乐类型服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/MusicGenresService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/MusicGenresService.html",
+      "intro": "音乐类型（流派）维度：全部音乐类型、按名称取单个。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/MusicGenres",
+          "title": "获取全部音乐类型",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/MusicGenres/{Name}",
+          "title": "按名称获取音乐类型",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "NotificationsService",
+      "zh": "管理员通知服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/NotificationsService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/NotificationsService.html",
+      "intro": "管理员群发通知：通知类型列表、向所有管理员发送通知。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Notifications/Types",
+          "title": "获取通知类型",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Notifications/Admin",
+          "title": "向所有管理员发送通知",
+          "auth": "用户",
+          "params": 6
+        }
+      ]
+    },
+    {
+      "service": "OfficialRatingService",
+      "zh": "分级服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/OfficialRatingService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/OfficialRatingService.html",
+      "intro": "获取服务器已知的官方分级（PG、R、TV-MA 等），用于筛选器。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/OfficialRatings",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        }
+      ]
+    },
+    {
+      "service": "OpenApiService",
+      "zh": "OpenAPI 规范服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/OpenApiService.md",
+      "endpoint_count": 4,
+      "doc": "https://dev.emby.media/reference/RestAPI/OpenApiService.html",
+      "intro": "直接输出服务器的 OpenAPI/Swagger 规范，可用于自动生成客户端 SDK。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/openapi",
+          "title": "获取 OpenAPI 3 规范",
+          "auth": "未标注",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/openapi.json",
+          "title": "获取 OpenAPI 3 规范",
+          "auth": "未标注",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/swagger",
+          "title": "获取 Swagger 规范",
+          "auth": "未标注",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/swagger.json",
+          "title": "获取 Swagger 规范",
+          "auth": "未标注",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "PackageService",
+      "zh": "插件包服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/PackageService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/PackageService.html",
+      "intro": "插件市场：查询可用包与更新、安装/取消安装。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Packages/Installing/{Id}",
+          "title": "取消包安装",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Packages",
+          "title": "获取可用包列表",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Packages/{Name}",
+          "title": "按名称或程序集 GUID 获取包",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Packages/Updates",
+          "title": "获取已安装包的可用更新",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Packages/Installed/{Name}",
+          "title": "安装包",
+          "auth": "管理员",
+          "params": 4
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Packages/Installing/{Id}/Delete",
+          "title": "取消包安装",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "PartyService",
+      "zh": "派对（一起看）服务",
+      "category": "04-播放与同步",
+      "file": "01-接口参考/04-播放与同步/PartyService.md",
+      "endpoint_count": 7,
+      "doc": "https://dev.emby.media/reference/RestAPI/PartyService.html",
+      "intro": "多人同步观看：创建/加入/离开派对、拉取派对消息与会话当前派对信息。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Parties",
+          "title": "获取活跃派对列表",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Parties/Info",
+          "title": "获取会话当前派对信息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Parties/Messages",
+          "title": "获取派对消息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Parties",
+          "title": "创建派对",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Parties/{Id}/Join",
+          "title": "加入派对",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Parties/Leave",
+          "title": "离开派对",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Parties/Messages",
+          "title": "在派对中发送消息",
+          "auth": "用户",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "PersonsService",
+      "zh": "人物服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/PersonsService.md",
+      "endpoint_count": 3,
+      "doc": "https://dev.emby.media/reference/RestAPI/PersonsService.html",
+      "intro": "演员/导演/编剧等人物维度：全部人物、按名称取人物、人物的参演与职务列表。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Persons",
+          "title": "获取全部人物",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Persons/{Id}/Credits",
+          "title": "获取人物的参演/职务列表",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Persons/{Name}",
+          "title": "按名称获取人物",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "PlaylistService",
+      "zh": "播放列表服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/PlaylistService.md",
+      "endpoint_count": 7,
+      "doc": "https://dev.emby.media/reference/RestAPI/PlaylistService.html",
+      "intro": "管理播放列表：新建、查看条目、增删条目、移动条目顺序、取播放列表的原始条目。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Playlists/{Id}/Items",
+          "title": "从播放列表移除条目",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Playlists/{Id}/AddToPlaylistInfo",
+          "title": "获取“加入播放列表”的可用目标",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Playlists/{Id}/Items",
+          "title": "获取播放列表的原始条目",
+          "auth": "用户",
+          "params": 9
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Playlists",
+          "title": "新建播放列表",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Playlists/{Id}/Items",
+          "title": "向播放列表添加条目",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Playlists/{Id}/Items/{ItemId}/Move/{NewIndex}",
+          "title": "移动播放列表条目",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Playlists/{Id}/Items/Delete",
+          "title": "从播放列表移除条目",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "PlaystateService",
+      "zh": "播放状态上报服务",
+      "category": "04-播放与同步",
+      "file": "01-接口参考/04-播放与同步/PlaystateService.md",
+      "endpoint_count": 12,
+      "doc": "https://dev.emby.media/reference/RestAPI/PlaystateService.html",
+      "intro": "播放进度三件套：开始播放、进度上报、停止播放；另有已播放标记、收藏、评分、用户数据更新。进度上报决定“继续观看”是否正确。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Users/{UserId}/PlayedItems/{Id}",
+          "title": "标记条目为未播放",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Users/{UserId}/PlayingItems/{Id}",
+          "title": "上报用户已停止播放",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/Sessions/Playing",
+          "title": "上报会话开始播放",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Sessions/Playing/Ping",
+          "title": "播放会话心跳",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Sessions/Playing/Progress",
+          "title": "上报会话播放进度",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Sessions/Playing/Stopped",
+          "title": "上报会话停止播放",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Users/{UserId}/Items/{ItemId}/UserData",
+          "title": "更新条目的用户数据",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 8,
+          "method": "POST",
+          "path": "/Users/{UserId}/PlayedItems/{Id}",
+          "title": "标记条目为已播放",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 9,
+          "method": "POST",
+          "path": "/Users/{UserId}/PlayedItems/{Id}/Delete",
+          "title": "标记条目为未播放",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 10,
+          "method": "POST",
+          "path": "/Users/{UserId}/PlayingItems/{Id}",
+          "title": "上报用户开始播放",
+          "auth": "用户",
+          "params": 9
+        },
+        {
+          "section": 11,
+          "method": "POST",
+          "path": "/Users/{UserId}/PlayingItems/{Id}/Delete",
+          "title": "上报用户已停止播放",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 12,
+          "method": "POST",
+          "path": "/Users/{UserId}/PlayingItems/{Id}/Progress",
+          "title": "上报用户播放进度",
+          "auth": "用户",
+          "params": 16
+        }
+      ]
+    },
+    {
+      "service": "PluginService",
+      "zh": "插件服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/PluginService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/PluginService.html",
+      "intro": "已安装插件的配置读取/写入、插件缩略图、卸载插件。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Plugins/{Id}",
+          "title": "卸载插件",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Plugins",
+          "title": "获取已安装插件列表",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Plugins/{Id}/Configuration",
+          "title": "获取插件配置",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Plugins/{Id}/Thumb",
+          "title": "获取插件缩略图",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/Plugins/{Id}/Configuration",
+          "title": "更新插件配置",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/Plugins/{Id}/Delete",
+          "title": "卸载插件",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "RemoteImageService",
+      "zh": "远程图片服务",
+      "category": "06-图片与字幕",
+      "file": "01-接口参考/06-图片与字幕/RemoteImageService.md",
+      "endpoint_count": 4,
+      "doc": "https://dev.emby.media/reference/RestAPI/RemoteImageService.html",
+      "intro": "从外部图片源（TMDB 等）搜索候选图片并下载为条目图片。做“更换封面”功能时使用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Images/Remote",
+          "title": "获取远程图片",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Items/{Id}/RemoteImages",
+          "title": "获取条目可用的远程图片",
+          "auth": "用户",
+          "params": 6
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Items/{Id}/RemoteImages/Providers",
+          "title": "获取条目可用的远程图片来源",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Items/{Id}/RemoteImages/Download",
+          "title": "下载条目的远程图片",
+          "auth": "管理员",
+          "params": 5
+        }
+      ]
+    },
+    {
+      "service": "ScheduledTaskService",
+      "zh": "计划任务服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/ScheduledTaskService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/ScheduledTaskService.html",
+      "intro": "服务器内置计划任务：列出任务、查看详情、启停、修改触发器。做“扫描媒体库”按钮时通常调这里。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/ScheduledTasks/Running/{Id}",
+          "title": "停止计划任务",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/ScheduledTasks",
+          "title": "获取计划任务列表",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/ScheduledTasks/{Id}",
+          "title": "按 ID 获取计划任务",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/ScheduledTasks/{Id}/Triggers",
+          "title": "更新计划任务的触发器",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "POST",
+          "path": "/ScheduledTasks/Running/{Id}",
+          "title": "启动计划任务",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "POST",
+          "path": "/ScheduledTasks/Running/{Id}/Delete",
+          "title": "停止计划任务",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "SessionsService",
+      "zh": "会话与远程控制服务",
+      "category": "04-播放与同步",
+      "file": "01-接口参考/04-播放与同步/SessionsService.md",
+      "endpoint_count": 20,
+      "doc": "https://dev.emby.media/reference/RestAPI/SessionsService.html",
+      "intro": "当前在线会话列表、会话详情，以及对客户端的远程控制：播放/暂停/跳转、下发消息、跳转浏览、添加附加用户，还有 API 密钥（Auth/Keys）管理。做投屏、遥控、多端同步时必用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Auth/Keys/{Key}",
+          "title": "删除 API 密钥",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Sessions/{Id}/Users/{UserId}",
+          "title": "从会话移除附加用户",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Auth/Keys",
+          "title": "获取 API 密钥列表",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Auth/Providers",
+          "title": "获取可用的认证提供方",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Sessions",
+          "title": "获取会话列表",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Sessions/PlayQueue",
+          "title": "获取会话当前的播放队列",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 7,
+          "method": "POST",
+          "path": "/Auth/Keys",
+          "title": "创建 API 密钥",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 8,
+          "method": "POST",
+          "path": "/Auth/Keys/{Key}/Delete",
+          "title": "删除 API 密钥（POST 兼容写法）",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 9,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Command",
+          "title": "向客户端下发系统命令",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 10,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Command/{Command}",
+          "title": "向客户端下发系统命令",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 11,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Message",
+          "title": "让客户端向用户显示消息",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 12,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Playing",
+          "title": "指示会话播放条目",
+          "auth": "用户",
+          "params": 5
+        },
+        {
+          "section": 13,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Playing/{Command}",
+          "title": "向客户端下发播放状态命令",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/Sessions/{Id}/System/{Command}",
+          "title": "向客户端下发系统命令",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 15,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Users/{UserId}",
+          "title": "向会话添加附加用户",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 16,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Users/{UserId}/Delete",
+          "title": "从会话移除附加用户",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 17,
+          "method": "POST",
+          "path": "/Sessions/{Id}/Viewing",
+          "title": "指示会话跳转到条目或视图",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 18,
+          "method": "POST",
+          "path": "/Sessions/Capabilities",
+          "title": "更新设备能力",
+          "auth": "用户",
+          "params": 5
+        },
+        {
+          "section": 19,
+          "method": "POST",
+          "path": "/Sessions/Capabilities/Full",
+          "title": "更新设备能力",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 20,
+          "method": "POST",
+          "path": "/Sessions/Logout",
+          "title": "上报会话已结束",
+          "auth": "用户",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "StudiosService",
+      "zh": "工作室服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/StudiosService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/StudiosService.html",
+      "intro": "制片工作室维度：全部工作室、按名称取单个工作室。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Studios",
+          "title": "获取全部工作室",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Studios/{Name}",
+          "title": "按名称获取工作室",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "SubtitleOptionsService",
+      "zh": "字幕选项服务",
+      "category": "06-图片与字幕",
+      "file": "01-接口参考/06-图片与字幕/SubtitleOptionsService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/SubtitleOptionsService.html",
+      "intro": "读取/更新服务器级的字幕选项（默认语言、模式等）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Encoding/SubtitleOptions",
+          "title": "获取字幕选项",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Encoding/SubtitleOptions",
+          "title": "更新字幕选项",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "SubtitleService",
+      "zh": "字幕服务",
+      "category": "06-图片与字幕",
+      "file": "01-接口参考/06-图片与字幕/SubtitleService.md",
+      "endpoint_count": 16,
+      "doc": "https://dev.emby.media/reference/RestAPI/SubtitleService.html",
+      "intro": "字幕全链路：远程搜索字幕、下载字幕、按格式获取字幕流（SRT/VTT/ASS）、上传外挂字幕、删除字幕、获取字幕播放列表。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Items/{Id}/Subtitles/{Index}",
+          "title": "删除外挂字幕文件",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Videos/{Id}/Subtitles/{Index}",
+          "title": "删除外挂字幕文件",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Items/{Id}/{MediaSourceId}/Subtitles/{Index}/{StartPositionTicks}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Items/{Id}/{MediaSourceId}/Subtitles/{Index}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Items/{Id}/RemoteSearch/Subtitles/{Language}",
+          "title": "按语言远程搜索字幕",
+          "auth": "用户",
+          "params": 6
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Providers/Subtitles/Subtitles/{Id}",
+          "title": "获取字幕提供方下载的字幕内容",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Videos/{Id}/{MediaSourceId}/Attachments/{Index}/Stream",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Videos/{Id}/{MediaSourceId}/Subtitles/{Index}/{StartPositionTicks}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/Videos/{Id}/{MediaSourceId}/Subtitles/{Index}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 10,
+          "method": "HEAD",
+          "path": "/Items/{Id}/{MediaSourceId}/Subtitles/{Index}/{StartPositionTicks}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 11,
+          "method": "HEAD",
+          "path": "/Items/{Id}/{MediaSourceId}/Subtitles/{Index}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 12,
+          "method": "HEAD",
+          "path": "/Videos/{Id}/{MediaSourceId}/Subtitles/{Index}/{StartPositionTicks}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 13,
+          "method": "HEAD",
+          "path": "/Videos/{Id}/{MediaSourceId}/Subtitles/{Index}/Stream.{Format}",
+          "title": "按指定格式获取字幕",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/Items/{Id}/RemoteSearch/Subtitles/{SubtitleId}",
+          "title": "下载指定的远程字幕",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 15,
+          "method": "POST",
+          "path": "/Items/{Id}/Subtitles/{Index}/Delete",
+          "title": "删除外挂字幕文件",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 16,
+          "method": "POST",
+          "path": "/Videos/{Id}/Subtitles/{Index}/Delete",
+          "title": "删除外挂字幕文件",
+          "auth": "用户",
+          "params": 3
+        }
+      ]
+    },
+    {
+      "service": "SuggestionsService",
+      "zh": "推荐服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/SuggestionsService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/SuggestionsService.html",
+      "intro": "获取“猜你喜欢”类推荐条目。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Users/{UserId}/Suggestions",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        }
+      ]
+    },
+    {
+      "service": "SyncService",
+      "zh": "离线同步服务",
+      "category": "04-播放与同步",
+      "file": "01-接口参考/04-播放与同步/SyncService.md",
+      "endpoint_count": 25,
+      "doc": "https://dev.emby.media/reference/RestAPI/SyncService.html",
+      "intro": "Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、上报传输完成、取消/移除条目、同步状态查询。做“下载到本地”功能时使用。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Sync/{TargetId}/Items",
+          "title": "从同步目标取消条目",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Sync/JobItems/{Id}",
+          "title": "取消同步任务条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "DELETE",
+          "path": "/Sync/Jobs/{Id}",
+          "title": "取消同步任务",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Sync/Items/Ready",
+          "title": "准备下载同步条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Sync/JobItems",
+          "title": "获取同步任务条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Sync/JobItems/{Id}/AdditionalFiles",
+          "title": "获取同步任务条目的文件",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Sync/JobItems/{Id}/File",
+          "title": "获取同步任务条目的文件",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Sync/Jobs",
+          "title": "获取同步任务列表",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/Sync/Jobs/{Id}",
+          "title": "获取同步任务",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/Sync/Options",
+          "title": "获取可用同步目标",
+          "auth": "用户",
+          "params": 5
+        },
+        {
+          "section": 11,
+          "method": "GET",
+          "path": "/Sync/Targets",
+          "title": "获取可用同步目标",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 12,
+          "method": "HEAD",
+          "path": "/Sync/JobItems/{Id}/File",
+          "title": "获取同步任务条目的文件",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 13,
+          "method": "POST",
+          "path": "/Sync/{ItemId}/Status",
+          "title": "获取条目的同步状态",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/Sync/{TargetId}/Items/Delete",
+          "title": "从同步目标取消条目",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 15,
+          "method": "POST",
+          "path": "/Sync/Data",
+          "title": "在设备与服务端之间同步数据",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 16,
+          "method": "POST",
+          "path": "/Sync/Items/Cancel",
+          "title": "从同步目标取消条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 17,
+          "method": "POST",
+          "path": "/Sync/JobItems/{Id}/Delete",
+          "title": "取消同步任务条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 18,
+          "method": "POST",
+          "path": "/Sync/JobItems/{Id}/Enable",
+          "title": "启用已取消或排队的同步条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 19,
+          "method": "POST",
+          "path": "/Sync/JobItems/{Id}/MarkForRemoval",
+          "title": "标记同步条目待移除",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 20,
+          "method": "POST",
+          "path": "/Sync/JobItems/{Id}/Transferred",
+          "title": "上报同步条目已传输完成",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 21,
+          "method": "POST",
+          "path": "/Sync/JobItems/{Id}/UnmarkForRemoval",
+          "title": "取消同步条目的待移除标记",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 22,
+          "method": "POST",
+          "path": "/Sync/Jobs",
+          "title": "获取同步任务列表",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 23,
+          "method": "POST",
+          "path": "/Sync/Jobs/{Id}",
+          "title": "更新同步任务",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 24,
+          "method": "POST",
+          "path": "/Sync/Jobs/{Id}/Delete",
+          "title": "取消同步任务",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 25,
+          "method": "POST",
+          "path": "/Sync/OfflineActions",
+          "title": "上报离线期间发生的操作",
+          "auth": "用户",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "SystemService",
+      "zh": "系统服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/SystemService.md",
+      "endpoint_count": 14,
+      "doc": "https://dev.emby.media/reference/RestAPI/SystemService.html",
+      "intro": "服务器级信息与运维：服务器信息与公开信息、心跳 Ping、日志文件、Wake-on-LAN、重启与关闭、端点信息。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/System/Endpoint",
+          "title": "获取请求端点信息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/System/Info",
+          "title": "获取服务器信息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/System/Info/Public",
+          "title": "获取服务器公开信息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/System/Logs/{Name}",
+          "title": "获取日志文件",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/System/Logs/{Name}/Lines",
+          "title": "获取日志文件",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/System/Logs/Query",
+          "title": "获取可用服务器日志文件列表",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/System/Ping",
+          "title": "心跳检测",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/System/ReleaseNotes",
+          "title": "获取发行说明",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/System/ReleaseNotes/Versions",
+          "title": "获取发行说明",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/System/WakeOnLanInfo",
+          "title": "获取 Wake-on-LAN 信息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 11,
+          "method": "HEAD",
+          "path": "/System/Ping",
+          "title": "心跳检测（HEAD）",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 12,
+          "method": "POST",
+          "path": "/System/Ping",
+          "title": "心跳检测（POST）",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 13,
+          "method": "POST",
+          "path": "/System/Restart",
+          "title": "按需重启应用",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/System/Shutdown",
+          "title": "关闭应用",
+          "auth": "管理员",
+          "params": 0
+        }
+      ]
+    },
+    {
+      "service": "TagService",
+      "zh": "标签服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/TagService.md",
+      "endpoint_count": 14,
+      "doc": "https://dev.emby.media/reference/RestAPI/TagService.html",
+      "intro": "标签维度：全局标签、按名称取标签，以及按父级取标签列表。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Artists/Prefixes",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/AudioCodecs",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/AudioLayouts",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Containers",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/ExtendedVideoTypes",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Items/Prefixes",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/ItemTypes",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/StreamLanguages",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/SubtitleCodecs",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/Tags",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 11,
+          "method": "GET",
+          "path": "/VideoCodecs",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 12,
+          "method": "GET",
+          "path": "/Years",
+          "title": "按条件查询媒体条目",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 13,
+          "method": "POST",
+          "path": "/Items/{Id}/Tags/Add",
+          "title": "为条目添加标签",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/Items/{Id}/Tags/Delete",
+          "title": "移除条目标签",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "ToneMapOptionsService",
+      "zh": "色调映射选项服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/ToneMapOptionsService.md",
+      "endpoint_count": 4,
+      "doc": "https://dev.emby.media/reference/RestAPI/ToneMapOptionsService.html",
+      "intro": "读取/更新 HDR→SDR 的色调映射选项。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Encoding/FullToneMapOptions",
+          "title": "获取色调映射选项",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Encoding/PublicToneMapOptions",
+          "title": "获取色调映射选项",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/Encoding/FullToneMapOptions",
+          "title": "更新色调映射选项",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "POST",
+          "path": "/Encoding/PublicToneMapOptions",
+          "title": "更新色调映射选项",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "TrailersService",
+      "zh": "预告片服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/TrailersService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/TrailersService.html",
+      "intro": "获取与某部电影/预告片相似的电影与预告片，用于“即将上映/相关推荐”。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Trailers",
+          "title": "查找与指定预告片相似的电影与预告片",
+          "auth": "用户",
+          "params": 99
+        }
+      ]
+    },
+    {
+      "service": "TvShowsService",
+      "zh": "剧集服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/TvShowsService.md",
+      "endpoint_count": 5,
+      "doc": "https://dev.emby.media/reference/RestAPI/TvShowsService.html",
+      "intro": "剧集维度查询：某剧的全部季、某季的全部集、下一集（Next Up）、缺失集与即将播出集。剧集类客户端的分季/分集页面依赖它。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Shows/{Id}/Episodes",
+          "title": "获取某季的全部集",
+          "auth": "用户",
+          "params": 102
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Shows/{Id}/Seasons",
+          "title": "获取剧集的全部季",
+          "auth": "用户",
+          "params": 100
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Shows/Missing",
+          "title": "获取缺失集列表",
+          "auth": "用户",
+          "params": 99
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Shows/NextUp",
+          "title": "获取“接下来播放”列表",
+          "auth": "用户",
+          "params": 10
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Shows/Upcoming",
+          "title": "获取即将播出的集",
+          "auth": "用户",
+          "params": 99
+        }
+      ]
+    },
+    {
+      "service": "UniversalAudioService",
+      "zh": "通用音频服务",
+      "category": "05-流媒体协议",
+      "file": "01-接口参考/05-流媒体协议/UniversalAudioService.md",
+      "endpoint_count": 4,
+      "doc": "https://dev.emby.media/reference/RestAPI/UniversalAudioService.html",
+      "intro": "按“通用音频”路径输出音频流，常用于有声书、播客等场景。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Audio/{Id}/universal",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Audio/{Id}/universal.{Container}",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 3,
+          "method": "HEAD",
+          "path": "/Audio/{Id}/universal",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 4,
+          "method": "HEAD",
+          "path": "/Audio/{Id}/universal.{Container}",
+          "title": "获取音频流",
+          "auth": "用户",
+          "params": 4
+        }
+      ]
+    },
+    {
+      "service": "UserLibraryService",
+      "zh": "用户媒体库服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/UserLibraryService.md",
+      "endpoint_count": 20,
+      "doc": "https://dev.emby.media/reference/RestAPI/UserLibraryService.html",
+      "intro": "以“用户视角”访问媒体库：某用户可见的媒体文件夹、某文件夹下的条目、以及条目的可见性设置（私有/公开/共享）。做权限敏感的浏览时优先用它。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Users/{UserId}/FavoriteItems/{Id}",
+          "title": "取消收藏",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Users/{UserId}/Items/{Id}/Rating",
+          "title": "删除用户对条目的个人评分",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/LiveTv/Programs/{Id}",
+          "title": "获取直播节目详情",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items/{Id}",
+          "title": "从用户媒体库获取条目",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items/{Id}/Intros",
+          "title": "获取正片播放前的片头/预告",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items/{Id}/LocalTrailers",
+          "title": "获取条目的本地预告片",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items/{Id}/SpecialFeatures",
+          "title": "获取条目的特别收录",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items/Latest",
+          "title": "获取最新媒体",
+          "auth": "用户",
+          "params": 13
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/Users/{UserId}/Items/Root",
+          "title": "获取用户媒体库根目录",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/Videos/{Id}/AdditionalParts",
+          "title": "获取视频的附加分段",
+          "auth": "用户",
+          "params": 7
+        },
+        {
+          "section": 11,
+          "method": "POST",
+          "path": "/Items/Access",
+          "title": "更新用户条目访问权限",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 12,
+          "method": "POST",
+          "path": "/Items/{Id}/MakePrivate",
+          "title": "将条目设为私有",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 13,
+          "method": "POST",
+          "path": "/Items/{Id}/MakePublic",
+          "title": "将条目对全部用户公开",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/Items/Shared/Leave",
+          "title": "退出共享条目",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 15,
+          "method": "POST",
+          "path": "/Users/{UserId}/FavoriteItems/{Id}",
+          "title": "标记为收藏",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 16,
+          "method": "POST",
+          "path": "/Users/{UserId}/FavoriteItems/{Id}/Delete",
+          "title": "取消收藏",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 17,
+          "method": "POST",
+          "path": "/Users/{UserId}/Items/{Id}/HideFromResume",
+          "title": "更新条目在“继续观看”中的隐藏状态",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 18,
+          "method": "POST",
+          "path": "/Users/{UserId}/Items/{Id}/Rating",
+          "title": "更新用户对条目的评分",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 19,
+          "method": "POST",
+          "path": "/Users/{UserId}/Items/{Id}/Rating/Delete",
+          "title": "删除用户对条目的个人评分",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 20,
+          "method": "POST",
+          "path": "/Users/{UserId}/SearchedItems/",
+          "title": "标记为收藏",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "UserNotificationsService",
+      "zh": "用户通知服务",
+      "category": "01-用户与认证",
+      "file": "01-接口参考/01-用户与认证/UserNotificationsService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/UserNotificationsService.html",
+      "intro": "面向单个用户的通知：读取通知摘要、把通知标记为已读。与 NotificationsService（管理员群发）不同，这里是“用户收件箱”。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Notifications/Services/Defaults",
+          "title": "获取默认通知信息",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Notifications/Services/Test",
+          "title": "发送测试通知",
+          "auth": "用户",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "UserService",
+      "zh": "用户服务",
+      "category": "01-用户与认证",
+      "file": "01-接口参考/01-用户与认证/UserService.md",
+      "endpoint_count": 25,
+      "doc": "https://dev.emby.media/reference/RestAPI/UserService.html",
+      "intro": "账号体系的核心：登录认证、用户增删改、权限策略（Policy）、密码与“忘记密码”、用户设置项、以及收藏/评分/播放状态等用户数据。第三方客户端首次接入几乎都要先走这里的认证接口。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Users/{Id}",
+          "title": "删除用户",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "DELETE",
+          "path": "/Users/{Id}/RecentlySearched",
+          "title": "清空最近搜索记录",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "DELETE",
+          "path": "/Users/{Id}/TrackSelections/{TrackType}",
+          "title": "清除用户已选的音轨/字幕轨",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/Users/{Id}",
+          "title": "按 ID 获取用户",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 5,
+          "method": "GET",
+          "path": "/Users/{UserId}/TypedSettings/{Key}",
+          "title": "获取指定类型的用户设置",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 6,
+          "method": "GET",
+          "path": "/Users/CopyDataOptions",
+          "title": "获取复制用户数据的选项",
+          "auth": "管理员",
+          "params": 0
+        },
+        {
+          "section": 7,
+          "method": "GET",
+          "path": "/Users/ItemAccess",
+          "title": "获取用户列表",
+          "auth": "用户",
+          "params": 6
+        },
+        {
+          "section": 8,
+          "method": "GET",
+          "path": "/Users/Prefixes",
+          "title": "获取用户列表",
+          "auth": "管理员",
+          "params": 6
+        },
+        {
+          "section": 9,
+          "method": "GET",
+          "path": "/Users/Public",
+          "title": "获取登录界面展示的公开用户",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 10,
+          "method": "GET",
+          "path": "/Users/Query",
+          "title": "获取用户列表",
+          "auth": "管理员",
+          "params": 6
+        },
+        {
+          "section": 11,
+          "method": "POST",
+          "path": "/Users/AuthenticateByName",
+          "title": "用户认证（登录）",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 12,
+          "method": "POST",
+          "path": "/Users/{Id}",
+          "title": "更新用户",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 13,
+          "method": "POST",
+          "path": "/Users/{Id}/Authenticate",
+          "title": "用户认证（登录）",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 14,
+          "method": "POST",
+          "path": "/Users/{Id}/Configuration",
+          "title": "更新用户配置",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 15,
+          "method": "POST",
+          "path": "/Users/{Id}/Configuration/Partial",
+          "title": "更新用户配置",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 16,
+          "method": "POST",
+          "path": "/Users/{Id}/Delete",
+          "title": "删除用户",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 17,
+          "method": "POST",
+          "path": "/Users/{Id}/Password",
+          "title": "修改用户密码",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 18,
+          "method": "POST",
+          "path": "/Users/{Id}/Policy",
+          "title": "更新用户策略（权限）",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 19,
+          "method": "POST",
+          "path": "/Users/{Id}/RecentlySearched/Delete",
+          "title": "清空最近搜索记录",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 20,
+          "method": "POST",
+          "path": "/Users/{Id}/TrackSelections/{TrackType}/Delete",
+          "title": "清除用户已选的音轨/字幕轨",
+          "auth": "用户",
+          "params": 2
+        },
+        {
+          "section": 21,
+          "method": "POST",
+          "path": "/Users/{UserId}/CopyData",
+          "title": "在两个用户间复制数据",
+          "auth": "管理员",
+          "params": 2
+        },
+        {
+          "section": 22,
+          "method": "POST",
+          "path": "/Users/{UserId}/TypedSettings/{Key}",
+          "title": "更新指定类型的用户设置",
+          "auth": "用户",
+          "params": 3
+        },
+        {
+          "section": 23,
+          "method": "POST",
+          "path": "/Users/ForgotPassword",
+          "title": "发起本地用户忘记密码流程",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 24,
+          "method": "POST",
+          "path": "/Users/ForgotPassword/Pin",
+          "title": "校验忘记密码 PIN",
+          "auth": "用户",
+          "params": 1
+        },
+        {
+          "section": 25,
+          "method": "POST",
+          "path": "/Users/New",
+          "title": "创建用户",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "UserViewsService",
+      "zh": "用户视图服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/UserViewsService.md",
+      "endpoint_count": 1,
+      "doc": "https://dev.emby.media/reference/RestAPI/UserViewsService.html",
+      "intro": "返回某用户首页应显示的顶级视图（电影、电视节目、音乐、文件夹等）。客户端启动后通常先调 `/Users/{UserId}/Views` 建立首页导航。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Users/{UserId}/Views",
+          "title": "获取用户的媒体库视图列表",
+          "auth": "用户",
+          "params": 2
+        }
+      ]
+    },
+    {
+      "service": "VideoHlsService",
+      "zh": "旧版 HLS 服务",
+      "category": "05-流媒体协议",
+      "file": "01-接口参考/05-流媒体协议/VideoHlsService.md",
+      "endpoint_count": 2,
+      "doc": "https://dev.emby.media/reference/RestAPI/VideoHlsService.html",
+      "intro": "较早的 HLS 接口路径（`/Videos/{Id}/hls/...`）。新客户端优先用 DynamicHlsService。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Audio/{Id}/hls/{PlaylistId}/{SegmentId}.{SegmentContainer}",
+          "title": "获取 HLS 音频分片（旧版路径）",
+          "auth": "用户",
+          "params": 4
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Videos/{Id}/hls/{PlaylistId}/{SegmentId}.{SegmentContainer}",
+          "title": "获取 HLS 视频分片（旧版路径）",
+          "auth": "用户",
+          "params": 4
+        }
+      ]
+    },
+    {
+      "service": "VideoService",
+      "zh": "视频流服务",
+      "category": "05-流媒体协议",
+      "file": "01-接口参考/05-流媒体协议/VideoService.md",
+      "endpoint_count": 6,
+      "doc": "https://dev.emby.media/reference/RestAPI/VideoService.html",
+      "intro": "直接以 HTTP 流输出视频：`/Videos/{Id}/stream` 系列，参数与转码参数一致（容器、编码、码率、分辨率、字幕烧录等）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/Videos/{Id}/{StreamFileName}",
+          "title": "获取视频流",
+          "auth": "用户",
+          "params": 25
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/Videos/{Id}/stream",
+          "title": "获取视频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/Videos/{Id}/stream.{Container}",
+          "title": "获取视频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 4,
+          "method": "HEAD",
+          "path": "/Videos/{Id}/{StreamFileName}",
+          "title": "获取视频流",
+          "auth": "用户",
+          "params": 25
+        },
+        {
+          "section": 5,
+          "method": "HEAD",
+          "path": "/Videos/{Id}/stream",
+          "title": "获取视频流",
+          "auth": "用户",
+          "params": 24
+        },
+        {
+          "section": 6,
+          "method": "HEAD",
+          "path": "/Videos/{Id}/stream.{Container}",
+          "title": "获取视频流",
+          "auth": "用户",
+          "params": 24
+        }
+      ]
+    },
+    {
+      "service": "VideosService",
+      "zh": "视频条目服务",
+      "category": "02-媒体库浏览",
+      "file": "01-接口参考/02-媒体库浏览/VideosService.md",
+      "endpoint_count": 3,
+      "doc": "https://dev.emby.media/reference/RestAPI/VideosService.html",
+      "intro": "视频条目的补充操作：多版本合并为一条记录、获取附加分段（如 CD 分段、花絮）。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "DELETE",
+          "path": "/Videos/{Id}/AlternateSources",
+          "title": "移除备用视频源",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 2,
+          "method": "POST",
+          "path": "/Videos/{Id}/AlternateSources/Delete",
+          "title": "移除备用视频源",
+          "auth": "管理员",
+          "params": 1
+        },
+        {
+          "section": 3,
+          "method": "POST",
+          "path": "/Videos/MergeVersions",
+          "title": "把多个视频合并为一条记录",
+          "auth": "管理员",
+          "params": 1
+        }
+      ]
+    },
+    {
+      "service": "WebAppService",
+      "zh": "Web 前端资源服务",
+      "category": "08-系统与运维",
+      "file": "01-接口参考/08-系统与运维/WebAppService.md",
+      "endpoint_count": 4,
+      "doc": "https://dev.emby.media/reference/RestAPI/WebAppService.html",
+      "intro": "Web 管理界面用的配置页面与界面文案接口。第三方客户端一般不需要。",
+      "endpoints": [
+        {
+          "section": 1,
+          "method": "GET",
+          "path": "/web/ConfigurationPage",
+          "title": "获取配置页面",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 2,
+          "method": "GET",
+          "path": "/web/ConfigurationPages",
+          "title": "获取配置页面列表",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 3,
+          "method": "GET",
+          "path": "/web/strings",
+          "title": "获取界面文案（JSON）",
+          "auth": "用户",
+          "params": 0
+        },
+        {
+          "section": 4,
+          "method": "GET",
+          "path": "/web/stringset",
+          "title": "获取界面文案（字符串集）",
+          "auth": "用户",
+          "params": 0
+        }
+      ]
+    }
+  ],
+  "models": {
+    "AccessSchedule": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "ActivityLogEntry": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 8,
+      "enum": 0
+    },
+    "AddAdminNotification": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "AddMediaPath": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "AddTags": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "AddToPlaylistInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "AddToPlaylistResult": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "AddVirtualFolder": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "AddressFamily": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 33
+    },
+    "AlbumInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 13,
+      "enum": 0
+    },
+    "AllThemeMediaResult": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "ArtistInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "AuthenticateUser": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "AuthenticateUserByName": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "AuthenticationResult": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "AvailableRecordingOptions": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "BaseDownloadRemoteImage": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "BaseItemDto": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 161,
+      "enum": 0
+    },
+    "BaseItemPerson": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "BaseItemsRequest": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 39,
+      "enum": 0
+    },
+    "BaseRefreshRequest": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "BitRate": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "BookInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 12,
+      "enum": 0
+    },
+    "BrandingOptions": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ChannelManagementInfo": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "ChapterInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ClientCapabilities": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 9,
+      "enum": 0
+    },
+    "CodecConfiguration": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "CodecDirections": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "CodecKinds": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "CodecProfile": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "CodecType": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "CollectionCreationResult": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "ColorFormats": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "ConfigurationPageInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 12,
+      "enum": 0
+    },
+    "ConfigurationPageType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "ConnectAuthenticationExchangeResult": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ContainerProfile": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ContentSection": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 23,
+      "enum": 0
+    },
+    "ContentUploadHistory": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "CopyData": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "CountryInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "CreateUserByName": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "CreditsList": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "CultureDto": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "DayOfWeek": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "DefaultDirectoryBrowserInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "DeleteHomeSections": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "DeleteInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "DeviceIdentification": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 10,
+      "enum": 0
+    },
+    "DeviceInfo": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "DeviceOptions": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "DeviceProfile": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 12,
+      "enum": 0
+    },
+    "DeviceProfileType": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "DirectPlayProfile": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "DisplayPreferences": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "DlnaProfile": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 38,
+      "enum": 0
+    },
+    "DlnaProfileType": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "DynamicDayOfWeek": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 10
+    },
+    "EditObjectContainer": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "EditorBase": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 8,
+      "enum": 0
+    },
+    "EditorButtonItem": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 8,
+      "enum": 0
+    },
+    "EditorRoot": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 12,
+      "enum": 0
+    },
+    "EditorTypes": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 20
+    },
+    "EncodingContext": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "EndPointInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "EpgRow": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ExtendedVideoSubTypes": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 18
+    },
+    "ExtendedVideoTypes": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "ExternalIdInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ExternalUrl": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "FeatureInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "FeatureType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "FileSystemEntryInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "FileSystemEntryType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 4
+    },
+    "ForgotPassword": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "ForgotPasswordAction": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "ForgotPasswordPin": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "ForgotPasswordResult": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "FullUserCopyDataOptions": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "GameInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "GeneralCommand": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "GetDirectoryContents": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "GuideInfo": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "HeaderMatchType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "HttpHeaderInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ICodecDeviceCapabilities": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "ICodecDeviceInfo": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 14,
+      "enum": 0
+    },
+    "IEditObjectContainer": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "IPlugin": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ImageInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 7,
+      "enum": 0
+    },
+    "ImageOption": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ImageOrientation": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 8
+    },
+    "ImageProviderInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "ImageSavingConvention": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "ImageType": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 15
+    },
+    "InstallationInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "IntroDebugInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ItemCounts": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 14,
+      "enum": 0
+    },
+    "ItemFileInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "ItemFileType": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "ItemLinkType": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 11
+    },
+    "ItemLookupInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "ItemsQuery": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 12,
+      "enum": 0
+    },
+    "KeepUntil": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 4
+    },
+    "KeywordInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "KeywordType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "LeaveSharedItems": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "LevelInformation": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 8,
+      "enum": 0
+    },
+    "LibraryOptionInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "LibraryOptions": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 65,
+      "enum": 0
+    },
+    "LibraryOptionsResult": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 6,
+      "enum": 0
+    },
+    "LibraryTypeOptions": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ListingProviderTypeInfo": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ListingsProviderInfo": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 20,
+      "enum": 0
+    },
+    "LiveStreamRequest": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 17,
+      "enum": 0
+    },
+    "LiveStreamResponse": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "LiveTvInfo": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "LocalFileInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "LocalizatonOption": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "LocationType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "LogFile": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "LogSeverity": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "MarkerType": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 4
+    },
+    "MediaFolder": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "MediaPathInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "MediaProtocol": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 8
+    },
+    "MediaSourceInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 47,
+      "enum": 0
+    },
+    "MediaSourceType": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "MediaStream": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 55,
+      "enum": 0
+    },
+    "MediaStreamType": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 7
+    },
+    "MediaUpdateInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "MediaUrl": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "MetadataEditorInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "MetadataFeatures": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "MetadataFields": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "MoveHomeSections": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "MovieInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "MusicVideoInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 12,
+      "enum": 0
+    },
+    "NameIdDescriptionPair": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "NameIdPair": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "NameLongIdPair": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "NameValuePair": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "NotificationCategoryInfo": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "NotificationLevel": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "NotificationTypeInfo": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "OfficialRatingItem": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "OnPlaybackProgress": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 6,
+      "enum": 0
+    },
+    "OperatingSystem": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "PackageInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 21,
+      "enum": 0
+    },
+    "PackageTargetSystem": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 4
+    },
+    "PackageVersionClass": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "PackageVersionInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 10,
+      "enum": 0
+    },
+    "ParentalRating": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "PartyInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "PartyInfoResult": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "PartyMessage": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "PathSubstitution": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "PersonLookupInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "PersonType": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 8
+    },
+    "PinRedeemResult": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "PlayMethod": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "PlayRequest": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "PlaybackErrorCode": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "PlaybackInfoRequest": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 19,
+      "enum": 0
+    },
+    "PlaybackInfoResponse": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "PlaybackProgressInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 30,
+      "enum": 0
+    },
+    "PlaybackStartInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 30,
+      "enum": 0
+    },
+    "PlaybackStopInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 14,
+      "enum": 0
+    },
+    "PlayerStateInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 16,
+      "enum": 0
+    },
+    "PlaylistCreationResult": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "PlaystateCommand": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 10
+    },
+    "PlaystateRequest": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "PluginInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "PostUpdatedMedia": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "PostbackAction": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "ProcessMetricPoint": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ProcessStatistics": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "ProfileCondition": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ProfileConditionType": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "ProfileConditionValue": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 26
+    },
+    "ProfileInformation": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ProfileLevelInformation": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ProgressEvent": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 16
+    },
+    "PropertyCondition": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 6,
+      "enum": 0
+    },
+    "PropertyConditionType": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "ProtocolInfoDetection": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "ProviderIdDictionary": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "ProxyHeaderMode": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 4
+    },
+    "PublicSystemInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 7,
+      "enum": 0
+    },
+    "QueryResult_ActivityLogEntry": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_BaseItemDto": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_ChannelManagementInfo": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_LogFile": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_String": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_SyncJob": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_SyncJobItem": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_UserDto": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueryResult_VirtualFolderInfo": {
+      "file": "02-数据模型/01-通用结构.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "QueueItem": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "RatingType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "RecommendationDto": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "RecommendationType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 6
+    },
+    "RecordingStatus": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 0,
+      "enum": 7
+    },
+    "RemoteImageInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 10,
+      "enum": 0
+    },
+    "RemoteImageResult": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "RemoteSearchQuery_AlbumInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_ArtistInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_BookInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_GameInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_ItemLookupInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_MovieInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_MusicVideoInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_PersonLookupInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_SeriesInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchQuery_TrailerInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "RemoteSearchResult": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 21,
+      "enum": 0
+    },
+    "RemoteSubtitleInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 13,
+      "enum": 0
+    },
+    "RemoveMediaPath": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "RemoveTags": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "RemoveVirtualFolder": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "RenameVirtualFolder": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "RepeatMode": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "ReportItemsSearched": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "Resolution": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ResolutionWithRate": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ResponseProfile": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 6,
+      "enum": 0
+    },
+    "RunUICommand": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "ScrollDirection": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "SecondaryFrameworks": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 13
+    },
+    "SegmentSkipMode": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "SeriesDisplayOrder": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "SeriesInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 13,
+      "enum": 0
+    },
+    "SeriesTimerInfo": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 25,
+      "enum": 0
+    },
+    "SeriesTimerInfoDto": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ServerConfiguration": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 71,
+      "enum": 0
+    },
+    "SessionInfo": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 26,
+      "enum": 0
+    },
+    "SessionUserInfo": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "SetChannelDisabled": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "SetChannelMapping": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "SetChannelSortIndex": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "SimpleCondition": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 4
+    },
+    "SleepTimerMode": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "SongInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 15,
+      "enum": 0
+    },
+    "SortOrder": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "SubFolder": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "SubtitleDeliveryMethod": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "SubtitleDownloadResult": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "SubtitleLocationType": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "SubtitlePlaybackMode": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 6
+    },
+    "SubtitleProfile": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 7,
+      "enum": 0
+    },
+    "SyncCategory": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "SyncDataRequest": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "SyncDataResponse": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "SyncDialogOptions": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "SyncJob": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 26,
+      "enum": 0
+    },
+    "SyncJobCreationResult": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "SyncJobItem": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 16,
+      "enum": 0
+    },
+    "SyncJobItemStatus": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 6
+    },
+    "SyncJobOption": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "SyncJobRequest": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 15,
+      "enum": 0
+    },
+    "SyncJobStatus": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 7
+    },
+    "SyncProfileOption": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "SyncQualityOption": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "SyncTarget": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "SyncedItem": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 9,
+      "enum": 0
+    },
+    "SyncedItemProgress": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "SystemEvent": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "SystemInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 36,
+      "enum": 0
+    },
+    "TagItem": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 1,
+      "enum": 0
+    },
+    "TaskCompletionStatus": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 4
+    },
+    "TaskInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 8,
+      "enum": 0
+    },
+    "TaskResult": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 7,
+      "enum": 0
+    },
+    "TaskState": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "TaskTriggerInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "TextSectionInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "ThemeMediaResult": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "ThumbnailInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "ThumbnailSetInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "TimerInfoDto": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 24,
+      "enum": 0
+    },
+    "TimerType": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "ToneMapOptionsVisibility": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "TrailerInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "TranscodeReason": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "TranscodeSeekInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "TranscodingInfo": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 32,
+      "enum": 0
+    },
+    "TranscodingProfile": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 19,
+      "enum": 0
+    },
+    "TransportStreamTimestamp": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "TunerHostInfo": {
+      "file": "02-数据模型/05-直播电视.md",
+      "fields": 17,
+      "enum": 0
+    },
+    "Tuple_Double-Double": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "TypeOptions": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 5,
+      "enum": 0
+    },
+    "UICommand": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 7,
+      "enum": 0
+    },
+    "UICommandType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 12
+    },
+    "UITabPageInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 6,
+      "enum": 0
+    },
+    "UIViewInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 13,
+      "enum": 0
+    },
+    "UIViewType": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "UnratedItem": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 0
+    },
+    "UpdateLibraryOptions": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "UpdateMediaPath": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 2,
+      "enum": 0
+    },
+    "UpdateUserItemAccess": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "UpdateUserPassword": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "UserAction": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 8,
+      "enum": 0
+    },
+    "UserActionType": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 0,
+      "enum": 3
+    },
+    "UserConfiguration": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 18,
+      "enum": 0
+    },
+    "UserDto": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 17,
+      "enum": 0
+    },
+    "UserItemDataDto": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 11,
+      "enum": 0
+    },
+    "UserItemShareLevel": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "UserLinkResult": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 3,
+      "enum": 0
+    },
+    "UserLinkType": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 0,
+      "enum": 2
+    },
+    "UserNotificationInfo": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 15,
+      "enum": 0
+    },
+    "UserPolicy": {
+      "file": "02-数据模型/03-用户与账号.md",
+      "fields": 47,
+      "enum": 0
+    },
+    "ValidatePath": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 4,
+      "enum": 0
+    },
+    "ValueCondition": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 0,
+      "enum": 6
+    },
+    "Version": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 6,
+      "enum": 0
+    },
+    "Video3DFormat": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 5
+    },
+    "VideoCodecBase": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 23,
+      "enum": 0
+    },
+    "VideoMediaTypes": {
+      "file": "02-数据模型/04-播放与转码.md",
+      "fields": 0,
+      "enum": 233
+    },
+    "VirtualFolderInfo": {
+      "file": "02-数据模型/02-媒体条目.md",
+      "fields": 10,
+      "enum": 0
+    },
+    "VpStepInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 10,
+      "enum": 0
+    },
+    "VpStepTypes": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 0,
+      "enum": 20
+    },
+    "WakeOnLanInfo": {
+      "file": "02-数据模型/06-系统与配置.md",
+      "fields": 3,
+      "enum": 0
+    }
+  }
+}
