@@ -7,7 +7,7 @@
 播放进度三件套：开始播放、进度上报、停止播放；另有已播放标记、收藏、评分、用户数据更新。进度上报决定“继续观看”是否正确。
 
 - 接口数量：**12**
-- 覆盖范围：官方参考站该服务下的全部 12 个端点
+- 收录范围：当前官方文档快照中的 12 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -72,11 +72,11 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
-| `NextMediaType` | query | string | 否 | 接下来要播放的媒体类型。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
+| `NextMediaType` | query | string | 是 | 接下来要播放的媒体类型。 |
 | `PositionTicks` | query | integer | 否 | 可选。播放停止时的位置，单位 tick，1 毫秒 = 10000 ticks。 |
-| `LiveStreamId` | query | string | 否 | — |
-| `PlaySessionId` | query | string | 否 | — |
+| `LiveStreamId` | query | string | 未标注 | — |
+| `PlaySessionId` | query | string | 未标注 | — |
 
 **响应**
 
@@ -102,7 +102,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | PlaybackStartInfo | — | 请求体：`PlaybackStartInfo` 对象。 |
+| `body` | body | PlaybackStartInfo | 是 | 请求体：`PlaybackStartInfo` 对象。 |
 
 **响应**
 
@@ -134,7 +134,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `PlaySessionId` | query | string | 否 | — |
+| `PlaySessionId` | query | string | 未标注 | — |
 
 **响应**
 
@@ -160,7 +160,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | PlaybackProgressInfo | — | 请求体：`PlaybackProgressInfo` 对象。 |
+| `body` | body | PlaybackProgressInfo | 是 | 请求体：`PlaybackProgressInfo` 对象。 |
 
 **响应**
 
@@ -192,7 +192,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | PlaybackStopInfo | — | 请求体：`PlaybackStopInfo` 对象。 |
+| `body` | body | PlaybackStopInfo | 是 | 请求体：`PlaybackStopInfo` 对象。 |
 
 **响应**
 
@@ -226,7 +226,7 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
 | `ItemId` | path | string | 是 | 条目 ID |
-| `body` | body | UserItemDataDto | — | 请求体：`UserItemDataDto` 对象。 |
+| `body` | body | UserItemDataDto | 是 | 请求体：`UserItemDataDto` 对象。 |
 
 **响应**
 
@@ -257,7 +257,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
-| `DatePlayed` | query | string | 否 | 条目最后播放时间（若有），格式 yyyyMMddHHmmss。 |
+| `DatePlayed` | query | string | 未标注 | 条目最后播放时间（若有），格式 yyyyMMddHHmmss。 |
 | `Id` | path | string | 是 | 条目 ID。 |
 
 **响应**
@@ -321,13 +321,13 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
-| `CanSeek` | query | boolean | 否 | 指示客户端是否支持拖动进度。 |
-| `AudioStreamIndex` | query | integer | 否 | — |
-| `SubtitleStreamIndex` | query | integer | 否 | 字幕流序号。 |
-| `PlayMethod` | query | string | 否 | 播放方式（DirectPlay 直连、DirectStream 直转封装、Transcode 转码）。 |
-| `LiveStreamId` | query | string | 否 | — |
-| `PlaySessionId` | query | string | 否 | — |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
+| `CanSeek` | query | boolean | 未标注 | 指示客户端是否支持拖动进度。 |
+| `AudioStreamIndex` | query | integer | 未标注 | — |
+| `SubtitleStreamIndex` | query | integer | 未标注 | 字幕流序号。 |
+| `PlayMethod` | query | string | 未标注 | 播放方式（DirectPlay 直连、DirectStream 直转封装、Transcode 转码）。 |
+| `LiveStreamId` | query | string | 未标注 | — |
+| `PlaySessionId` | query | string | 未标注 | — |
 
 **响应**
 
@@ -355,11 +355,11 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
-| `NextMediaType` | query | string | 否 | 接下来要播放的媒体类型。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
+| `NextMediaType` | query | string | 是 | 接下来要播放的媒体类型。 |
 | `PositionTicks` | query | integer | 否 | 可选。播放停止时的位置，单位 tick，1 毫秒 = 10000 ticks。 |
-| `LiveStreamId` | query | string | 否 | — |
-| `PlaySessionId` | query | string | 否 | — |
+| `LiveStreamId` | query | string | 未标注 | — |
+| `PlaySessionId` | query | string | 未标注 | — |
 
 **响应**
 
@@ -387,20 +387,20 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
 | `PositionTicks` | query | integer | 否 | 可选。当前位置，单位 tick，1 毫秒 = 10000 ticks。 |
-| `IsPaused` | query | boolean | 否 | 指示播放器是否已暂停。 |
-| `IsMuted` | query | boolean | 否 | 指示播放器是否已静音。 |
-| `AudioStreamIndex` | query | integer | 否 | — |
-| `SubtitleStreamIndex` | query | integer | 否 | 字幕流序号。 |
-| `VolumeLevel` | query | integer | 否 | 取值范围 0–100。 |
-| `PlayMethod` | query | string | 否 | 播放方式（DirectPlay 直连、DirectStream 直转封装、Transcode 转码）。 |
-| `LiveStreamId` | query | string | 否 | — |
-| `PlaySessionId` | query | string | 否 | — |
-| `RepeatMode` | query | string | 否 | 循环模式（RepeatNone、RepeatAll、RepeatOne）。 |
-| `SubtitleOffset` | query | string | 否 | 字幕时间偏移，单位 tick。 |
-| `PlaybackRate` | query | string | 否 | 播放速率（如 1.0 表示正常速度）。 |
-| `body` | body | OnPlaybackProgress | — | 请求体：`OnPlaybackProgress` 对象。 |
+| `IsPaused` | query | boolean | 未标注 | 指示播放器是否已暂停。 |
+| `IsMuted` | query | boolean | 未标注 | 指示播放器是否已静音。 |
+| `AudioStreamIndex` | query | integer | 未标注 | — |
+| `SubtitleStreamIndex` | query | integer | 未标注 | 字幕流序号。 |
+| `VolumeLevel` | query | integer | 未标注 | 取值范围 0–100。 |
+| `PlayMethod` | query | string | 未标注 | 播放方式（DirectPlay 直连、DirectStream 直转封装、Transcode 转码）。 |
+| `LiveStreamId` | query | string | 未标注 | — |
+| `PlaySessionId` | query | string | 未标注 | — |
+| `RepeatMode` | query | string | 未标注 | 循环模式（RepeatNone、RepeatAll、RepeatOne）。 |
+| `SubtitleOffset` | query | string | 未标注 | 字幕时间偏移，单位 tick。 |
+| `PlaybackRate` | query | string | 未标注 | 播放速率（如 1.0 表示正常速度）。 |
+| `body` | body | OnPlaybackProgress | 是 | 请求体：`OnPlaybackProgress` 对象。 |
 
 **响应**
 

@@ -7,7 +7,7 @@
 对外暴露的 DLNA/UPnP 端点（ConnectionManager、ContentDirectory、设备描述）。给第三方 DLNA 客户端或调试工具使用，普通 App 一般不需要。
 
 - 接口数量：**16**
-- 覆盖范围：官方参考站该服务下的全部 16 个端点
+- 收录范围：当前官方文档快照中的 16 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -228,7 +228,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `UuId` | query | string | 否 | 服务器 UUID。 |
+| `UuId` | query | string | 未标注 | 服务器 UUID。 |
 | `Filename` | path | string | 是 | 图标文件名。 |
 
 **响应**
@@ -412,7 +412,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UuId` | path | string | 是 | 服务器 UUID。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -439,7 +439,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UuId` | path | string | 是 | 服务器 UUID。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 

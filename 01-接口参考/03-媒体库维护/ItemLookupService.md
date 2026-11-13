@@ -7,7 +7,7 @@
 按类型（电影、剧集、专辑、人物……）向外部元数据源检索候选项，再把选中的结果写回条目。做“识别/匹配元数据”功能时使用。
 
 - 接口数量：**14**
-- 覆盖范围：官方参考站该服务下的全部 14 个端点
+- 收录范围：当前官方文档快照中的 14 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -71,8 +71,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `ImageUrl` | query | string | 否 | 图片 URL。 |
-| `ProviderName` | query | string | 否 | 提供方名称。 |
+| `ImageUrl` | query | string | 是 | 图片 URL。 |
+| `ProviderName` | query | string | 是 | 提供方名称。 |
 
 **响应**
 
@@ -98,7 +98,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `ItemIds` | query | string | 否 | 条目 ID 列表。 |
+| `ItemIds` | query | string | 是 | 条目 ID 列表。 |
 
 **响应**
 
@@ -125,8 +125,8 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `ReplaceAllImages` | query | string | 否 | 是否替换全部图片。 |
-| `body` | body | RemoteSearchResult | — | 请求体：`RemoteSearchResult` 对象。 |
+| `ReplaceAllImages` | query | string | 未标注 | 是否替换全部图片。 |
+| `body` | body | RemoteSearchResult | 是 | 请求体：`RemoteSearchResult` 对象。 |
 
 **响应**
 
@@ -158,7 +158,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_BookInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_BookInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -190,7 +190,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_ItemLookupInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_ItemLookupInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -222,7 +222,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_GameInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_GameInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -254,7 +254,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_MovieInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_MovieInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -286,7 +286,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_AlbumInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_AlbumInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -318,7 +318,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_ArtistInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_ArtistInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -350,7 +350,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_MusicVideoInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_MusicVideoInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -382,7 +382,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_PersonLookupInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_PersonLookupInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -414,7 +414,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_SeriesInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_SeriesInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 
@@ -446,7 +446,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoteSearchQuery_TrailerInfo | — | 请求体：`RemoteSearchQuery`1` 对象。 |
+| `body` | body | RemoteSearchQuery_TrailerInfo | 是 | 请求体：`RemoteSearchQuery`1` 对象。 |
 
 **响应**
 

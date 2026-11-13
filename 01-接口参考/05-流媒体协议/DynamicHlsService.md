@@ -7,7 +7,7 @@
 按需切片的自适应 HLS：主播放列表（master.m3u8）、变体播放列表、分片，支持音频/视频/字幕分离与直播。适合弱网与自适应码率播放。
 
 - 接口数量：**14**
-- 覆盖范围：官方参考站该服务下的全部 14 个端点
+- 收录范围：当前官方文档快照中的 14 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -72,16 +72,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |
@@ -121,16 +121,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |
@@ -170,16 +170,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |
@@ -248,16 +248,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |
@@ -296,8 +296,8 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `SubtitleSegmentLength` | query | string | 否 | 字幕分段长度。 |
-| `ManifestSubtitles` | query | string | 否 | 字幕分段格式。 |
+| `SubtitleSegmentLength` | query | string | 是 | 字幕分段长度。 |
+| `ManifestSubtitles` | query | string | 是 | 字幕分段格式。 |
 
 **响应**
 
@@ -325,16 +325,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |
@@ -374,16 +374,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |
@@ -422,8 +422,8 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `SubtitleSegmentLength` | query | string | 否 | 字幕分段长度。 |
-| `ManifestSubtitles` | query | string | 否 | 字幕分段格式。 |
+| `SubtitleSegmentLength` | query | string | 是 | 字幕分段长度。 |
+| `ManifestSubtitles` | query | string | 是 | 字幕分段格式。 |
 
 **响应**
 
@@ -480,16 +480,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |
@@ -558,16 +558,16 @@
 |---|---|---|---|---|
 | `DeviceProfileId` | query | string | 否 | 可选。要使用的 DLNA 设备配置文件 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `Container` | query | string | 否 | 封装格式（如 mkv、mp4、ts）。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `Container` | query | string | 是 | 封装格式（如 mkv、mp4、ts）。 |
 | `AudioCodec` | query | string | 否 | 可选。目标音频编码，如 mp3；省略时服务端按 URL 扩展名自动选择。可选值：aac、mp3、vorbis、wma。 |
-| `EnableAutoStreamCopy` | query | boolean | 否 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
+| `EnableAutoStreamCopy` | query | boolean | 未标注 | 请求参数与原片一致时是否允许自动直接流复制，默认 true。 |
 | `AudioSampleRate` | query | string | 否 | 可选。指定音频采样率，如 44100。 |
 | `AudioBitRate` | query | integer | 否 | 可选。目标音频码率，如 128000；省略时使用编码器默认值。 |
 | `AudioChannels` | query | integer | 否 | 可选。指定音频声道数，如 2。 |
 | `MaxAudioChannels` | query | integer | 否 | 可选。指定最大音频声道数，如 2。 |
 | `Static` | query | boolean | 否 | 可选。为 true 时直接静态输出原文件、不做任何编码。URL 使用无扩展名或原文件扩展名。true/false。 |
-| `CopyTimestamps` | query | string | 否 | 带偏移转码时是否复制时间戳，默认 false。 |
+| `CopyTimestamps` | query | string | 未标注 | 带偏移转码时是否复制时间戳，默认 false。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 | `Width` | query | integer | 否 | 可选。编码视频的固定水平分辨率（宽）。 |
 | `Height` | query | integer | 否 | 可选。编码视频的固定垂直分辨率（高）。 |

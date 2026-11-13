@@ -7,7 +7,7 @@
 读取/更新指定编码器的参数（如 H.264 的预设、CRF）。
 
 - 接口数量：**2**
-- 覆盖范围：官方参考站该服务下的全部 2 个端点
+- 收录范围：当前官方文档快照中的 2 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -29,8 +29,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `CodecId` | query | string | 否 | 编码 ID。 |
-| `ParameterContext` | query | string | 否 | 参数上下文。 |
+| `CodecId` | query | string | 是 | 编码 ID。 |
+| `ParameterContext` | query | string | 是 | 参数上下文。 |
 
 **响应**
 
@@ -62,9 +62,9 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `CodecId` | query | string | 否 | 编码 ID。 |
-| `ParameterContext` | query | string | 否 | 参数上下文。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `CodecId` | query | string | 是 | 编码 ID。 |
+| `ParameterContext` | query | string | 是 | 参数上下文。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 

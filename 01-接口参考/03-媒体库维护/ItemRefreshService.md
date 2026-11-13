@@ -7,7 +7,7 @@
 触发条目元数据刷新：全量刷新、仅刷新缺失字段、按外部 ID 重新匹配。
 
 - 接口数量：**1**
-- 覆盖范围：官方参考站该服务下的全部 1 个端点
+- 收录范围：当前官方文档快照中的 1 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -28,13 +28,13 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Recursive` | query | boolean | 否 | 指示是否递归刷新。 |
+| `Recursive` | query | boolean | 未标注 | 指示是否递归刷新。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MetadataRefreshMode` | query | string | 否 | 指定元数据刷新模式。 |
-| `ImageRefreshMode` | query | string | 否 | 指定图片刷新模式。 |
-| `ReplaceAllMetadata` | query | string | 否 | 是否替换元数据，仅在刷新模式为 FullRefresh 时有效。 |
-| `ReplaceAllImages` | query | string | 否 | 是否替换图片，仅在刷新模式为 FullRefresh 时有效。 |
-| `body` | body | BaseRefreshRequest | — | 请求体：`BaseRefreshRequest` 对象。 |
+| `MetadataRefreshMode` | query | string | 未标注 | 指定元数据刷新模式。 |
+| `ImageRefreshMode` | query | string | 未标注 | 指定图片刷新模式。 |
+| `ReplaceAllMetadata` | query | string | 未标注 | 是否替换元数据，仅在刷新模式为 FullRefresh 时有效。 |
+| `ReplaceAllImages` | query | string | 未标注 | 是否替换图片，仅在刷新模式为 FullRefresh 时有效。 |
+| `body` | body | BaseRefreshRequest | 是 | 请求体：`BaseRefreshRequest` 对象。 |
 
 **响应**
 

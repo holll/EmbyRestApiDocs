@@ -7,7 +7,7 @@
 电影推荐与相似电影查询。接口很少，通常配合 ItemsService 使用。
 
 - 接口数量：**1**
-- 覆盖范围：官方参考站该服务下的全部 1 个端点
+- 收录范围：当前官方文档快照中的 1 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -28,10 +28,10 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `CategoryLimit` | query | integer | 否 | 最多返回的分类数。 |
-| `ItemLimit` | query | integer | 否 | 每个分类下最多返回的条目数。 |
+| `CategoryLimit` | query | integer | 未标注 | 最多返回的分类数。 |
+| `ItemLimit` | query | integer | 未标注 | 每个分类下最多返回的条目数。 |
 | `UserId` | query | string | 否 | 可选。按用户 ID 过滤，并在结果中附带该用户的用户数据。 |
-| `ParentId` | query | string | 否 | 指定该项可把查询限定到某个条目或文件夹；省略则从媒体库根目录开始。 |
+| `ParentId` | query | string | 未标注 | 指定该项可把查询限定到某个条目或文件夹；省略则从媒体库根目录开始。 |
 | `EnableImages` | query | boolean | 否 | 可选。输出中包含图片信息。 |
 | `EnableUserData` | query | boolean | 否 | 可选。输出中包含用户数据。 |
 | `ImageTypeLimit` | query | integer | 否 | 可选。每种图片类型最多返回的图片数量。 |

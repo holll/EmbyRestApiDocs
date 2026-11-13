@@ -1,0 +1,14 @@
+[
+  {
+    "service": "ConnectService",
+    "method": "GET",
+    "path": "/Connect/Exchange",
+    "parameter": "ConnectUserId",
+    "location": "query",
+    "required": "required",
+    "required_source": "verified",
+    "source_url": "https://dev.emby.media/reference/RestAPI/ConnectService/getConnectExchange.html",
+    "evidence": "官方参数名为 *ConnectUserId；星号表示必填。旧快照丢失名称星号。",
+    "scope": "单参数核验，不代表该服务全部参数已核验"
+  }
+]

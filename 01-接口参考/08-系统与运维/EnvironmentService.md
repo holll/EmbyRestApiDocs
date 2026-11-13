@@ -7,7 +7,7 @@
 服务器运行环境：可用磁盘、网络设备与共享、目录浏览、路径校验、默认编解码配置。配置媒体库路径时常用。
 
 - 接口数量：**8**
-- 覆盖范围：官方参考站该服务下的全部 8 个端点
+- 收录范围：当前官方文档快照中的 8 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -61,9 +61,9 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Path` | query | string | 否 | — |
-| `IncludeFiles` | query | string | 否 | 可选。结果中是否包含文件，true/false。 |
-| `IncludeDirectories` | query | string | 否 | 可选。结果中是否包含文件夹，true/false。 |
+| `Path` | query | string | 是 | — |
+| `IncludeFiles` | query | string | 未标注 | 可选。结果中是否包含文件，true/false。 |
+| `IncludeDirectories` | query | string | 未标注 | 可选。结果中是否包含文件夹，true/false。 |
 
 **响应**
 
@@ -145,7 +145,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Path` | query | string | 否 | — |
+| `Path` | query | string | 是 | — |
 
 **响应**
 
@@ -175,7 +175,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Path` | query | string | 否 | — |
+| `Path` | query | string | 是 | — |
 
 **响应**
 
@@ -201,10 +201,10 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Path` | query | string | 否 | — |
-| `IncludeFiles` | query | string | 否 | 可选。结果中是否包含文件，true/false。 |
-| `IncludeDirectories` | query | string | 否 | 可选。结果中是否包含文件夹，true/false。 |
-| `body` | body | GetDirectoryContents | — | 请求体：`GetDirectoryContents` 对象。 |
+| `Path` | query | string | 是 | — |
+| `IncludeFiles` | query | string | 未标注 | 可选。结果中是否包含文件，true/false。 |
+| `IncludeDirectories` | query | string | 未标注 | 可选。结果中是否包含文件夹，true/false。 |
+| `body` | body | GetDirectoryContents | 是 | 请求体：`GetDirectoryContents` 对象。 |
 
 **响应**
 
@@ -236,8 +236,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Path` | query | string | 否 | — |
-| `body` | body | ValidatePath | — | 请求体：`ValidatePath` 对象。 |
+| `Path` | query | string | 是 | — |
+| `body` | body | ValidatePath | 是 | 请求体：`ValidatePath` 对象。 |
 
 **响应**
 

@@ -7,7 +7,7 @@
 字幕全链路：远程搜索字幕、下载字幕、按格式获取字幕流（SRT/VTT/ASS）、上传外挂字幕、删除字幕、获取字幕播放列表。
 
 - 接口数量：**16**
-- 覆盖范围：官方参考站该服务下的全部 16 个端点
+- 收录范围：当前官方文档快照中的 16 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -44,7 +44,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 
 **响应**
@@ -72,7 +72,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 
 **响应**
@@ -104,8 +104,8 @@
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
 | `StartPositionTicks` | path | integer | 是 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -135,9 +135,9 @@
 | `MediaSourceId` | path | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
-| `StartPositionTicks` | query | integer | 否 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `StartPositionTicks` | query | integer | 未标注 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -164,11 +164,11 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
 | `Language` | path | string | 是 | 语言。 |
-| `IsPerfectMatch` | query | boolean | 否 | 是否为完全匹配。 |
-| `IsForced` | query | boolean | 否 | 是否为强制字幕（forced）。 |
-| `IsHearingImpaired` | query | boolean | 否 | 是否为听障字幕（SDH）。 |
+| `IsPerfectMatch` | query | boolean | 未标注 | 是否为完全匹配。 |
+| `IsForced` | query | boolean | 未标注 | 是否为强制字幕（forced）。 |
+| `IsHearingImpaired` | query | boolean | 未标注 | 是否为听障字幕（SDH）。 |
 
 **响应**
 
@@ -257,8 +257,8 @@
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
 | `StartPositionTicks` | path | integer | 是 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -288,9 +288,9 @@
 | `MediaSourceId` | path | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
-| `StartPositionTicks` | query | integer | 否 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `StartPositionTicks` | query | integer | 未标注 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -321,8 +321,8 @@
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
 | `StartPositionTicks` | path | integer | 是 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -352,9 +352,9 @@
 | `MediaSourceId` | path | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
-| `StartPositionTicks` | query | integer | 否 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `StartPositionTicks` | query | integer | 未标注 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -385,8 +385,8 @@
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
 | `StartPositionTicks` | path | integer | 是 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -416,9 +416,9 @@
 | `MediaSourceId` | path | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 | `Format` | path | string | 是 | 格式。 |
-| `StartPositionTicks` | query | integer | 否 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `EndPositionTicks` | query | integer | 否 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
-| `CopyTimestamps` | query | string | 否 | 是否复制时间戳。 |
+| `StartPositionTicks` | query | integer | 未标注 | 起始位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `EndPositionTicks` | query | integer | 未标注 | 结束位置，单位 tick（1 毫秒 = 10000 ticks）。 |
+| `CopyTimestamps` | query | string | 未标注 | 是否复制时间戳。 |
 
 **响应**
 
@@ -445,7 +445,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
 | `SubtitleId` | path | string | 是 | 字幕 ID。 |
 
 **响应**
@@ -477,7 +477,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 
 **响应**
@@ -505,7 +505,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MediaSourceId` | query | string | 否 | 媒体源 ID。 |
+| `MediaSourceId` | query | string | 是 | 媒体源 ID。 |
 | `Index` | path | integer | 是 | 字幕流序号。 |
 
 **响应**

@@ -7,7 +7,7 @@
 以“用户视角”访问媒体库：某用户可见的媒体文件夹、某文件夹下的条目、以及条目的可见性设置（私有/公开/共享）。做权限敏感的浏览时优先用它。
 
 - 接口数量：**20**
-- 覆盖范围：官方参考站该服务下的全部 20 个端点
+- 收录范围：当前官方文档快照中的 20 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -289,14 +289,14 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
-| `Limit` | query | integer | 否 | 请求体：`Limit` 对象。 |
-| `ParentId` | query | string | 否 | 指定该项可把查询限定到某个条目或文件夹；省略则从媒体库根目录开始。 |
+| `Limit` | query | integer | 未标注 | 请求体：`Limit` 对象。 |
+| `ParentId` | query | string | 未标注 | 指定该项可把查询限定到某个条目或文件夹；省略则从媒体库根目录开始。 |
 | `Fields` | query | string | 否 | 可选。指定输出中额外返回的字段，英文逗号分隔。可选值：Chapters、DateCreated、Genres、HomePageUrl、IndexOptions、MediaStreams、Overview、ParentId、Path、People、ProviderIds、PrimaryImageAspectRatio、SortName、Studios、Taglines。 |
 | `IncludeItemTypes` | query | string | 否 | 可选。按条目类型过滤结果，可用英文逗号分隔多个值。 |
 | `MediaTypes` | query | string | 否 | 可选。按媒体类型过滤，英文逗号分隔多个。 |
-| `IsFolder` | query | boolean | 否 | 按是否为文件夹过滤。 |
-| `IsPlayed` | query | boolean | 否 | 按是否已播放过滤。 |
-| `GroupItems` | query | string | 否 | 是否把条目归组到父容器中。 |
+| `IsFolder` | query | boolean | 未标注 | 按是否为文件夹过滤。 |
+| `IsPlayed` | query | boolean | 未标注 | 按是否已播放过滤。 |
+| `GroupItems` | query | string | 未标注 | 是否把条目归组到父容器中。 |
 | `EnableImages` | query | boolean | 否 | 可选。输出中包含图片信息。 |
 | `ImageTypeLimit` | query | integer | 否 | 可选。每种图片类型最多返回的图片数量。 |
 | `EnableImageTypes` | query | boolean | 否 | 可选。输出中要包含的图片类型。 |
@@ -402,7 +402,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | UpdateUserItemAccess | — | 请求体：`UpdateUserItemAccess` 对象。 |
+| `body` | body | UpdateUserItemAccess | 是 | 请求体：`UpdateUserItemAccess` 对象。 |
 
 **响应**
 
@@ -486,7 +486,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | LeaveSharedItems | — | 请求体：`LeaveSharedItems` 对象。 |
+| `body` | body | LeaveSharedItems | 是 | 请求体：`LeaveSharedItems` 对象。 |
 
 **响应**
 
@@ -580,7 +580,7 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `Hide` | query | string | 否 | 是否把该条目从“继续观看”中隐藏，true/false。 |
+| `Hide` | query | string | 是 | 是否把该条目从“继续观看”中隐藏，true/false。 |
 
 **响应**
 
@@ -612,7 +612,7 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
 | `Id` | path | string | 是 | 条目 ID。 |
-| `Likes` | query | string | 否 | 用户是否喜欢该条目，true/false。 |
+| `Likes` | query | string | 是 | 用户是否喜欢该条目，true/false。 |
 
 **响应**
 
@@ -674,7 +674,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
-| `body` | body | ReportItemsSearched | — | 请求体：`ReportItemsSearched` 对象。 |
+| `body` | body | ReportItemsSearched | 是 | 请求体：`ReportItemsSearched` 对象。 |
 
 **响应**
 

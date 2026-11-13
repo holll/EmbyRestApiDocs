@@ -7,7 +7,7 @@
 读写服务器配置：应用配置（端口、HTTPS、库扫描等）与各类“命名配置”（如 branding、metadata 等）。
 
 - 接口数量：**5**
-- 覆盖范围：官方参考站该服务下的全部 5 个端点
+- 收录范围：当前官方文档快照中的 5 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -86,7 +86,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | ServerConfiguration | — | 请求体：`ServerConfiguration` 对象。 |
+| `body` | body | ServerConfiguration | 是 | 请求体：`ServerConfiguration` 对象。 |
 
 **响应**
 
@@ -119,7 +119,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Key` | path | string | 是 | 键。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -145,7 +145,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 

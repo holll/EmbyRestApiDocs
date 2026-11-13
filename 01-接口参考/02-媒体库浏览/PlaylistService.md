@@ -7,7 +7,7 @@
 管理播放列表：新建、查看条目、增删条目、移动条目顺序、取播放列表的原始条目。
 
 - 接口数量：**7**
-- 覆盖范围：官方参考站该服务下的全部 7 个端点
+- 收录范围：当前官方文档快照中的 7 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -35,7 +35,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID |
-| `EntryIds` | query | string | 否 | 活动日志条目 ID 列表。 |
+| `EntryIds` | query | string | 是 | 活动日志条目 ID 列表。 |
 
 **响应**
 
@@ -61,8 +61,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `UserId` | query | string | 否 | 用户 ID。 |
-| `Ids` | query | string | 否 | 条目 ID，英文逗号分隔。 |
+| `UserId` | query | string | 未标注 | 用户 ID。 |
+| `Ids` | query | string | 是 | 条目 ID，英文逗号分隔。 |
 | `Id` | path | string | 是 | 条目 ID |
 
 **响应**
@@ -94,7 +94,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID |
-| `UserId` | query | string | 否 | 用户 ID。 |
+| `UserId` | query | string | 未标注 | 用户 ID。 |
 | `StartIndex` | query | integer | 否 | 可选。开始返回的记录序号，序号更小的记录会被丢弃。 |
 | `Limit` | query | integer | 否 | 可选。最多返回的记录条数。 |
 | `Fields` | query | string | 否 | 可选。指定输出中额外返回的字段，英文逗号分隔。可选值：Budget、Chapters、DateCreated、Genres、HomePageUrl、IndexOptions、MediaStreams、Overview、ParentId、Path、People、ProviderIds、PrimaryImageAspectRatio、Revenue、SortName、Studios、Taglines。 |
@@ -133,8 +133,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Ids` | query | string | 否 | 要加入播放列表的条目 ID。 |
-| `MediaType` | query | string | 否 | 播放列表媒体类型。 |
+| `Ids` | query | string | 未标注 | 要加入播放列表的条目 ID。 |
+| `MediaType` | query | string | 未标注 | 播放列表媒体类型。 |
 
 **响应**
 
@@ -164,8 +164,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `UserId` | query | string | 否 | 用户 ID。 |
-| `Ids` | query | string | 否 | 条目 ID，英文逗号分隔。 |
+| `UserId` | query | string | 未标注 | 用户 ID。 |
+| `Ids` | query | string | 是 | 条目 ID，英文逗号分隔。 |
 | `Id` | path | string | 是 | 条目 ID |
 
 **响应**
@@ -225,7 +225,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID |
-| `EntryIds` | query | string | 否 | 活动日志条目 ID 列表。 |
+| `EntryIds` | query | string | 是 | 活动日志条目 ID 列表。 |
 
 **响应**
 

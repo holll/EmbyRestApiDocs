@@ -17,6 +17,7 @@ from zh_notes import NOTE, PNOTE_EMPTY, PNOTE_OVERRIDE  # noqa: E402
 from zh_ops import OP_TITLE, PATH_TITLE, SUM  # noqa: E402
 from zh_services import SVC  # noqa: E402
 from zh_model import tr_field  # noqa: E402
+from dataset import load_dataset, snapshot_metadata  # noqa: E402
 
 API_DIR = "01-接口参考"
 MODEL_DIR = "02-数据模型"
@@ -207,9 +208,12 @@ def required_flag(p):
         return "是"
     if note.lower().startswith("required"):
         return "是"
-    if loc in ("query", "header"):
+    if note.lower().startswith("optional"):
         return "否"
-    return "—"
+    # 旧抓取器把所有未注明 Optional 的参数都判成 required，不能据此宣称必填。
+    if p.get("required_source") in ("name_marker", "notes", "verified"):
+        return {"required": "是", "optional": "否"}.get(p.get("required"), "未标注")
+    return "未标注"
 
 
 def path_note(path, name):
@@ -264,7 +268,7 @@ def render_service(svc, models_map):
     lines.append("## 概述\n")
     lines.append(intro + "\n")
     lines.append("- 接口数量：**%d**" % len(ops))
-    lines.append("- 覆盖范围：官方参考站该服务下的全部 %d 个端点" % len(ops))
+    lines.append("- 收录范围：当前官方文档快照中的 %d 个端点；不代表已逐接口实机验证。" % len(ops))
     lines.append("")
     lines.append("## 接口一览\n")
     lines.append("| # | 方法 | 路径 | 说明 | 权限 |")
@@ -292,7 +296,7 @@ def render_service(svc, models_map):
             else:
                 lines.append("- **成功响应**：`200`（无返回内容，动作类接口）")
         if op.get("incomplete"):
-            lines.append("- **注意**：官方参考站未提供该接口的详情页，参数表可能不完整，请以服务器实际实现为准。")
+            lines.append("- **注意**：本次快照未取得可解析的详情，可能是上游缺页、网络或解析失败；参数和响应未知，不可据此认定无参数。")
         lines.append("")
 
         desc = op.get("description") or ""
@@ -318,6 +322,8 @@ def render_service(svc, models_map):
                 lines.append("| `%s` | %s | %s | %s | %s |" % (
                     esc(p["name"]), p.get("in", ""), esc(t), req, esc(zh)))
             lines.append("")
+        elif op.get("incomplete"):
+            lines.append("请求参数未知：当前快照未取得详情。\n")
         else:
             lines.append("该接口无请求参数。\n")
 
@@ -376,7 +382,7 @@ def render_models(models):
     index = []
     index.append("# 数据模型索引\n")
     index.append("> [返回总目录](../README.md)\n")
-    index.append("本索引收录官方参考站出现的全部 **%d** 个数据模型（含枚举）。" % len(models))
+    index.append("本索引收录当前快照中的 **%d** 个数据模型（含枚举）；同名不同身份已消歧，冲突类型保留候选并标注。" % len(models))
     index.append("服务文档中的“涉及的数据模型”一节点击即跳到对应条目。\n")
     for k in MODEL_FILES:
         fn, title = MODEL_FILES[k]
@@ -411,8 +417,11 @@ def render_models(models):
                 lines.append("|---|---|---|")
                 for f in m["fields"]:
                     t = clean_type(f["type"]) or "—"
+                    note = tr_field(f["notes"], f["name"])
+                    if f.get("type_status") == "source_conflict":
+                        note += "（官方快照不同位置的类型冲突，候选均保留，待按服务器版本核验）"
                     lines.append("| `%s` | %s | %s |" % (
-                        f["name"], esc(t), esc(tr_field(f["notes"], f["name"]))))
+                        f["name"], esc(t), esc(note)))
                 lines.append("")
             if not m["enum"] and not m["fields"]:
                 lines.append("（该模型在官方文档中无字段明细。）\n")
@@ -447,7 +456,7 @@ def render_readme(services, cats, models):
     lines.append("# Emby REST API 中文速查手册\n")
     lines.append("面向第三方客户端开发者的 Emby Server REST API 中文参考。内容依据官方文档 "
                  "<https://dev.emby.media/reference/RestAPI.html> 整理，按服务分组逐条编写，"
-                 "覆盖官方参考站列出的全部接口。\n")
+                 "收录仓库中的官方文档快照；不保证覆盖上游后续新增接口，也不代表逐接口实机核验。\n")
     lines.append("## 这份手册怎么用\n")
     lines.append("1. **第一次接入**：先读 [快速开始](00-基础/01-快速开始.md)，照着跑通登录与拉取媒体库。")
     lines.append("2. **写代码前**：查 [常用接口速查表](00-基础/05-常用接口速查表.md)，那里是按场景组织的“最短路径”。")
@@ -480,7 +489,7 @@ def render_readme(services, cats, models):
     lines.append("- 返回体均为 JSON（流媒体、图片类接口除外），字段名 PascalCase，解析时请按原样大小写匹配。")
     lines.append("- 布尔值用 `true` / `false`，时间为 ISO 8601 字符串，播放位置用 tick（1 毫秒 = 10000 ticks）。")
     lines.append("- 参数表“类型”列以官方文档为准；官方未给出类型时按命名惯例推断（`Is*`/`Has*`/`Can*` 判为布尔，`Limit`/`StartIndex` 等判为整数），仅供参考。")
-    lines.append("- 参数表“必填”列：路径参数一律为“是”；查询参数官方未逐一标注，除说明中明确写 Required 外按“否”处理；请求体字段标“—”，表示整体以模型定义为准。")
+    lines.append("- 参数表“必填”列：路径参数为“是”；官方名称星号、明确 Required/Optional 说明或带来源的核验记录决定“是/否”；旧快照无法恢复的标记显示“未标注”，不等于可省略。")
     lines.append("- 模型表“说明”列的 `—` 表示官方未提供该字段说明，`（原文）` 开头表示保留官方英文原文以便对照。")
     lines.append("")
     lines.append("## 目录\n")
@@ -522,16 +531,33 @@ def render_readme(services, cats, models):
     lines.append("| [远程控制与投屏](03-实战示例/03-远程控制与投屏.md) | 会话发现、下发播放命令、轮询状态 |")
     lines.append("")
     lines.append("## 生成与校验\n")
+    lines.append("环境：Python 3.11+，核心工具无第三方依赖；维护流程和质量边界见 [维护指南](CONTRIBUTING.md)。\n")
     lines.append("接口清单由 `tools/crawl_emby_api.py` 从官方参考站抓取（结果落在 `tools/_data/`），"
                  "`tools/build_docs.py` 依据数据与中文词表生成全部 Markdown，`tools/check_docs.py` 做交付校验。\n")
     lines.append("```text")
-    lines.append("python tools\\crawl_emby_api.py   # 重新抓取官方接口（可选）")
-    lines.append("python tools\\build_docs.py      # 重新生成文档（会覆盖自动生成的文件）")
-    lines.append("python tools\\build_ai_index.py  # 生成 llms.txt 与 index.json（AI / 脚本入口）")
-    lines.append("python tools\\check_docs.py      # 校验：接口数/参数表/模型/断链/未打钩项/AI 入口")
+    lines.append("python3 tools/crawl_emby_api.py       # 联网更新；失败不发布，保留旧快照")
+    lines.append("python3 tools/rebuild_snapshot.py    # 离线规范化及应用有来源的修订")
+    lines.append("python3 tools/build_docs.py          # 重生成接口、模型及目录（不覆盖手写教程）")
+    lines.append("python3 tools/build_ai_index.py      # 重生成 AI / 脚本入口")
+    lines.append("python3 tools/check_docs.py          # 内容、快照、链接与索引一致性校验")
+    lines.append("python3 -m unittest discover -s tests -v  # 离线回归测试")
     lines.append("```\n")
-    lines.append("最近一次校验结果：服务 70、接口 548、参数条目 7708、模型 321、Markdown 96 个文件，"
-                 "另有 `llms.txt`（约 18 KB）与 `index.json`（约 190 KB）两个机器入口；无断链、无未打钩项。\n")
+    incomplete = sum(bool(op.get("incomplete")) for svc in services for op in svc["operations"])
+    lines.append("当前快照：%d 个服务、%d 个端点，其中 %d 个端点详情不完整。生成统计不是校验结果。"
+                 "校验仅证明快照与产物一致，不等于官方实时全覆盖或服务器实测通过。\n" %
+                 (len(services), total_ops, incomplete))
+    provenance = snapshot_metadata(DATA)
+    lines.append("## 快照与质量边界\n")
+    lines.append("- 输入哈希（SHA-256）：`services.json` 为 `%s`；`models.json` 为 `%s`。" %
+                 (provenance["sha256"]["services.json"], provenance["sha256"]["models.json"]))
+    source = provenance["provenance"]
+    if source.get("kind") == "live_crawl" and source.get("fetched_at"):
+        lines.append("- 本次官方站点抓取完成时间：`%s`；来源、页面哈希及归档关联见 [快照元数据](tools/_data/metadata.json)。官方参考站未提供可据以确认的 Emby Server 版本，不以抓取日期或示例版本代替。" % source["fetched_at"])
+    else:
+        lines.append("- 抓取来源及可追溯记录见 [快照元数据](tools/_data/metadata.json)；遗留数据的抓取日期和适用服务器版本未知，不以示例版本代替。")
+    lines.append("- 已知详情缺失的端点必须单独报告；未知参数不应解释为无参数。")
+    lines.append("- 同身份模型的冲突类型以 `A | A[]` 等候选形式保留，不代表两个类型都已实测支持。")
+    lines.append("- 局部核验修订记录见 [修订记录](tools/_data/corrections.json)，不能据少量抽查推定所有参数已核对。\n")
     lines.append("> 手写文档（`00-基础/`、`03-实战示例/`）不会被 `build_docs.py` 覆盖；"
                  "`进度清单.md` 会在每次生成时按文件是否存在自动打钩。")
     lines.append("")
@@ -544,7 +570,7 @@ def render_readme(services, cats, models):
 def render_progress(services, cats):
     lines = ["# 编写进度清单\n",
              "> [返回总目录](README.md)\n",
-             "图例：`[x]` 已编写并核对（接口数、参数、响应均与官方一致）；`[ ]` 未完成。\n"]
+             "图例：`[x]` 文件已存在（自动生成或手写）；`[ ]` 文件缺失。勾选不代表人工核对、上游完整覆盖或实机验证。\n"]
     lines.append("## 基础篇\n")
     for n, t in [("01-快速开始.md", "快速开始"), ("02-认证与鉴权.md", "认证与鉴权"),
                  ("03-通用约定与响应格式.md", "通用约定与响应格式"),
@@ -589,8 +615,7 @@ def render_progress(services, cats):
 
 
 def main():
-    services = json.load(open(os.path.join(DATA, "services.json"), encoding="utf-8"))
-    models = json.load(open(os.path.join(DATA, "models.json"), encoding="utf-8"))
+    services, models = load_dataset(DATA)
     os.makedirs(os.path.join(ROOT, MODEL_DIR), exist_ok=True)
 
     models_map, buckets = render_models(models)

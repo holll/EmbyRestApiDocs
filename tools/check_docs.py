@@ -1,145 +1,294 @@
 # -*- coding: utf-8 -*-
-"""核对生成结果：文档是否覆盖全部服务/接口/模型，是否存在未打钩项与断链。"""
-import io
+"""离线校验：生成一致性、快照结构完整性；不等于官方全覆盖或服务器实测。
+
+validate() 不修改工作树，不共享错误列表。临时渲染用于检查生成漂移，另外逐表格、
+端点、模型字段/枚举检查语义，避免仅有标题/数量正确的空壳文档通过。
+"""
+import argparse
+from contextlib import contextmanager
+from dataclasses import dataclass, field
 import json
-import os
+from pathlib import Path
 import re
 import sys
+import tempfile
+from urllib.parse import unquote, urlsplit
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(ROOT, "tools"))
-from zh_services import SVC  # noqa: E402
-
-API_DIR = "01-接口参考"
-MODEL_DIR = "02-数据模型"
-MODEL_FILES = ["01-通用结构.md", "02-媒体条目.md", "03-用户与账号.md",
-               "04-播放与转码.md", "05-直播电视.md", "06-系统与配置.md"]
-
-errors = []
-warns = []
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "tools") not in sys.path:
+    sys.path.insert(0, str(ROOT / "tools"))
+import build_docs
+import build_ai_index
+from zh_services import SVC
 
 
-def read(p):
-    with io.open(p, encoding="utf-8") as f:
-        return f.read()
+@dataclass
+class Report:
+    errors: list = field(default_factory=list)
+    warnings: list = field(default_factory=list)
+    counts: dict = field(default_factory=dict)
+
+    @property
+    def ok(self):
+        return not self.errors
 
 
-def main():
-    services = json.load(io.open(os.path.join(ROOT, "tools", "_data", "services.json"), encoding="utf-8"))
-    models = json.load(io.open(os.path.join(ROOT, "tools", "_data", "models.json"), encoding="utf-8"))
+@contextmanager
+def module_root(module, root):
+    """现有生成器保留文件输出接口；仅指向临时目录并保证还原。"""
+    old = module.ROOT
+    old_data = getattr(module, "DATA", None)
+    module.ROOT = str(root)
+    if old_data is not None:
+        module.DATA = str(Path(root) / "tools/_data")
+    try:
+        yield
+    finally:
+        module.ROOT = old
+        if old_data is not None:
+            module.DATA = old_data
 
-    total_ops = 0
-    total_params = 0
+
+def load_json(path, report):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        report.errors.append("无法读取 JSON %s：%s" % (path.name, exc))
+        return None
+
+
+def read_text(path, report):
+    try:
+        return path.read_text(encoding="utf-8")
+    except OSError as exc:
+        report.errors.append("缺少或无法读取文档 %s：%s" % (path, exc))
+        return None
+
+
+def sections(text):
+    """保留小节顺序及重名，不用字典静默吞掉重复小节。"""
+    matches = list(re.finditer(r"^## (.+)$", text, re.M))
+    return [(m.group(1), text[m.end():matches[i + 1].start() if i + 1 < len(matches) else len(text)])
+            for i, m in enumerate(matches)]
+
+
+def table_rows(text):
+    """读取全部表格，支持生成器的转义竖线；顺序与重复项均有意义。"""
+    rows = []
+    for line in text.splitlines():
+        if line.startswith("|") and line.endswith("|"):
+            rows.append(tuple(cell.strip().replace("\\|", "|")
+                              for cell in re.split(r"(?<!\\)\|", line[1:-1])))
+    return rows
+
+
+def service_semantics(text):
+    result = []
+    for title, body in sections(text):
+        if title == "接口一览" or re.match(r"\d+\. ", title):
+            route = re.findall(r"^`(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)` `([^`]+)`$", body, re.M)
+            auth = re.findall(r"^- \*\*权限\*\*：(.+)$", body, re.M)
+            success = re.findall(r"^- \*\*成功响应\*\*：(.+)$", body, re.M)
+            result.append((title, route, auth, success, table_rows(body)))
+    return result
+
+
+def model_semantics(text):
+    return [(title, table_rows(body), re.findall(r"^\*\*枚举值\*\*：(.+)$", body, re.M))
+            for title, body in sections(text)]
+
+
+def validate_source(services, models, report):
+    """只检查保存快照的结构，绝不据此声称实时官网全覆盖。"""
+    names = set()
+    incomplete = []
     for svc in services:
         name = svc["service"]
-        total_ops += len(svc["operations"])
-        total_params += sum(len(op["params"]) for op in svc["operations"])
+        if name in names:
+            report.errors.append("源数据服务重复：" + name)
+        names.add(name)
         if name not in SVC:
-            errors.append("服务未登记中文信息：%s" % name)
-            continue
-        cat = SVC[name][0]
-        path = os.path.join(ROOT, API_DIR, cat, "%s.md" % name)
-        if not os.path.exists(path):
-            errors.append("缺少服务文档：%s" % path)
-            continue
-        text = read(path)
-        n_heading = len(re.findall(r"^## \d+\. ", text, re.M))
-        if n_heading != len(svc["operations"]):
-            errors.append("%s：文档小节 %d 个，官方接口 %d 个" % (name, n_heading, len(svc["operations"])))
-        n_params = text.count("**请求参数**")
-        n_ops_with_params = sum(1 for op in svc["operations"] if op["params"])
-        if n_params != n_ops_with_params:
-            warns.append("%s：参数表 %d 个，有参数的接口 %d 个" % (name, n_params, n_ops_with_params))
-        # 路径一致性：文档中出现的反引号路径应都能在官方数据里找到
-        doc_paths = set(re.findall(r"^\| \d+ \| `(GET|POST|DELETE|PUT|HEAD|PATCH)` \| `([^`]+)`", text, re.M))
-        official = {(op["method"].upper(), op["path"]) for op in svc["operations"]}
-        for m, p in doc_paths:
-            if (m, p) not in official:
-                errors.append("%s：一览表出现非官方端点 %s %s" % (name, m, p))
-
-    # 模型
-    all_model_names = []
-    for fn in MODEL_FILES:
-        p = os.path.join(ROOT, MODEL_DIR, fn)
-        if not os.path.exists(p):
-            errors.append("缺少模型文件：%s" % fn)
-            continue
-        all_model_names += re.findall(r"^## ([\w\-\.]+)$", read(p), re.M)
-    missing = set(models) - set(all_model_names)
-    if missing:
-        errors.append("模型未写入文档：%d 个，例如 %s" % (len(missing), sorted(missing)[:5]))
-    extra = set(all_model_names) - set(models)
-    if extra:
-        warns.append("文档中出现了数据文件里没有的模型名：%s" % sorted(extra)[:5])
-
-    idx = os.path.join(ROOT, MODEL_DIR, "00-模型索引.md")
-    if os.path.exists(idx):
-        for fn in MODEL_FILES:
-            if fn[:-3] not in read(idx):
-                warns.append("模型索引未链接分类：%s" % fn)
-
-    # AI / 脚本入口
-    llms = os.path.join(ROOT, "llms.txt")
-    idx_json = os.path.join(ROOT, "index.json")
-    if not os.path.exists(llms):
-        errors.append("缺少 llms.txt（AI 入口索引）")
-    else:
-        for link in re.findall(r"\]\(([^)#\s]+\.md)", read(llms)):
-            if not os.path.exists(os.path.normpath(os.path.join(ROOT, link))):
-                errors.append("llms.txt 链接失效：%s" % link)
-        for svc in services:
-            if SVC[svc["service"]][0] and ("%s.md" % svc["service"]) not in read(llms):
-                errors.append("llms.txt 未列出服务：%s" % svc["service"])
-    if not os.path.exists(idx_json):
-        errors.append("缺少 index.json（机器可读目录）")
-    else:
-        data = json.load(io.open(idx_json, encoding="utf-8"))
-        c = data["meta"]["counts"]
-        if c["services"] != len(services) or c["endpoints"] != total_ops:
-            errors.append("index.json 计数与官方数据不一致")
-        if len(data["services"]) != len(services):
-            errors.append("index.json 服务条目数不符：%d" % len(data["services"]))
-        for s in data["services"]:
-            if not os.path.exists(os.path.join(ROOT, s["file"])):
-                errors.append("index.json 指向的文件不存在：%s" % s["file"])
-        if len(data.get("models", {})) != len(models):
-            errors.append("index.json 模型条目数不符：%d" % len(data.get("models", {})))
-
-    # 进度清单
-    prog = os.path.join(ROOT, "进度清单.md")
-    if os.path.exists(prog):
-        undone = read(prog).count("- [ ]")
-        if undone:
-            errors.append("进度清单仍有 %d 项未打钩" % undone)
-
-    # 链接可达性（只查站内相对链接）
-    md_files = []
-    for dirpath, _, files in os.walk(ROOT):
-        if ".git" in dirpath or "_data" in dirpath:
-            continue
-        for f in files:
-            if f.endswith(".md"):
-                md_files.append(os.path.join(dirpath, f))
-    broken = 0
-    for p in md_files:
-        for link in re.findall(r"\]\(([^)#\s]+\.md)(?:#[^)]*)?\)", read(p)):
-            if link.startswith("http"):
+            report.errors.append("服务未登记中文信息：" + name)
+        if not svc["operations"]:
+            report.errors.append("源数据服务无接口（可能抓取失败）：" + name)
+        routes = set()
+        for op in svc["operations"]:
+            route = (op["method"].upper(), op["path"])
+            label = "%s %s %s" % (name, *route)
+            if route in routes:
+                report.errors.append("源数据端点重复：" + label)
+            routes.add(route)
+            if op.get("incomplete"):
+                incomplete.append(label)
                 continue
-            target = os.path.normpath(os.path.join(os.path.dirname(p), link))
-            if not os.path.exists(target):
-                broken += 1
-                if broken <= 10:
-                    errors.append("断链：%s → %s" % (os.path.relpath(p, ROOT), link))
+            if not op.get("responses"):
+                report.errors.append("完整端点缺少响应定义：" + label)
+            params = set()
+            for p in op["params"]:
+                key = (p["name"], p.get("in", ""))
+                if key in params:
+                    report.errors.append("源数据参数重复：%s %s" % (label, key))
+                params.add(key)
+    # 同名定义/枚举丢失由独立registry归并重建检测，不能只信任models.json。
+    try:
+        from model_registry import normalize_services
+        _, rebuilt = normalize_services(services)
+        if rebuilt != models:
+            report.errors.append("源数据模型 registry 与接口定义重建结果不一致（字段/枚举/命名冲突）")
+    except ImportError:
+        report.warnings.append("未提供模型 registry，未执行接口定义与模型快照的独立一致性检查")
+    if incomplete:
+        report.warnings.append("源数据不完整：%d 个端点仅有清单信息，参数/响应未核验：%s" %
+                               (len(incomplete), "；".join(incomplete)))
+    report.counts.update(services=len(services), endpoints=sum(len(s["operations"]) for s in services),
+                         params=sum(len(o["params"]) for s in services for o in s["operations"]),
+                         models=len(models), model_fields=sum(len(m["fields"]) for m in models.values()),
+                         incomplete=len(incomplete))
 
-    print("服务 %d / 接口 %d / 参数条目 %d / 模型 %d" % (
-        len(services), total_ops, total_params, len(models)))
-    print("Markdown 文件 %d 个" % len(md_files))
-    for w in warns:
-        print("[警告] " + w)
-    for e in errors:
-        print("[错误] " + e)
-    print("结果：%s（错误 %d，警告 %d）" % ("通过" if not errors else "未通过", len(errors), len(warns)))
-    return 1 if errors else 0
+
+def compare_document(actual_path, expected_path, kind, report):
+    actual = read_text(actual_path, report)
+    if actual is None:
+        return
+    expected = expected_path.read_text(encoding="utf-8")
+    parser = service_semantics if kind == "service" else model_semantics
+    if parser(actual) != parser(expected):
+        report.errors.append("内容语义不一致：%s（小节/方法路径/参数/响应/模型字段/枚举）" % actual_path.name)
+    if actual != expected:
+        report.errors.append("生成一致性不符：%s（请重新生成，不代表服务器实测失败）" % actual_path.name)
+
+
+def heading_anchors(text):
+    """GitHub 风格标题锚点，包括重复标题的 -1/-2 后缀；忽略 fenced code。"""
+    anchors = set()
+    seen = {}
+    fenced = False
+    fence_char = None
+    for line in text.splitlines():
+        fence = re.match(r"^\s*(`{3,}|~{3,})", line)
+        if fence:
+            if not fenced:
+                fenced, fence_char = True, fence.group(1)[0]
+            elif fence.group(1)[0] == fence_char:
+                fenced = False
+            continue
+        if fenced:
+            continue
+        match = re.match(r"^#{1,6}\s+(.+?)(?:\s+#+)?$", line)
+        if not match:
+            continue
+        title = re.sub(r"<[^>]+>", "", match.group(1))
+        title = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", title)
+        # 中间的下划线是模型名的一部分，不是 Markdown 强调标记。
+        title = re.sub(r"(?<!\w)_([^_\n]+)_(?!\w)", r"\1", title)
+        title = re.sub(r"[\[\]`*~]", "", title).lower()
+        title = "".join(c for c in title if c.isalnum() or c in "_- ")
+        anchor = title.replace(" ", "-")
+        count = seen.get(anchor, 0)
+        seen[anchor] = count + 1
+        anchors.add(anchor + ("-%d" % count if count else ""))
+    return anchors
+
+
+def validate_links(root, report):
+    sources = sorted(p for p in root.rglob("*.md") if ".git" not in p.parts and "_data" not in p.parts)
+    if (root / "llms.txt").exists():
+        sources.append(root / "llms.txt")
+    cache = {}
+    for source in sources:
+        text = source.read_text(encoding="utf-8")
+        # 排除 fenced code 中的示意链接，避免把教程代码视为导航。
+        text = re.sub(r"(?ms)^```[^\n]*\n.*?^```\s*$", "", text)
+        for raw in re.findall(r"\]\(([^)]+)\)", text):
+            target = raw.strip()
+            if target.startswith("<") and ">" in target:
+                target = target[1:target.index(">")]
+            else:
+                target = target.split(' "', 1)[0]
+            parsed = urlsplit(target)
+            if parsed.scheme or parsed.netloc:
+                continue
+            filename = unquote(parsed.path)
+            if filename and not filename.endswith(".md"):
+                continue
+            path = (source.parent / filename).resolve() if filename else source.resolve()
+            if not path.is_file():
+                report.errors.append("断链：%s → %s" % (source.relative_to(root), raw))
+                continue
+            if parsed.fragment:
+                if path not in cache:
+                    cache[path] = heading_anchors(path.read_text(encoding="utf-8"))
+                if unquote(parsed.fragment) not in cache[path]:
+                    report.errors.append("锚点不存在：%s → %s" % (source.relative_to(root), raw))
+    report.counts["markdown"] = sum(p.suffix == ".md" for p in sources)
+
+
+def validate(root=ROOT, services=None, models=None):
+    root = Path(root).resolve()
+    report = Report()
+    if services is None and models is None:
+        try:
+            from dataset import load_dataset
+            services, models = load_dataset(root / "tools/_data")
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            report.errors.append("源数据完整性校验失败：%s" % exc)
+            return report
+    else:
+        if services is None:
+            services = load_json(root / "tools/_data/services.json", report)
+        if models is None:
+            models = load_json(root / "tools/_data/models.json", report)
+    if services is None or models is None:
+        return report
+    try:
+        validate_source(services, models, report)
+        with tempfile.TemporaryDirectory(prefix="emby-docs-check-") as tmp:
+            expected_root = Path(tmp)
+            (expected_root / build_docs.MODEL_DIR).mkdir()
+            with module_root(build_docs, expected_root):
+                models_map, _ = build_docs.render_models(models)
+                for svc in services:
+                    cat = build_docs.render_service(svc, models_map)
+                    rel = Path(build_docs.API_DIR) / cat / (svc["service"] + ".md")
+                    compare_document(root / rel, expected_root / rel, "service", report)
+            for path in sorted((expected_root / build_docs.MODEL_DIR).glob("*.md")):
+                compare_document(root / build_docs.MODEL_DIR / path.name, path, "model", report)
+            expected_services = {s["service"] for s in services}
+            actual_services = {p.stem for p in (root / build_docs.API_DIR).rglob("*.md") if p.name != "README.md"}
+            if actual_services != expected_services:
+                report.errors.append("服务文档集合不一致（缺失/多余）：%s" % sorted(actual_services ^ expected_services))
+            with module_root(build_ai_index, root):
+                expected_index = build_ai_index.build(services, models)
+                expected_llms = build_ai_index.write_llms(expected_index)
+            actual_index = load_json(root / "index.json", report)
+            if actual_index is not None and actual_index != expected_index:
+                report.errors.append("index.json 详细内容不一致（计数/服务/路径/小节/参数数/模型/约定）")
+            actual_llms = read_text(root / "llms.txt", report)
+            if actual_llms is not None and actual_llms != expected_llms:
+                report.errors.append("llms.txt 生成一致性不符")
+        validate_links(root, report)
+    except (OSError, KeyError, TypeError, ValueError, AttributeError) as exc:
+        report.errors.append("源数据结构或生成接口异常：%s: %s" % (type(exc).__name__, exc))
+    return report
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--strict-source", action="store_true", help="源快照含 incomplete 端点时也返回失败")
+    args = parser.parse_args(argv)
+    report = validate(args.root)
+    for key, value in report.counts.items():
+        print("%s: %s" % (key, value))
+    for warning in report.warnings:
+        print("[警告] " + warning)
+    for error in report.errors:
+        print("[错误] " + error)
+    failed = not report.ok or (args.strict_source and report.counts.get("incomplete", 0) > 0)
+    print("生成一致性/快照结构校验：%s（错误 %d，警告 %d）" %
+          ("未通过" if failed else "通过", len(report.errors), len(report.warnings)))
+    print("范围说明：本命令不证明实时官方全覆盖，也未进行 Emby 服务器实测。")
+    return int(failed)
 
 
 if __name__ == "__main__":

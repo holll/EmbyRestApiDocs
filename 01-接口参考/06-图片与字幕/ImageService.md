@@ -7,7 +7,7 @@
 所有图片出口：条目主图/背景图/Logo/缩略图、人物与工作室图片、用户头像。支持指定尺寸、格式、质量、裁白、圆角、进度角标等参数，也支持上传/删除图片。图片 URL 是客户端列表页性能的关键。
 
 - 接口数量：**49**
-- 覆盖范围：官方参考站该服务下的全部 49 个端点
+- 收录范围：当前官方文档快照中的 49 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -77,7 +77,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -133,7 +133,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -189,20 +189,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -230,19 +230,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -271,20 +271,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -312,19 +312,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -353,20 +353,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -394,19 +394,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -465,20 +465,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -506,19 +506,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -551,17 +551,17 @@
 | `Id` | path | string | 是 | 条目 ID。 |
 | `MaxWidth` | path | integer | 是 | 返回图片的最大宽度。 |
 | `MaxHeight` | path | integer | 是 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | path | string | 是 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
 | `Format` | path | string | 是 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -590,20 +590,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -631,19 +631,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -672,20 +672,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -713,19 +713,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -754,20 +754,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -795,19 +795,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -836,20 +836,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -877,19 +877,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -918,20 +918,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -959,19 +959,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1000,20 +1000,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1041,19 +1041,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1082,20 +1082,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1123,19 +1123,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1164,20 +1164,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1205,19 +1205,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1250,17 +1250,17 @@
 | `Id` | path | string | 是 | 条目 ID。 |
 | `MaxWidth` | path | integer | 是 | 返回图片的最大宽度。 |
 | `MaxHeight` | path | integer | 是 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | path | string | 是 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
 | `Format` | path | string | 是 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1289,20 +1289,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1330,19 +1330,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1371,20 +1371,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1412,19 +1412,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1453,20 +1453,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1494,19 +1494,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 条目名称（需 URL 编码）。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1535,20 +1535,20 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1576,19 +1576,19 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
-| `MaxWidth` | query | integer | 否 | 返回图片的最大宽度。 |
-| `MaxHeight` | query | integer | 否 | 返回图片的最大高度。 |
-| `Width` | query | integer | 否 | 返回图片的固定宽度。 |
-| `Height` | query | integer | 否 | 返回图片的固定高度。 |
+| `MaxWidth` | query | integer | 未标注 | 返回图片的最大宽度。 |
+| `MaxHeight` | query | integer | 未标注 | 返回图片的最大高度。 |
+| `Width` | query | integer | 未标注 | 返回图片的固定宽度。 |
+| `Height` | query | integer | 未标注 | 返回图片的固定高度。 |
 | `Quality` | query | integer | 否 | 可选。图片质量 0–100，默认 90，多数场景足够。 |
 | `Tag` | query | string | 否 | 可选。传入条目对象中的缓存标记（Tag），以便服务端返回强缓存响应头。 |
-| `CropWhitespace` | query | string | 否 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
-| `EnableImageEnhancers` | query | boolean | 否 | 是否启用封面图等图像增强。 |
-| `Format` | query | string | 否 | 图片输出格式：original（原格式）、gif、jpg、png。 |
+| `CropWhitespace` | query | string | 未标注 | 是否裁掉图片四周空白，True/False；不指定时，logo 与透明艺术图会自动裁白。 |
+| `EnableImageEnhancers` | query | boolean | 未标注 | 是否启用封面图等图像增强。 |
+| `Format` | query | string | 未标注 | 图片输出格式：original（原格式）、gif、jpg、png。 |
 | `BackgroundColor` | query | string | 否 | 可选。为透明图片填充背景色。 |
 | `ForegroundLayer` | query | string | 否 | 可选。在图片上叠加前景层。 |
-| `AutoOrient` | query | boolean | 否 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
-| `KeepAnimation` | query | string | 否 | 设为 true 时保留图片动画（若格式支持）。 |
+| `AutoOrient` | query | boolean | 未标注 | 设为 true 时强制校正图片方向（用于不支持旋转信息的渲染端）。 |
+| `KeepAnimation` | query | string | 未标注 | 设为 true 时保留图片动画（若格式支持）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
@@ -1617,9 +1617,9 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -1648,7 +1648,7 @@
 | `Id` | path | string | 是 | 条目 ID。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -1705,7 +1705,7 @@
 | `Id` | path | string | 是 | 条目 ID。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
-| `NewIndex` | query | integer | 否 | 新图片的序号。 |
+| `NewIndex` | query | integer | 是 | 新图片的序号。 |
 
 **响应**
 
@@ -1734,7 +1734,7 @@
 | `Id` | path | string | 是 | 条目 ID。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 | `Index` | path | integer | 是 | 图片序号，同类型图片从 0 开始编号。 |
-| `Url` | query | string | 否 | 新图片的 URL。 |
+| `Url` | query | string | 是 | 新图片的 URL。 |
 
 **响应**
 
@@ -1761,7 +1761,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**
@@ -1790,7 +1790,7 @@
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -1818,7 +1818,7 @@
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 | `Index` | path | string | 是 | 序号，从 0 开始 |
 
 **响应**
@@ -1874,7 +1874,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
-| `Index` | query | integer | 否 | 图片序号，同类型图片从 0 开始编号。 |
+| `Index` | query | integer | 未标注 | 图片序号，同类型图片从 0 开始编号。 |
 | `Type` | path | string | 是 | 图片类型（Primary 主图、Backdrop 背景图、Logo、Thumb、Banner 等）。 |
 
 **响应**

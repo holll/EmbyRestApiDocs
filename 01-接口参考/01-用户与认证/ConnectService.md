@@ -7,7 +7,7 @@
 Emby Connect 是官方的“账号云”登录方式：用户用邮箱注册 Connect 账号，客户端凭 Connect 换取本地服务器用户。本服务负责发起/解除 Connect 绑定，以及用 Connect 用户 ID 反查本地用户。
 
 - 接口数量：**5**
-- 覆盖范围：官方参考站该服务下的全部 5 个端点
+- 收录范围：当前官方文档快照中的 5 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -58,7 +58,7 @@ Emby Connect 是官方的“账号云”登录方式：用户用邮箱注册 Con
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `ConnectUserId` | query | string | 否 | Connect 用户 ID。 |
+| `ConnectUserId` | query | string | 是 | Connect 用户 ID。 |
 
 **响应**
 
@@ -111,7 +111,7 @@ Emby Connect 是官方的“账号云”登录方式：用户用邮箱注册 Con
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID。 |
-| `ConnectUsername` | query | string | 否 | Connect 用户名。 |
+| `ConnectUsername` | query | string | 是 | Connect 用户名。 |
 
 **响应**
 

@@ -7,7 +7,7 @@
 管理已登录的设备：列出设备、查看设备信息与选项、更新设备能力（客户端上报自己支持的能力）、以及相机上传历史。做“设备管理”界面时会用到。
 
 - 接口数量：**8**
-- 覆盖范围：官方参考站该服务下的全部 8 个端点
+- 收录范围：当前官方文档快照中的 8 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -35,7 +35,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Id` | query | string | 否 | 设备 ID。 |
+| `Id` | query | string | 是 | 设备 ID。 |
 
 **响应**
 
@@ -61,7 +61,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `SortOrder` | query | string | 否 | 排序方向：Ascending（升序）/ Descending（降序）。 |
+| `SortOrder` | query | string | 未标注 | 排序方向：Ascending（升序）/ Descending（降序）。 |
 
 **响应**
 
@@ -121,7 +121,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Id` | query | string | 否 | 设备 ID。 |
+| `Id` | query | string | 是 | 设备 ID。 |
 
 **响应**
 
@@ -151,7 +151,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Id` | query | string | 否 | 设备 ID。 |
+| `Id` | query | string | 是 | 设备 ID。 |
 
 **响应**
 
@@ -181,10 +181,10 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Album` | query | string | 否 | 专辑。 |
-| `Name` | query | string | 否 | 名称。 |
-| `Id` | query | string | 否 | 标识。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `Album` | query | string | 是 | 专辑。 |
+| `Name` | query | string | 是 | 名称。 |
+| `Id` | query | string | 是 | 标识。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -210,7 +210,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Id` | query | string | 否 | 设备 ID。 |
+| `Id` | query | string | 是 | 设备 ID。 |
 
 **响应**
 
@@ -236,8 +236,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Id` | query | string | 否 | 设备 ID。 |
-| `body` | body | DeviceOptions | — | 请求体：`DeviceOptions` 对象。 |
+| `Id` | query | string | 是 | 设备 ID。 |
+| `body` | body | DeviceOptions | 是 | 请求体：`DeviceOptions` 对象。 |
 
 **响应**
 

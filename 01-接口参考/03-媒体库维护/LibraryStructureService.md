@@ -7,7 +7,7 @@
 管理员接口：新增/删除/重命名虚拟文件夹（媒体库）、增删改媒体路径、更新库选项、查询库结构。搭“媒体库管理”页面时使用。
 
 - 接口数量：**10**
-- 覆盖范围：官方参考站该服务下的全部 10 个端点
+- 收录范围：当前官方文档快照中的 10 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -114,7 +114,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | AddVirtualFolder | — | 请求体：`AddVirtualFolder` 对象。 |
+| `body` | body | AddVirtualFolder | 是 | 请求体：`AddVirtualFolder` 对象。 |
 
 **响应**
 
@@ -146,7 +146,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoveVirtualFolder | — | 请求体：`RemoveVirtualFolder` 对象。 |
+| `body` | body | RemoveVirtualFolder | 是 | 请求体：`RemoveVirtualFolder` 对象。 |
 
 **响应**
 
@@ -176,7 +176,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | UpdateLibraryOptions | — | 请求体：`UpdateLibraryOptions` 对象。 |
+| `body` | body | UpdateLibraryOptions | 是 | 请求体：`UpdateLibraryOptions` 对象。 |
 
 **响应**
 
@@ -208,7 +208,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RenameVirtualFolder | — | 请求体：`RenameVirtualFolder` 对象。 |
+| `body` | body | RenameVirtualFolder | 是 | 请求体：`RenameVirtualFolder` 对象。 |
 
 **响应**
 
@@ -238,7 +238,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | AddMediaPath | — | 请求体：`AddMediaPath` 对象。 |
+| `body` | body | AddMediaPath | 是 | 请求体：`AddMediaPath` 对象。 |
 
 **响应**
 
@@ -270,7 +270,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RemoveMediaPath | — | 请求体：`RemoveMediaPath` 对象。 |
+| `body` | body | RemoveMediaPath | 是 | 请求体：`RemoveMediaPath` 对象。 |
 
 **响应**
 
@@ -300,7 +300,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | UpdateMediaPath | — | 请求体：`UpdateMediaPath` 对象。 |
+| `body` | body | UpdateMediaPath | 是 | 请求体：`UpdateMediaPath` 对象。 |
 
 **响应**
 

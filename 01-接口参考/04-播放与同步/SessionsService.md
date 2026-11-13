@@ -7,7 +7,7 @@
 当前在线会话列表、会话详情，以及对客户端的远程控制：播放/暂停/跳转、下发消息、跳转浏览、添加附加用户，还有 API 密钥（Auth/Keys）管理。做投屏、遥控、多端同步时必用。
 
 - 接口数量：**20**
-- 覆盖范围：官方参考站该服务下的全部 20 个端点
+- 收录范围：当前官方文档快照中的 20 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -220,7 +220,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `App` | query | string | 否 | 应用名称。 |
+| `App` | query | string | 是 | 应用名称。 |
 
 **响应**
 
@@ -273,7 +273,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 会话 ID。 |
-| `body` | body | GeneralCommand | — | 请求体：`GeneralCommand` 对象。 |
+| `body` | body | GeneralCommand | 是 | 请求体：`GeneralCommand` 对象。 |
 
 **响应**
 
@@ -331,9 +331,9 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 会话 ID。 |
-| `Text` | query | string | 否 | 消息正文。 |
-| `Header` | query | string | 否 | 消息标题。 |
-| `TimeoutMs` | query | string | 否 | 消息超时时间；省略时用户必须手动确认才能关闭消息。 |
+| `Text` | query | string | 是 | 消息正文。 |
+| `Header` | query | string | 是 | 消息标题。 |
+| `TimeoutMs` | query | string | 未标注 | 消息超时时间；省略时用户必须手动确认才能关闭消息。 |
 
 **响应**
 
@@ -360,10 +360,10 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 会话 ID。 |
-| `ItemIds` | query | string | 否 | 要播放的条目 ID，英文逗号分隔。 |
-| `StartPositionTicks` | query | integer | 否 | 第一个条目的起始位置。 |
-| `PlayCommand` | query | string | 否 | 播放命令类型（PlayNow 立即播放、PlayNext 下一首插播、PlayLast 末尾追加）。尚未实现后两者的客户端可一律用 PlayNow。 |
-| `body` | body | PlayRequest | — | 请求体：`PlayRequest` 对象。 |
+| `ItemIds` | query | string | 是 | 要播放的条目 ID，英文逗号分隔。 |
+| `StartPositionTicks` | query | integer | 未标注 | 第一个条目的起始位置。 |
+| `PlayCommand` | query | string | 是 | 播放命令类型（PlayNow 立即播放、PlayNext 下一首插播、PlayLast 末尾追加）。尚未实现后两者的客户端可一律用 PlayNow。 |
+| `body` | body | PlayRequest | 是 | 请求体：`PlayRequest` 对象。 |
 
 **响应**
 
@@ -395,7 +395,7 @@
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 会话 ID。 |
 | `Command` | path | string | 是 | 命令名，如 PlayPause / Pause / Unpause / Stop / Seek / NextTrack / VolumeUp |
-| `body` | body | PlaystateRequest | — | 请求体：`PlaystateRequest` 对象。 |
+| `body` | body | PlaystateRequest | 是 | 请求体：`PlaystateRequest` 对象。 |
 
 **响应**
 
@@ -509,9 +509,9 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 会话 ID。 |
-| `ItemType` | query | string | 否 | 要浏览到的条目类型。 |
-| `ItemId` | query | string | 否 | 条目 ID。 |
-| `ItemName` | query | string | 否 | 条目名称。 |
+| `ItemType` | query | string | 是 | 要浏览到的条目类型。 |
+| `ItemId` | query | string | 是 | 条目 ID。 |
+| `ItemName` | query | string | 是 | 条目名称。 |
 
 **响应**
 
@@ -537,11 +537,11 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Id` | query | string | 否 | 会话 ID。 |
-| `PlayableMediaTypes` | query | string | 否 | 可播放媒体类型列表，英文逗号分隔：Audio、Video、Book、Game、Photo。 |
-| `SupportedCommands` | query | string | 否 | 支持的远程控制命令列表，英文逗号分隔。 |
-| `SupportsMediaControl` | query | boolean | 否 | 是否支持远程播放控制。 |
-| `SupportsSync` | query | boolean | 否 | 是否支持同步（Sync）。 |
+| `Id` | query | string | 是 | 会话 ID。 |
+| `PlayableMediaTypes` | query | string | 未标注 | 可播放媒体类型列表，英文逗号分隔：Audio、Video、Book、Game、Photo。 |
+| `SupportedCommands` | query | string | 未标注 | 支持的远程控制命令列表，英文逗号分隔。 |
+| `SupportsMediaControl` | query | boolean | 未标注 | 是否支持远程播放控制。 |
+| `SupportsSync` | query | boolean | 未标注 | 是否支持同步（Sync）。 |
 
 **响应**
 
@@ -567,8 +567,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Id` | query | string | 否 | 会话 ID。 |
-| `body` | body | ClientCapabilities | — | 请求体：`ClientCapabilities` 对象。 |
+| `Id` | query | string | 是 | 会话 ID。 |
+| `body` | body | ClientCapabilities | 是 | 请求体：`ClientCapabilities` 对象。 |
 
 **响应**
 

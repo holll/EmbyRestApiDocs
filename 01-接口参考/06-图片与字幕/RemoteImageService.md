@@ -7,7 +7,7 @@
 从外部图片源（TMDB 等）搜索候选图片并下载为条目图片。做“更换封面”功能时使用。
 
 - 接口数量：**4**
-- 覆盖范围：官方参考站该服务下的全部 4 个端点
+- 收录范围：当前官方文档快照中的 4 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -31,7 +31,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `ImageUrl` | query | string | 否 | 图片 URL。 |
+| `ImageUrl` | query | string | 是 | 图片 URL。 |
 
 **响应**
 
@@ -125,10 +125,10 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `Type` | query | string | 否 | 图片类型（Primary / Backdrop / Logo / Thumb 等）。 |
-| `ProviderName` | query | string | 否 | 提供方名称。 |
-| `ImageUrl` | query | string | 否 | 图片 URL。 |
-| `body` | body | BaseDownloadRemoteImage | — | 请求体：`BaseDownloadRemoteImage` 对象。 |
+| `Type` | query | string | 是 | 图片类型（Primary / Backdrop / Logo / Thumb 等）。 |
+| `ProviderName` | query | string | 未标注 | 提供方名称。 |
+| `ImageUrl` | query | string | 未标注 | 图片 URL。 |
+| `body` | body | BaseDownloadRemoteImage | 是 | 请求体：`BaseDownloadRemoteImage` 对象。 |
 
 **响应**
 

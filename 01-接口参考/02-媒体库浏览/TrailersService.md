@@ -7,7 +7,7 @@
 获取与某部电影/预告片相似的电影与预告片，用于“即将上映/相关推荐”。
 
 - 接口数量：**1**
-- 覆盖范围：官方参考站该服务下的全部 1 个端点
+- 收录范围：当前官方文档快照中的 1 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -28,7 +28,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `ArtistType` | query | string | 否 | 艺术家类型：Artist（艺术家）或 AlbumArtist（专辑艺术家）。 |
+| `ArtistType` | query | string | 未标注 | 艺术家类型：Artist（艺术家）或 AlbumArtist（专辑艺术家）。 |
 | `MaxOfficialRating` | query | string | 否 | 可选。按最高分级过滤（如 PG、PG-13、TV-MA）。 |
 | `HasThemeSong` | query | boolean | 否 | 可选。筛选含主题曲的条目。 |
 | `HasThemeVideo` | query | boolean | 否 | 可选。筛选含主题视频的条目。 |
@@ -51,7 +51,7 @@
 | `IsUnaired` | query | boolean | 否 | 可选。筛选未播出集或非未播出集。 |
 | `MinCommunityRating` | query | string | 否 | 可选。按最低社区评分过滤。 |
 | `MinCriticRating` | query | string | 否 | 可选。按最低影评人评分过滤。 |
-| `AiredDuringSeason` | query | string | 否 | 获取某一季期间播出的全部集，含特别篇。 |
+| `AiredDuringSeason` | query | string | 未标注 | 获取某一季期间播出的全部集，含特别篇。 |
 | `MinPremiereDate` | query | string | 否 | 可选。首播日期下限，格式为 ISO 8601。 |
 | `MinDateLastSaved` | query | string | 否 | 可选。条目最后保存时间的下限，格式为 ISO 8601。 |
 | `MinDateLastSavedForUser` | query | string | 否 | 可选。条目对指定用户可见的最后保存时间下限，格式为 ISO 8601。 |
@@ -63,10 +63,10 @@
 | `ExcludeItemIds` | query | string | 否 | 可选。排除指定条目 ID，可用英文逗号分隔多个。 |
 | `StartIndex` | query | integer | 否 | 可选。开始返回的记录序号，序号更小的记录会被丢弃。 |
 | `Limit` | query | integer | 否 | 可选。最多返回的记录条数。 |
-| `Recursive` | query | boolean | 否 | 在文件夹内搜索时是否递归查找子文件夹，true/false。 |
-| `SearchTerm` | query | string | 否 | 搜索关键词。 |
-| `SortOrder` | query | string | 否 | 排序方向：Ascending（升序）/ Descending（降序）。 |
-| `ParentId` | query | string | 否 | 指定该项可把查询限定到某个条目或文件夹；省略则从媒体库根目录开始。 |
+| `Recursive` | query | boolean | 未标注 | 在文件夹内搜索时是否递归查找子文件夹，true/false。 |
+| `SearchTerm` | query | string | 未标注 | 搜索关键词。 |
+| `SortOrder` | query | string | 未标注 | 排序方向：Ascending（升序）/ Descending（降序）。 |
+| `ParentId` | query | string | 未标注 | 指定该项可把查询限定到某个条目或文件夹；省略则从媒体库根目录开始。 |
 | `Fields` | query | string | 否 | 可选。指定输出中额外返回的字段，英文逗号分隔。可选值：Budget、Chapters、DateCreated、Genres、HomePageUrl、IndexOptions、MediaStreams、Overview、ParentId、Path、People、ProviderIds、PrimaryImageAspectRatio、Revenue、SortName、Studios、Taglines。 |
 | `ExcludeItemTypes` | query | string | 否 | 可选。按条目类型过滤结果，可用英文逗号分隔多个值。 |
 | `IncludeItemTypes` | query | string | 否 | 可选。按条目类型过滤结果，可用英文逗号分隔多个值。 |
@@ -83,7 +83,7 @@
 | `IsPremiere` | query | boolean | 否 | 可选。按“首播”标记筛选。 |
 | `IsNewOrPremiere` | query | boolean | 否 | 可选。按“新增或首播”标记筛选。 |
 | `IsRepeat` | query | boolean | 否 | 可选。按“重播”标记筛选。 |
-| `ProjectToMedia` | query | string | 否 | 把结果投影为媒体条目（仅返回媒体相关字段）。 |
+| `ProjectToMedia` | query | string | 未标注 | 把结果投影为媒体条目（仅返回媒体相关字段）。 |
 | `MediaTypes` | query | string | 否 | 可选。按媒体类型过滤，英文逗号分隔多个。 |
 | `ImageTypes` | query | string | 否 | 可选。按包含的图片类型过滤，可用英文逗号分隔多个值。 |
 | `SortBy` | query | string | 否 | 可选。排序字段，英文逗号分隔多个。可选值：Album、AlbumArtist、Artist、Budget、CommunityRating、CriticRating、DateCreated、DatePlayed、PlayCount、PremiereDate、ProductionYear、SortName、Random、Revenue、Runtime。 |
@@ -114,12 +114,12 @@
 | `ExtendedVideoTypes` | query | string | 否 | 可选。按扩展视频类型过滤，英文逗号分隔多个。 |
 | `SubtitleCodecs` | query | string | 否 | 可选。按字幕编码过滤，英文逗号分隔多个。 |
 | `Path` | query | string | 否 | 可选。按文件路径过滤。 |
-| `UserId` | query | string | 否 | 用户 ID。 |
+| `UserId` | query | string | 未标注 | 用户 ID。 |
 | `MinOfficialRating` | query | string | 否 | 可选。按最低分级过滤（如 PG、PG-13、TV-MA）。 |
 | `IsLocked` | query | boolean | 否 | 可选。筛选已锁定的条目。 |
 | `IsPlaceHolder` | query | boolean | 否 | 可选。筛选占位条目（无实际文件）。 |
 | `HasOfficialRating` | query | boolean | 否 | 可选。筛选带分级信息的条目。 |
-| `GroupItemsIntoCollections` | query | string | 否 | 是否把条目折叠进其所属合集（套装）后再返回。 |
+| `GroupItemsIntoCollections` | query | string | 未标注 | 是否把条目折叠进其所属合集（套装）后再返回。 |
 | `Is3D` | query | boolean | 否 | 可选。筛选 3D 或非 3D 条目。 |
 | `SeriesStatus` | query | string | 否 | 可选。按剧集状态过滤，英文逗号分隔多个。 |
 | `NameStartsWithOrGreater` | query | string | 否 | 可选。筛选排序名大于等于给定字符串的条目。 |

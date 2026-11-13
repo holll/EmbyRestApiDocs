@@ -7,7 +7,7 @@
 保存每个用户、每种客户端（如 emby、emby-theater）的界面偏好：首页分区顺序、列表视图/海报视图、排序字段等。键由 userId + client 组成。
 
 - 接口数量：**5**
-- 覆盖范围：官方参考站该服务下的全部 5 个端点
+- 收录范围：当前官方文档快照中的 5 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -33,8 +33,8 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `UserId` | query | string | 否 | 用户 ID。 |
-| `Client` | query | string | 否 | 客户端名称。 |
+| `UserId` | query | string | 是 | 用户 ID。 |
+| `Client` | query | string | 是 | 客户端名称。 |
 
 **响应**
 
@@ -93,8 +93,8 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `DisplayPreferencesId` | path | string | 是 | 显示偏好 ID。 |
-| `UserId` | query | string | 否 | 用户 ID。 |
-| `body` | body | DisplayPreferences | — | 请求体：`DisplayPreferences` 对象。 |
+| `UserId` | query | string | 是 | 用户 ID。 |
+| `body` | body | DisplayPreferences | 是 | 请求体：`DisplayPreferences` 对象。 |
 
 **响应**
 
@@ -127,7 +127,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
-| `body` | body | array | — | 请求体：`UserSettings` 对象。 |
+| `body` | body | array | 是 | 请求体：`UserSettings` 对象。 |
 
 **响应**
 
@@ -154,7 +154,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 

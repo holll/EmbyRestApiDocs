@@ -7,7 +7,7 @@
 按“通用音频”路径输出音频流，常用于有声书、播客等场景。
 
 - 接口数量：**4**
-- 覆盖范围：官方参考站该服务下的全部 4 个端点
+- 收录范围：当前官方文档快照中的 4 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -32,7 +32,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 
 **响应**
@@ -60,7 +60,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
 | `Container` | path | string | 是 | 路径参数 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 
@@ -89,7 +89,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 
 **响应**
@@ -117,7 +117,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `DeviceId` | query | string | 未标注 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
 | `Container` | path | string | 是 | 路径参数 |
 | `StartTimeTicks` | query | integer | 否 | 可选。起始偏移，单位 tick，1 毫秒 = 10000 ticks。 |
 

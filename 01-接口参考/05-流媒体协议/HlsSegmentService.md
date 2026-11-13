@@ -7,7 +7,7 @@
 管理正在进行的 HLS 编码任务：停止/删除活动编码，避免转码进程堆积。
 
 - 接口数量：**2**
-- 覆盖范围：官方参考站该服务下的全部 2 个端点
+- 收录范围：当前官方文档快照中的 2 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -29,8 +29,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `PlaySessionId` | query | string | 否 | 播放会话 ID。 |
+| `DeviceId` | query | string | 是 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `PlaySessionId` | query | string | 是 | 播放会话 ID。 |
 
 **响应**
 
@@ -56,8 +56,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `DeviceId` | query | string | 否 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
-| `PlaySessionId` | query | string | 否 | 播放会话 ID。 |
+| `DeviceId` | query | string | 是 | 请求方客户端的设备 ID，用于在需要时终止转码进程。 |
+| `PlaySessionId` | query | string | 是 | 播放会话 ID。 |
 
 **响应**
 

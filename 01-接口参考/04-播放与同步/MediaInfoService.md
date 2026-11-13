@@ -7,7 +7,7 @@
 播放链路的核心：`PlaybackInfo` 返回可用的媒体源、转码参数与播放会话 ID；还提供打开/关闭媒体源、直播流媒体信息、带宽测速。任何自研播放器都要先调 PlaybackInfo。
 
 - 接口数量：**6**
-- 覆盖范围：官方参考站该服务下的全部 6 个端点
+- 收录范围：当前官方文档快照中的 6 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -34,7 +34,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID。 |
-| `UserId` | query | string | 否 | 用户 ID。 |
+| `UserId` | query | string | 是 | 用户 ID。 |
 
 **响应**
 
@@ -66,7 +66,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Size` | query | integer | 否 | 大小。 |
+| `Size` | query | integer | 是 | 大小。 |
 
 **响应**
 
@@ -93,7 +93,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID |
-| `body` | body | PlaybackInfoRequest | — | 请求体：`PlaybackInfoRequest` 对象。 |
+| `body` | body | PlaybackInfoRequest | 是 | 请求体：`PlaybackInfoRequest` 对象。 |
 
 **响应**
 
@@ -125,8 +125,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `LiveStreamId` | query | string | 否 | 直播流 ID。 |
-| `PlaySessionId` | query | string | 否 | 播放会话 ID。 |
+| `LiveStreamId` | query | string | 是 | 直播流 ID。 |
+| `PlaySessionId` | query | string | 是 | 播放会话 ID。 |
 
 **响应**
 
@@ -152,7 +152,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `LiveStreamId` | query | string | 否 | 直播流 ID。 |
+| `LiveStreamId` | query | string | 是 | 直播流 ID。 |
 
 **响应**
 
@@ -178,7 +178,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | LiveStreamRequest | — | 请求体：`LiveStreamRequest` 对象。 |
+| `body` | body | LiveStreamRequest | 是 | 请求体：`LiveStreamRequest` 对象。 |
 
 **响应**
 

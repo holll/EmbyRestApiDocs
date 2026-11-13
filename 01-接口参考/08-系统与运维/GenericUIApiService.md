@@ -7,7 +7,7 @@
 为 Web 端 UI 提供聚合数据与命令执行（如电视设置向导中的命令）。
 
 - 接口数量：**2**
-- 覆盖范围：官方参考站该服务下的全部 2 个端点
+- 收录范围：当前官方文档快照中的 2 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -29,8 +29,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `PageId` | query | string | 否 | 页面控制器 ID。 |
-| `ClientLocale` | query | string | 否 | 客户端区域标识（如 zh-CN）。 |
+| `PageId` | query | string | 是 | 页面控制器 ID。 |
+| `ClientLocale` | query | string | 是 | 客户端区域标识（如 zh-CN）。 |
 
 **响应**
 
@@ -62,7 +62,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | RunUICommand | — | 请求体：`RunUICommand` 对象。 |
+| `body` | body | RunUICommand | 是 | 请求体：`RunUICommand` 对象。 |
 
 **响应**
 

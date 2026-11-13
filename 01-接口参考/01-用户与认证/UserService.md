@@ -7,7 +7,7 @@
 账号体系的核心：登录认证、用户增删改、权限策略（Policy）、密码与“忘记密码”、用户设置项、以及收藏/评分/播放状态等用户数据。第三方客户端首次接入几乎都要先走这里的认证接口。
 
 - 接口数量：**25**
-- 覆盖范围：官方参考站该服务下的全部 25 个端点
+- 收录范围：当前官方文档快照中的 25 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -223,7 +223,7 @@
 | `StartIndex` | query | integer | 否 | 可选。开始返回的记录序号，序号更小的记录会被丢弃。 |
 | `Limit` | query | integer | 否 | 可选。最多返回的记录条数。 |
 | `NameStartsWithOrGreater` | query | string | 否 | 可选。筛选排序名大于等于给定字符串的条目。 |
-| `SortOrder` | query | string | 否 | 排序方向：Ascending（升序）/ Descending（降序）。 |
+| `SortOrder` | query | string | 未标注 | 排序方向：Ascending（升序）/ Descending（降序）。 |
 
 **响应**
 
@@ -260,7 +260,7 @@
 | `StartIndex` | query | integer | 否 | 可选。开始返回的记录序号，序号更小的记录会被丢弃。 |
 | `Limit` | query | integer | 否 | 可选。最多返回的记录条数。 |
 | `NameStartsWithOrGreater` | query | string | 否 | 可选。筛选排序名大于等于给定字符串的条目。 |
-| `SortOrder` | query | string | 否 | 排序方向：Ascending（升序）/ Descending（降序）。 |
+| `SortOrder` | query | string | 未标注 | 排序方向：Ascending（升序）/ Descending（降序）。 |
 
 **响应**
 
@@ -323,7 +323,7 @@
 | `StartIndex` | query | integer | 否 | 可选。开始返回的记录序号，序号更小的记录会被丢弃。 |
 | `Limit` | query | integer | 否 | 可选。最多返回的记录条数。 |
 | `NameStartsWithOrGreater` | query | string | 否 | 可选。筛选排序名大于等于给定字符串的条目。 |
-| `SortOrder` | query | string | 否 | 排序方向：Ascending（升序）/ Descending（降序）。 |
+| `SortOrder` | query | string | 未标注 | 排序方向：Ascending（升序）/ Descending（降序）。 |
 
 **响应**
 
@@ -357,8 +357,8 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `X-Emby-Authorization` | header | string | 否 | 认证头，名称可以是 Authorization 或 X-Emby-Authorization，格式为：Emby UserId="(guid)", Client="(string)", Device="(string)", DeviceId="(string)", Version="string", Token="(string)"。详见认证章节。 |
-| `body` | body | AuthenticateUserByName | — | 请求体：`AuthenticateUserByName` 对象。 |
+| `X-Emby-Authorization` | header | string | 是 | 认证头，名称可以是 Authorization 或 X-Emby-Authorization，格式为：Emby UserId="(guid)", Client="(string)", Device="(string)", DeviceId="(string)", Version="string", Token="(string)"。详见认证章节。 |
+| `body` | body | AuthenticateUserByName | 是 | 请求体：`AuthenticateUserByName` 对象。 |
 
 **响应**
 
@@ -391,7 +391,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID |
-| `body` | body | UserDto | — | 请求体：`UserDto` 对象。 |
+| `body` | body | UserDto | 是 | 请求体：`UserDto` 对象。 |
 
 **响应**
 
@@ -424,7 +424,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID |
-| `body` | body | AuthenticateUser | — | 请求体：`AuthenticateUser` 对象。 |
+| `body` | body | AuthenticateUser | 是 | 请求体：`AuthenticateUser` 对象。 |
 
 **响应**
 
@@ -457,7 +457,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID |
-| `body` | body | UserConfiguration | — | 请求体：`UserConfiguration` 对象。 |
+| `body` | body | UserConfiguration | 是 | 请求体：`UserConfiguration` 对象。 |
 
 **响应**
 
@@ -490,7 +490,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -543,7 +543,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID |
-| `body` | body | UpdateUserPassword | — | 请求体：`UpdateUserPassword` 对象。 |
+| `body` | body | UpdateUserPassword | 是 | 请求体：`UpdateUserPassword` 对象。 |
 
 **响应**
 
@@ -574,7 +574,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 用户 ID |
-| `body` | body | UserPolicy | — | 请求体：`UserPolicy` 对象。 |
+| `body` | body | UserPolicy | 是 | 请求体：`UserPolicy` 对象。 |
 
 **响应**
 
@@ -660,7 +660,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID |
-| `body` | body | CopyData | — | 请求体：`CopyData` 对象。 |
+| `body` | body | CopyData | 是 | 请求体：`CopyData` 对象。 |
 
 **响应**
 
@@ -692,7 +692,7 @@
 |---|---|---|---|---|
 | `UserId` | path | string | 是 | 用户 ID |
 | `Key` | path | string | 是 | 键。 |
-| `body` | body | string (binary) | — | 二进制流，请求体直接传文件内容。 |
+| `body` | body | string (binary) | 是 | 二进制流，请求体直接传文件内容。 |
 
 **响应**
 
@@ -718,7 +718,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | ForgotPassword | — | 请求体：`ForgotPassword` 对象。 |
+| `body` | body | ForgotPassword | 是 | 请求体：`ForgotPassword` 对象。 |
 
 **响应**
 
@@ -750,7 +750,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | ForgotPasswordPin | — | 请求体：`ForgotPasswordPin` 对象。 |
+| `body` | body | ForgotPasswordPin | 是 | 请求体：`ForgotPasswordPin` 对象。 |
 
 **响应**
 
@@ -780,7 +780,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | CreateUserByName | — | 请求体：`CreateUserByName` 对象。 |
+| `body` | body | CreateUserByName | 是 | 请求体：`CreateUserByName` 对象。 |
 
 **响应**
 

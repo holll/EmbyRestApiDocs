@@ -7,7 +7,7 @@
 管理 DLNA 设备配置文件：列出/新增/删除/更新 profile。
 
 - 接口数量：**6**
-- 覆盖范围：官方参考站该服务下的全部 6 个端点
+- 收录范围：当前官方文档快照中的 6 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -147,7 +147,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | DlnaProfile | — | 请求体：`DlnaProfile` 对象。 |
+| `body` | body | DlnaProfile | 是 | 请求体：`DlnaProfile` 对象。 |
 
 **响应**
 
@@ -180,7 +180,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID |
-| `body` | body | DlnaProfile | — | 请求体：`DlnaProfile` 对象。 |
+| `body` | body | DlnaProfile | 是 | 请求体：`DlnaProfile` 对象。 |
 
 **响应**
 

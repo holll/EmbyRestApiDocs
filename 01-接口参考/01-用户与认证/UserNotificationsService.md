@@ -7,7 +7,7 @@
 面向单个用户的通知：读取通知摘要、把通知标记为已读。与 NotificationsService（管理员群发）不同，这里是“用户收件箱”。
 
 - 接口数量：**2**
-- 覆盖范围：官方参考站该服务下的全部 2 个端点
+- 收录范围：当前官方文档快照中的 2 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -55,7 +55,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | UserNotificationInfo | — | 请求体：`UserNotificationInfo` 对象。 |
+| `body` | body | UserNotificationInfo | 是 | 请求体：`UserNotificationInfo` 对象。 |
 
 **响应**
 

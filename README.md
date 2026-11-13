@@ -1,6 +1,6 @@
 # Emby REST API 中文速查手册
 
-面向第三方客户端开发者的 Emby Server REST API 中文参考。内容依据官方文档 <https://dev.emby.media/reference/RestAPI.html> 整理，按服务分组逐条编写，覆盖官方参考站列出的全部接口。
+面向第三方客户端开发者的 Emby Server REST API 中文参考。内容依据官方文档 <https://dev.emby.media/reference/RestAPI.html> 整理，按服务分组逐条编写，收录仓库中的官方文档快照；不保证覆盖上游后续新增接口，也不代表逐接口实机核验。
 
 ## 这份手册怎么用
 
@@ -27,8 +27,8 @@
 | 服务（Controller） | 70 |
 | 接口（端点） | 548 |
 | 请求参数条目 | 7708 |
-| 数据模型（含枚举） | 321 |
-| 模型字段 | 1916 |
+| 数据模型（含枚举） | 329 |
+| 模型字段 | 1971 |
 
 ## 约定
 
@@ -38,7 +38,7 @@
 - 返回体均为 JSON（流媒体、图片类接口除外），字段名 PascalCase，解析时请按原样大小写匹配。
 - 布尔值用 `true` / `false`，时间为 ISO 8601 字符串，播放位置用 tick（1 毫秒 = 10000 ticks）。
 - 参数表“类型”列以官方文档为准；官方未给出类型时按命名惯例推断（`Is*`/`Has*`/`Can*` 判为布尔，`Limit`/`StartIndex` 等判为整数），仅供参考。
-- 参数表“必填”列：路径参数一律为“是”；查询参数官方未逐一标注，除说明中明确写 Required 外按“否”处理；请求体字段标“—”，表示整体以模型定义为准。
+- 参数表“必填”列：路径参数为“是”；官方名称星号、明确 Required/Optional 说明或带来源的核验记录决定“是/否”；旧快照无法恢复的标记显示“未标注”，不等于可省略。
 - 模型表“说明”列的 `—` 表示官方未提供该字段说明，`（原文）` 开头表示保留官方英文原文以便对照。
 
 ## 目录
@@ -174,7 +174,7 @@
 
 | 文档 | 内容 |
 |---|---|
-| [模型索引](02-数据模型/00-模型索引.md) | 全部 321 个模型的总索引 |
+| [模型索引](02-数据模型/00-模型索引.md) | 全部 329 个模型的总索引 |
 | [通用结构](02-数据模型/01-通用结构.md) | 通用结构 |
 | [媒体条目](02-数据模型/02-媒体条目.md) | 媒体条目 |
 | [用户与账号](02-数据模型/03-用户与账号.md) | 用户与账号 |
@@ -192,16 +192,28 @@
 
 ## 生成与校验
 
+环境：Python 3.11+，核心工具无第三方依赖；维护流程和质量边界见 [维护指南](CONTRIBUTING.md)。
+
 接口清单由 `tools/crawl_emby_api.py` 从官方参考站抓取（结果落在 `tools/_data/`），`tools/build_docs.py` 依据数据与中文词表生成全部 Markdown，`tools/check_docs.py` 做交付校验。
 
 ```text
-python tools\crawl_emby_api.py   # 重新抓取官方接口（可选）
-python tools\build_docs.py      # 重新生成文档（会覆盖自动生成的文件）
-python tools\build_ai_index.py  # 生成 llms.txt 与 index.json（AI / 脚本入口）
-python tools\check_docs.py      # 校验：接口数/参数表/模型/断链/未打钩项/AI 入口
+python3 tools/crawl_emby_api.py       # 联网更新；失败不发布，保留旧快照
+python3 tools/rebuild_snapshot.py    # 离线规范化及应用有来源的修订
+python3 tools/build_docs.py          # 重生成接口、模型及目录（不覆盖手写教程）
+python3 tools/build_ai_index.py      # 重生成 AI / 脚本入口
+python3 tools/check_docs.py          # 内容、快照、链接与索引一致性校验
+python3 -m unittest discover -s tests -v  # 离线回归测试
 ```
 
-最近一次校验结果：服务 70、接口 548、参数条目 7708、模型 321、Markdown 96 个文件，另有 `llms.txt`（约 18 KB）与 `index.json`（约 190 KB）两个机器入口；无断链、无未打钩项。
+当前快照：70 个服务、548 个端点，其中 3 个端点详情不完整。生成统计不是校验结果。校验仅证明快照与产物一致，不等于官方实时全覆盖或服务器实测通过。
+
+## 快照与质量边界
+
+- 输入哈希（SHA-256）：`services.json` 为 `de9f3d5ce60c7283776a8b2b6e5a6ef295fbadebc0df7ff85051653fe2bbdbe0`；`models.json` 为 `bf2fefcacfa7b1b575f9efe0215060cba9975d639cdf138295025e218c43ef9a`。
+- 本次官方站点抓取完成时间：`2026-11-13T03:24:48.298832+00:00`；来源、页面哈希及归档关联见 [快照元数据](tools/_data/metadata.json)。官方参考站未提供可据以确认的 Emby Server 版本，不以抓取日期或示例版本代替。
+- 已知详情缺失的端点必须单独报告；未知参数不应解释为无参数。
+- 同身份模型的冲突类型以 `A | A[]` 等候选形式保留，不代表两个类型都已实测支持。
+- 局部核验修订记录见 [修订记录](tools/_data/corrections.json)，不能据少量抽查推定所有参数已核对。
 
 > 手写文档（`00-基础/`、`03-实战示例/`）不会被 `build_docs.py` 覆盖；`进度清单.md` 会在每次生成时按文件是否存在自动打钩。
 

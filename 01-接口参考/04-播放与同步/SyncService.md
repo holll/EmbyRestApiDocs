@@ -7,7 +7,7 @@
 Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、上报传输完成、取消/移除条目、同步状态查询。做“下载到本地”功能时使用。
 
 - 接口数量：**25**
-- 覆盖范围：官方参考站该服务下的全部 25 个端点
+- 收录范围：当前官方文档快照中的 25 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -53,7 +53,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `TargetId` | path | string | 是 | 目标 ID。 |
-| `ItemIds` | query | string | 否 | 条目 ID 列表。 |
+| `ItemIds` | query | string | 未标注 | 条目 ID 列表。 |
 
 **响应**
 
@@ -131,7 +131,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `TargetId` | query | string | 否 | 目标 ID。 |
+| `TargetId` | query | string | 是 | 目标 ID。 |
 
 **响应**
 
@@ -163,7 +163,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `TargetId` | query | string | 否 | 目标 ID。 |
+| `TargetId` | query | string | 是 | 目标 ID。 |
 
 **响应**
 
@@ -196,7 +196,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 标识。 |
-| `Name` | query | string | 否 | 名称。 |
+| `Name` | query | string | 是 | 名称。 |
 
 **响应**
 
@@ -308,11 +308,11 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `UserId` | query | string | 否 | 用户 ID。 |
-| `ItemIds` | query | string | 否 | 条目 ID 列表。 |
-| `ParentId` | query | string | 否 | 父级 ID。 |
-| `TargetId` | query | string | 否 | 目标 ID。 |
-| `Category` | query | string | 否 | 分类。 |
+| `UserId` | query | string | 是 | 用户 ID。 |
+| `ItemIds` | query | string | 未标注 | 条目 ID 列表。 |
+| `ParentId` | query | string | 未标注 | 父级 ID。 |
+| `TargetId` | query | string | 未标注 | 目标 ID。 |
+| `Category` | query | string | 未标注 | 分类。 |
 
 **响应**
 
@@ -344,7 +344,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `UserId` | query | string | 否 | 用户 ID。 |
+| `UserId` | query | string | 是 | 用户 ID。 |
 
 **响应**
 
@@ -401,7 +401,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `ItemId` | path | string | 是 | 条目 ID |
-| `body` | body | SyncedItemProgress | — | 请求体：`SyncedItemProgress` 对象。 |
+| `body` | body | SyncedItemProgress | 是 | 请求体：`SyncedItemProgress` 对象。 |
 
 **响应**
 
@@ -434,7 +434,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `TargetId` | path | string | 是 | 目标 ID。 |
-| `ItemIds` | query | string | 否 | 条目 ID 列表。 |
+| `ItemIds` | query | string | 未标注 | 条目 ID 列表。 |
 
 **响应**
 
@@ -460,8 +460,8 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `TargetId` | query | string | 否 | 目标 ID。 |
-| `body` | body | SyncDataRequest | — | 请求体：`SyncDataRequest` 对象。 |
+| `TargetId` | query | string | 是 | 目标 ID。 |
+| `body` | body | SyncDataRequest | 是 | 请求体：`SyncDataRequest` 对象。 |
 
 **响应**
 
@@ -491,7 +491,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `ItemIds` | query | string | 否 | 条目 ID 列表。 |
+| `ItemIds` | query | string | 未标注 | 条目 ID 列表。 |
 
 **响应**
 
@@ -647,7 +647,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | SyncJobRequest | — | 请求体：`SyncJobRequest` 对象。 |
+| `body` | body | SyncJobRequest | 是 | 请求体：`SyncJobRequest` 对象。 |
 
 **响应**
 
@@ -680,7 +680,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Id` | path | string | 是 | 条目 ID |
-| `body` | body | SyncJob | — | 请求体：`SyncJob` 对象。 |
+| `body` | body | SyncJob | 是 | 请求体：`SyncJob` 对象。 |
 
 **响应**
 
@@ -738,7 +738,7 @@ Emby 的离线下载（Sync）：创建同步任务、查询任务与条目、�
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `body` | body | UserAction [] | — | 请求体：`List`1` 对象。 |
+| `body` | body | UserAction [] | 是 | 请求体：`List`1` 对象。 |
 
 **响应**
 

@@ -7,7 +7,7 @@
 插件市场：查询可用包与更新、安装/取消安装。
 
 - 接口数量：**6**
-- 覆盖范围：官方参考站该服务下的全部 6 个端点
+- 收录范围：当前官方文档快照中的 6 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -95,7 +95,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 包名称。 |
-| `AssemblyGuid` | query | string | 否 | 关联程序集的 GUID。 |
+| `AssemblyGuid` | query | string | 未标注 | 关联程序集的 GUID。 |
 
 **响应**
 
@@ -127,7 +127,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `PackageType` | query | string | 否 | 包类型过滤（System / UserInstalled）。 |
+| `PackageType` | query | string | 是 | 包类型过滤（System / UserInstalled）。 |
 
 **响应**
 
@@ -158,7 +158,7 @@
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
 | `Name` | path | string | 是 | 包名称。 |
-| `AssemblyGuid` | query | string | 否 | 关联程序集的 GUID。 |
+| `AssemblyGuid` | query | string | 未标注 | 关联程序集的 GUID。 |
 | `Version` | query | string | 否 | 可选。版本号，默认取最新版本。 |
 | `UpdateClass` | query | string | 否 | 可选。更新通道（Dev、Beta、Release），默认 Release。 |
 

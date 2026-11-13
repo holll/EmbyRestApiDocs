@@ -7,7 +7,7 @@
 管理员群发通知：通知类型列表、向所有管理员发送通知。
 
 - 接口数量：**2**
-- 覆盖范围：官方参考站该服务下的全部 2 个端点
+- 收录范围：当前官方文档快照中的 2 个端点；不代表已逐接口实机验证。
 
 ## 接口一览
 
@@ -55,12 +55,12 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 |---|---|---|---|---|
-| `Name` | query | string | 否 | 通知名称。 |
-| `Description` | query | string | 否 | 通知描述。 |
-| `ImageUrl` | query | string | 否 | 通知图片 URL。 |
-| `Url` | query | string | 否 | 通知详情 URL。 |
-| `Level` | query | integer | 否 | 通知级别（Normal、Warning、Error）。 |
-| `body` | body | AddAdminNotification | — | 请求体：`AddAdminNotification` 对象。 |
+| `Name` | query | string | 是 | 通知名称。 |
+| `Description` | query | string | 是 | 通知描述。 |
+| `ImageUrl` | query | string | 未标注 | 通知图片 URL。 |
+| `Url` | query | string | 未标注 | 通知详情 URL。 |
+| `Level` | query | integer | 未标注 | 通知级别（Normal、Warning、Error）。 |
+| `body` | body | AddAdminNotification | 是 | 请求体：`AddAdminNotification` 对象。 |
 
 **响应**
 
